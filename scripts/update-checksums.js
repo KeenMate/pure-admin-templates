@@ -77,6 +77,15 @@ function updateTemplate(templateDir) {
   }
   checksums.metadata = sha256String(JSON.stringify(metadata, null, 0));
 
+  // Summary hash over all individual file hashes (sorted for determinism)
+  const allHashes = [
+    ...Object.entries(checksums.files || {}).sort().map(([k, v]) => `${k}:${v}`),
+    ...Object.entries(checksums.pages || {}).sort().map(([k, v]) => `pages/${k}:${v}`),
+    checksums.helper || '',
+    checksums.metadata,
+  ].filter(Boolean);
+  checksums.summary = sha256String(allHashes.join('\n'));
+
   manifest.checksums = checksums;
 
   fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');

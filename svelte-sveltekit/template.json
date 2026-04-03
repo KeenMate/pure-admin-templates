@@ -195,6 +195,7 @@
       "master-detail.svelte": "sha256:dac82e09d360371cda367cc7212642ef4971a2e58c694a6cbec6a460aeb9de0b"
     },
     "helper": "sha256:080abd1e8e790ee3ae2981972a66a65fe74d2261b9baf8eea01dab6e37c20453",
-    "metadata": "sha256:afe7709fc03aaa8342af4e863d0a5b11d08d9f30aaf2e50a980cd81b4467868c"
+    "metadata": "sha256:afe7709fc03aaa8342af4e863d0a5b11d08d9f30aaf2e50a980cd81b4467868c",
+    "summary": "sha256:61968d594a948486692397933dc30326e27fedaf2ef8f25f3569e9316c386714"
   }
 }
