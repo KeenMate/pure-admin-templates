@@ -1,0 +1,189 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://keenmate.com/schemas/pure-admin-template.schema.json",
+  "title": "Pure Admin Template Manifest",
+  "description": "Configuration manifest for Pure Admin project templates",
+  "type": "object",
+  "required": ["name", "version", "technology", "variant", "displayName"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Reference to the JSON schema for validation"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Unique identifier for the template (lowercase, hyphens allowed)"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Human-readable display name"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(-[a-zA-Z0-9.]+)?$",
+      "description": "Semantic version of the template"
+    },
+    "technology": {
+      "type": "string",
+      "description": "Technology group for wizard selection (e.g. svelte, react, elixir)"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Variant within the technology (e.g. sveltekit, spa, vite, nextjs)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Brief one-line description of the template"
+    },
+    "content": {
+      "type": "string",
+      "description": "Markdown content for the template detail page on pureadmin.io"
+    },
+    "author": {
+      "type": "string",
+      "description": "Template author or organization"
+    },
+    "license": {
+      "type": "string",
+      "description": "License identifier (e.g. MIT, Apache-2.0)"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Searchable tags (e.g. 'ssr', 'spa', 'static', 'fullstack')"
+    },
+    "homepage": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to the template's homepage or repository"
+    },
+    "scaffold": {
+      "type": "object",
+      "description": "Commands to bootstrap the project before template files are applied",
+      "properties": {
+        "command": {
+          "type": "string",
+          "description": "Primary scaffold command (supports {{APP_ID}} placeholder)"
+        },
+        "fallback": {
+          "type": "string",
+          "description": "Fallback command if primary fails"
+        }
+      }
+    },
+    "dependencies": {
+      "type": "object",
+      "description": "npm packages to install after scaffold (key: package name, value: version)",
+      "additionalProperties": { "type": "string" }
+    },
+    "placeholders": {
+      "type": "object",
+      "description": "Template variables substituted at create time (__VAR__ syntax)",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["description"],
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "What this placeholder is for"
+          },
+          "default": {
+            "type": "string",
+            "description": "Default value if not provided"
+          }
+        }
+      }
+    },
+    "features": {
+      "type": "object",
+      "description": "Optional feature blocks that can be enabled/disabled via CLI flags",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["description", "default", "points"],
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "What this feature provides"
+          },
+          "default": {
+            "type": "boolean",
+            "description": "Whether the feature is enabled by default"
+          },
+          "requires": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Feature IDs that must be enabled when this feature is enabled"
+          },
+          "points": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "data-pa point IDs that belong to this feature"
+          }
+        }
+      }
+    },
+    "pageTypes": {
+      "type": "object",
+      "description": "Available page generators for --preset and --pages",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["file", "description"],
+        "properties": {
+          "file": {
+            "type": "string",
+            "description": "Path to page template file (relative to template root)"
+          },
+          "description": {
+            "type": "string",
+            "description": "What kind of page this generates"
+          },
+          "route": {
+            "type": "string",
+            "description": "Override route path pattern (default: src/routes/{{entity}}/+page.svelte)"
+          },
+          "icon": {
+            "type": "string",
+            "description": "Default sidebar icon class"
+          },
+          "defaultLabel": {
+            "type": "string",
+            "description": "Default sidebar label"
+          }
+        }
+      }
+    },
+    "instructions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Post-create instructions shown to the user (supports placeholders)"
+    },
+    "checksums": {
+      "type": "object",
+      "description": "SHA-256 checksums of template files for change detection on upload",
+      "properties": {
+        "files": {
+          "type": "object",
+          "description": "SHA-256 checksums of all files in template/, keyed by relative path",
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        },
+        "pages": {
+          "type": "object",
+          "description": "SHA-256 checksums of page generator files, keyed by relative path",
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        },
+        "metadata": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "description": "SHA-256 of canonical JSON encoding of descriptive metadata (name, version, description, content, author, license, tags)"
+        }
+      }
+    }
+  }
+}

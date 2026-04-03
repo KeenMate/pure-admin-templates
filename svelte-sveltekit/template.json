@@ -1,91 +1,200 @@
 {
+  "$schema": "../schemas/pure-admin-template.schema.json",
   "name": "svelte-sveltekit",
   "displayName": "SvelteKit + Pure Admin",
   "version": "1.0.0",
   "technology": "svelte",
   "variant": "sveltekit",
-  "description": "Full SvelteKit app with Pure Admin layout, sidebar, navbar, theme switching, and optional panels",
+  "description": "Full SvelteKit app with file-based routing, SSR, and optional panels",
+  "content": "## SvelteKit + Pure Admin\n\nA full-featured SvelteKit application template with Pure Admin layout, sidebar navigation, theme switching, and optional panels.\n\n### Highlights\n\n- **SvelteKit** with file-based routing and SSR\n- **Svelte 5** runes for reactive state\n- **Pure Admin** layout with navbar, sidebar, footer\n- **Theme switching** via pureadmin.io themes\n- **Optional features**: profile panel, settings panel, FontAwesome, Floating UI, page loader\n- **Page generators**: dashboard, list, detail, form, master-detail\n\n### Quick Start\n\n```bash\npureadmin create my-app\ncd my-app\nnpm run dev\n```",
   "author": "KeenMate",
   "license": "MIT",
-
+  "tags": [
+    "svelte",
+    "sveltekit",
+    "ssr",
+    "fullstack",
+    "typescript"
+  ],
+  "homepage": "https://pureadmin.io",
   "scaffold": {
     "command": "npx sv create {{APP_ID}} --template minimal --types ts --no-add-ons --no-install",
     "fallback": "npm create svelte@latest {{APP_ID}} -- --template skeleton --types ts"
   },
-
   "dependencies": {
     "@keenmate/svelte-pure-admin": "latest",
     "@keenmate/pure-admin-core": "latest"
   },
-
   "placeholders": {
-    "APP_NAME": { "description": "Display name", "default": "My App" },
-    "APP_ID": { "description": "Package name (kebab-case)", "default": "my-app" },
-    "COPYRIGHT": { "description": "Footer copyright text", "default": "2026 My Company" },
-    "DEFAULT_THEME": { "description": "Default theme slug", "default": "corporate" },
-    "USER_NAME": { "description": "Default user display name", "default": "John Doe" },
-    "USER_EMAIL": { "description": "Default user email", "default": "john@example.com" },
-    "USER_NAME_URL": { "description": "URL-encoded user name (for avatar API)", "default": "John+Doe" },
-    "PM": { "description": "Package manager (npm/pnpm/bun)", "default": "npm" },
-    "PM_RUN": { "description": "Package manager run command", "default": "npm run" },
-    "PM_EXEC": { "description": "Package manager exec command", "default": "npx" }
+    "APP_NAME": {
+      "description": "Display name",
+      "default": "My App"
+    },
+    "APP_ID": {
+      "description": "Package name (kebab-case)",
+      "default": "my-app"
+    },
+    "COPYRIGHT": {
+      "description": "Footer copyright text",
+      "default": "2026 My Company"
+    },
+    "DEFAULT_THEME": {
+      "description": "Default theme slug",
+      "default": "corporate"
+    },
+    "USER_NAME": {
+      "description": "Default user display name",
+      "default": "John Doe"
+    },
+    "USER_EMAIL": {
+      "description": "Default user email",
+      "default": "john@example.com"
+    },
+    "USER_NAME_URL": {
+      "description": "URL-encoded user name (for avatar API)",
+      "default": "John+Doe"
+    },
+    "PM": {
+      "description": "Package manager (npm/pnpm/bun)",
+      "default": "npm"
+    },
+    "PM_RUN": {
+      "description": "Package manager run command",
+      "default": "npm run"
+    },
+    "PM_EXEC": {
+      "description": "Package manager exec command",
+      "default": "npx"
+    }
   },
-
   "features": {
     "navbar": {
       "description": "Top navigation bar with burger menu",
       "default": true,
-      "points": ["navbar-component", "navbar-imports"]
+      "points": [
+        "navbar-component",
+        "navbar-imports"
+      ]
     },
     "sidebar": {
       "description": "Side navigation with menu items",
       "default": true,
-      "points": ["sidebar-component", "sidebar-imports"]
+      "points": [
+        "sidebar-component",
+        "sidebar-imports"
+      ]
     },
     "profile-panel": {
       "description": "User profile slide-in panel with avatar, nav, and actions",
       "default": false,
-      "requires": ["navbar"],
-      "points": ["profile-imports", "profile-state", "profile-toggle", "navbar-profile-snippet", "profile-panel-component"]
+      "requires": [
+        "navbar"
+      ],
+      "points": [
+        "profile-imports",
+        "profile-state",
+        "profile-toggle",
+        "navbar-profile-snippet",
+        "profile-panel-component"
+      ]
     },
     "settings-panel": {
       "description": "Theme switcher and display settings gear",
       "default": false,
-      "points": ["settings-imports", "settings-data", "settings-panel-component"]
+      "points": [
+        "settings-imports",
+        "settings-data",
+        "settings-panel-component"
+      ]
     },
     "font-awesome": {
       "description": "FontAwesome 6 icons via CDN",
       "default": true,
-      "points": ["font-awesome-cdn"]
+      "points": [
+        "font-awesome-cdn"
+      ]
     },
     "floating-ui": {
       "description": "Floating UI for tooltips and popovers",
       "default": true,
-      "points": ["floating-ui-cdn", "popover-imports", "popover-container"]
+      "points": [
+        "floating-ui-cdn",
+        "popover-imports",
+        "popover-container"
+      ]
     },
     "page-loader": {
       "description": "Loading spinner while fonts and CSS load",
       "default": true,
-      "points": ["page-loader-css", "page-loader-html", "page-loader-script", "page-loader-onmount"]
+      "points": [
+        "page-loader-css",
+        "page-loader-html",
+        "page-loader-script",
+        "page-loader-onmount"
+      ]
     },
     "footer": {
       "description": "Page footer with copyright",
       "default": true,
-      "points": ["footer-component", "footer-imports"]
+      "points": [
+        "footer-component",
+        "footer-imports"
+      ]
     }
   },
-
   "pageTypes": {
-    "dashboard": { "file": "pages/dashboard.svelte", "description": "Dashboard with stats and charts" },
-    "list": { "file": "pages/list.svelte", "description": "Data table with search and pagination" },
-    "detail": { "file": "pages/detail.svelte", "description": "Single record detail view" },
-    "form": { "file": "pages/form.svelte", "description": "Create/edit form" },
-    "master-detail": { "file": "pages/master-detail.svelte", "description": "List + detail side-by-side" }
+    "dashboard": {
+      "file": "pages/dashboard.svelte",
+      "description": "Dashboard with stats and charts"
+    },
+    "list": {
+      "file": "pages/list.svelte",
+      "description": "Data table with search and pagination"
+    },
+    "detail": {
+      "file": "pages/detail.svelte",
+      "description": "Single record detail view"
+    },
+    "form": {
+      "file": "pages/form.svelte",
+      "description": "Create/edit form"
+    },
+    "master-detail": {
+      "file": "pages/master-detail.svelte",
+      "description": "List + detail side-by-side"
+    }
   },
-
   "instructions": [
     "cd {{APP_ID}}",
     "{{PM_RUN}} dev",
     "Open http://localhost:5173"
-  ]
+  ],
+  "checksums": {
+    "files": {
+      "CHANGELOG.md": "sha256:f95da2199a404959bf927dc3ae6570a41b3bdb54ef5b1b0fbf8aa0d4e97a73ec",
+      "Makefile": "sha256:3a7e8947143c340faefdefbb278ecefc36135e9c0f34e046bea1859318eed86d",
+      "package.json": "sha256:61d7558757ad39e33d5d6a965c8428044c29b8c386a4eb475208193c178860ed",
+      "pureadmin.json": "sha256:c1c4b3e844a972adf425de9074859c4698664b3d72649e196a48b64fdde0731b",
+      "README.md": "sha256:562c63f39b6bb27d393145a3c436e6d1e3416334365197135e8ed0ac1f293e6a",
+      "src/app.css": "sha256:1c0b34ff0b9907d25a9729081bb1737d0489af714a3da2f1de11eb6642a695a6",
+      "src/app.html": "sha256:a511e46fbdd31b594867ee8958322ed3d70f4dc1a05f1dc82a71f020583f2a83",
+      "src/routes/+layout.svelte": "sha256:a9b45cbfa07f8ff282549ff6fb60d6a7564470b69ef3713cf2b78832eb026573",
+      "src/routes/+page.svelte": "sha256:c98fad1d22986e487de4b5e3d4a462870a6a2fce44c3a17600924746d16100d2",
+      "src/routes/getting-started/+page.svelte": "sha256:58deb55108fc0acd98168bc4a9c8b3374f81c6f321b5201092a61a6b8c915898",
+      "src/routes/settings/+page.svelte": "sha256:9fc5b6d9f62533a417fdad367ddf63c4a5973435207caa1a2f7d5a64385e45dd",
+      "src/routes/users/+page.svelte": "sha256:b0aeee6f3792876ebf9f6ba3e9a77036be34bfc1341009dd9f12175a773a6530",
+      "svelte.config.js": "sha256:fb0615df2dd6064603752f4a5e2de26b26d39beb52c98be2e3ca5b0c23a05e69",
+      "tsconfig.json": "sha256:7c46e5fc665b2429eb8d4e66f493141a8a210d2fbf42e42a94f96771d6b7141e",
+      "vite.config.ts": "sha256:57fab6695036bdec420fc24934ecc4cf5344ac2723a6ce0e2728a66ad96785b8"
+    },
+    "pages": {
+      "dashboard.svelte": "sha256:e789ef322fb573fa6c702a94c3b8fd1a616170690f16074b19fb8163e85bea8c",
+      "detail.svelte": "sha256:aa4256fb44bd581a568e7c185fad3b4b66fefab48bc5402145f397256ccbb023",
+      "form.svelte": "sha256:ad69d7a7269423c9cf52c561628336fbb81db3199ce05fecc68c01afe68928fa",
+      "list.svelte": "sha256:6a4a732645e73e7f0a2f2c3875c5925d235e2ca8e0859bad9f0c4d30433067cd",
+      "master-detail.svelte": "sha256:dac82e09d360371cda367cc7212642ef4971a2e58c694a6cbec6a460aeb9de0b"
+    },
+    "helper": "sha256:080abd1e8e790ee3ae2981972a66a65fe74d2261b9baf8eea01dab6e37c20453",
+    "metadata": "sha256:afe7709fc03aaa8342af4e863d0a5b11d08d9f30aaf2e50a980cd81b4467868c"
+  }
 }
