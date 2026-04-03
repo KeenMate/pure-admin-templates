@@ -1,0 +1,92 @@
+{
+  "name": "svelte-spa",
+  "displayName": "Svelte SPA + Pure Admin",
+  "version": "1.0.0",
+  "technology": "svelte",
+  "variant": "spa",
+  "description": "Single-page Svelte app with Pure Admin layout, hash-based routing, and optional panels",
+  "author": "KeenMate",
+  "license": "MIT",
+
+  "scaffold": {
+    "command": "npm create vite@latest {{APP_ID}} -- --template svelte-ts",
+    "fallback": "npm create vite@latest {{APP_ID}} -- --template svelte-ts"
+  },
+
+  "dependencies": {
+    "@keenmate/svelte-pure-admin": "latest",
+    "@keenmate/pure-admin-core": "latest",
+    "@keenmate/svelte-spa-router": "latest"
+  },
+
+  "placeholders": {
+    "APP_NAME": { "description": "Display name", "default": "My App" },
+    "APP_ID": { "description": "Package name (kebab-case)", "default": "my-app" },
+    "COPYRIGHT": { "description": "Footer copyright text", "default": "2026 My Company" },
+    "DEFAULT_THEME": { "description": "Default theme slug", "default": "corporate" },
+    "USER_NAME": { "description": "Default user display name", "default": "John Doe" },
+    "USER_EMAIL": { "description": "Default user email", "default": "john@example.com" },
+    "USER_NAME_URL": { "description": "URL-encoded user name (for avatar API)", "default": "John+Doe" },
+    "PM": { "description": "Package manager (npm/pnpm/bun)", "default": "npm" },
+    "PM_RUN": { "description": "Package manager run command", "default": "npm run" },
+    "PM_EXEC": { "description": "Package manager exec command", "default": "npx" }
+  },
+
+  "features": {
+    "navbar": {
+      "description": "Top navigation bar with burger menu",
+      "default": true,
+      "points": ["navbar-component", "navbar-imports"]
+    },
+    "sidebar": {
+      "description": "Side navigation with menu items",
+      "default": true,
+      "points": ["sidebar-component", "sidebar-imports"]
+    },
+    "profile-panel": {
+      "description": "User profile slide-in panel with avatar, nav, and actions",
+      "default": false,
+      "requires": ["navbar"],
+      "points": ["profile-imports", "profile-state", "profile-toggle", "navbar-profile-snippet", "profile-panel-component"]
+    },
+    "settings-panel": {
+      "description": "Theme switcher and display settings gear",
+      "default": false,
+      "points": ["settings-imports", "settings-data", "settings-panel-component"]
+    },
+    "font-awesome": {
+      "description": "FontAwesome 6 icons via CDN",
+      "default": true,
+      "points": ["font-awesome-cdn"]
+    },
+    "floating-ui": {
+      "description": "Floating UI for tooltips and popovers",
+      "default": true,
+      "points": ["floating-ui-cdn", "popover-imports", "popover-container"]
+    },
+    "page-loader": {
+      "description": "Loading spinner while fonts and CSS load",
+      "default": true,
+      "points": ["page-loader-css", "page-loader-html", "page-loader-script", "page-loader-onmount"]
+    },
+    "footer": {
+      "description": "Page footer with copyright",
+      "default": true,
+      "points": ["footer-component", "footer-imports"]
+    }
+  },
+
+  "pageTypes": {
+    "dashboard": { "file": "pages/dashboard.svelte", "description": "Dashboard with stats and charts" },
+    "list": { "file": "pages/list.svelte", "description": "Data table with search and pagination" },
+    "detail": { "file": "pages/detail.svelte", "description": "Single record detail view" },
+    "form": { "file": "pages/form.svelte", "description": "Create/edit form" },
+    "master-detail": { "file": "pages/master-detail.svelte", "description": "List + detail side-by-side" }
+  },
+
+  "instructions": [
+    "cd {{APP_ID}}",
+    "{{PM_RUN}} dev",
+    "Open http://localhost:5173"
+  ]
+}

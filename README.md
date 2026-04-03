@@ -6,7 +6,8 @@ Project templates for [Pure Admin](https://pureadmin.io) — used by `pureadmin 
 
 | Folder | Technology | Variant | Description |
 |--------|-----------|---------|-------------|
-| `svelte-sveltekit/` | Svelte | SvelteKit | Full SvelteKit app with layout, sidebar, navbar, theme switching, and optional panels |
+| `svelte-sveltekit/` | Svelte | SvelteKit | Full SvelteKit app with file-based routing, SSR, and optional panels |
+| `svelte-spa/` | Svelte | SPA | Single-page app with hash-based routing (no SSR, no server) |
 
 ## Structure
 
