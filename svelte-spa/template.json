@@ -71,7 +71,7 @@
   "features": {
     "navbar": {
       "description": "Top navigation bar with burger menu",
-      "default": true,
+      "isRequired": true,
       "points": [
         "navbar-component",
         "navbar-imports"
@@ -79,7 +79,7 @@
     },
     "sidebar": {
       "description": "Side navigation with menu items",
-      "default": true,
+      "isRequired": true,
       "points": [
         "sidebar-component",
         "sidebar-imports"
@@ -87,7 +87,6 @@
     },
     "profile-panel": {
       "description": "User profile slide-in panel with avatar, nav, and actions",
-      "default": false,
       "requires": [
         "navbar"
       ],
@@ -97,50 +96,69 @@
         "profile-toggle",
         "navbar-profile-snippet",
         "profile-panel-component"
-      ]
+      ],
+      "cli": "--profile-panel"
     },
     "settings-panel": {
       "description": "Theme switcher and display settings gear",
-      "default": false,
       "points": [
         "settings-imports",
         "settings-data",
         "settings-panel-component"
-      ]
+      ],
+      "cli": "--settings-panel"
     },
-    "font-awesome": {
-      "description": "FontAwesome 6 icons via CDN",
-      "default": true,
+    "icons": {
+      "description": "Icon library",
+      "isDefault": true,
       "points": [
         "font-awesome-cdn"
+      ],
+      "cli": [
+        {
+          "name": "Font Awesome",
+          "flag": "--font-awesome",
+          "isDefault": true
+        },
+        {
+          "name": "Lucide",
+          "flag": "--lucide"
+        },
+        {
+          "name": "Fluent UI",
+          "flag": "--fluent-ui"
+        }
       ]
     },
     "floating-ui": {
       "description": "Floating UI for tooltips and popovers",
-      "default": true,
+      "isDefault": true,
       "points": [
         "floating-ui-cdn",
         "popover-imports",
         "popover-container"
-      ]
+      ],
+      "cli": "--floating-ui"
     },
     "page-loader": {
       "description": "Loading spinner while fonts and CSS load",
-      "default": true,
+      "isDefault": true,
       "points": [
         "page-loader-css",
         "page-loader-html",
         "page-loader-script",
         "page-loader-onmount"
-      ]
+      ],
+      "cli": "--page-loader"
     },
     "footer": {
       "description": "Page footer with copyright",
-      "default": true,
+      "isDefault": true,
       "points": [
         "footer-component",
         "footer-imports"
-      ]
+      ],
+      "cli": "--footer"
     }
   },
   "pageTypes": {

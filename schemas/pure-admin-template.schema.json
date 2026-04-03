@@ -97,18 +97,24 @@
     },
     "features": {
       "type": "object",
-      "description": "Optional feature blocks that can be enabled/disabled via CLI flags",
+      "description": "Template features that can be toggled via CLI flags or the wizard",
       "additionalProperties": {
         "type": "object",
-        "required": ["description", "default", "points"],
+        "required": ["description", "points"],
         "properties": {
           "description": {
             "type": "string",
             "description": "What this feature provides"
           },
-          "default": {
+          "isRequired": {
             "type": "boolean",
-            "description": "Whether the feature is enabled by default"
+            "default": false,
+            "description": "If true, the feature cannot be disabled (always included)"
+          },
+          "isDefault": {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, the feature is enabled by default (user can disable)"
           },
           "requires": {
             "type": "array",
@@ -119,6 +125,38 @@
             "type": "array",
             "items": { "type": "string" },
             "description": "data-pa point IDs that belong to this feature"
+          },
+          "cli": {
+            "description": "CLI flag(s) to enable this feature. String for single flag, array of objects for multiple exclusive options.",
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "Single CLI flag (e.g. '--profile-panel')"
+              },
+              {
+                "type": "array",
+                "description": "Multiple exclusive options for this feature (pick one)",
+                "items": {
+                  "type": "object",
+                  "required": ["name", "flag"],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display name for this option"
+                    },
+                    "flag": {
+                      "type": "string",
+                      "description": "CLI flag (e.g. '--font-awesome')"
+                    },
+                    "isDefault": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether this option is the default choice"
+                    }
+                  }
+                }
+              }
+            ]
           }
         }
       }
