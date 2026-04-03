@@ -69,21 +69,21 @@ function updateTemplate(templateDir) {
     checksums.helper = sha256(helperPath);
   }
 
-  // Metadata hash (canonical JSON of descriptive fields)
-  const metadataFields = ['name', 'version', 'description', 'content', 'author', 'license', 'tags'];
+  // Metadata hash (canonical JSON of descriptive fields — must match server's @metadata_fields)
+  const metadataFields = ['id', 'name', 'version', 'description', 'content', 'author', 'license', 'tags'];
   const metadata = {};
-  for (const key of metadataFields) {
+  for (const key of metadataFields.sort()) {
     if (manifest[key] !== undefined) metadata[key] = manifest[key];
   }
-  checksums.metadata = sha256String(JSON.stringify(metadata, null, 0));
+  checksums.metadata = sha256String(JSON.stringify(metadata));
 
-  // Summary hash over all individual file hashes (sorted for determinism)
+  // Summary hash — must match server's compute_summary format
   const allHashes = [
-    ...Object.entries(checksums.files || {}).sort().map(([k, v]) => `${k}:${v}`),
-    ...Object.entries(checksums.pages || {}).sort().map(([k, v]) => `pages/${k}:${v}`),
-    checksums.helper || '',
-    checksums.metadata,
-  ].filter(Boolean);
+    ...Object.entries(checksums.files || {}).sort(([a], [b]) => a.localeCompare(b)).map(([k, v]) => `files:${k}:${v}`),
+    ...Object.entries(checksums.pages || {}).sort(([a], [b]) => a.localeCompare(b)).map(([k, v]) => `pages:${k}:${v}`),
+    ...(checksums.helper ? [`helper:${checksums.helper}`] : []),
+    ...(checksums.metadata ? [`metadata:${checksums.metadata}`] : []),
+  ];
   checksums.summary = sha256String(allHashes.join('\n'));
 
   manifest.checksums = checksums;
