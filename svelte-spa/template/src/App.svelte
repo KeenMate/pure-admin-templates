@@ -29,10 +29,9 @@
 		// /data-pa="profile-imports"
 	} from '@keenmate/svelte-pure-admin';
 	import type { PureAdminConfig } from '@keenmate/svelte-pure-admin';
-	import Router, { link, location } from '@keenmate/svelte-spa-router';
-	import active from '@keenmate/svelte-spa-router/active';
+	import Router, { location } from '@keenmate/svelte-spa-router';
 	import { onMount } from 'svelte';
-	import { routes, nav } from './routes';
+	import { routes } from './routes';
 
 	let sidebarHidden = $state(
 		typeof localStorage !== 'undefined' && localStorage.getItem('sidebar-hidden') === 'true'
@@ -111,9 +110,9 @@
 		{/snippet}
 
 		{#snippet navEnd()}
-			<li><a href="/" use:link use:active>Dashboard</a></li>
-			<li><a href="/users" use:link use:active>Users</a></li>
-			<li><a href="/settings" use:link use:active>Settings</a></li>
+			<li><a href="#/">Dashboard</a></li>
+			<li><a href="#/users">Users</a></li>
+			<li><a href="#/settings">Settings</a></li>
 		{/snippet}
 
 		<!-- data-pa="navbar-profile-snippet" -->

@@ -11,7 +11,7 @@
   "dependencies": {
     "@keenmate/svelte-pure-admin": "^1.6.1",
     "@keenmate/pure-admin-core": "^2.3.5",
-    "@keenmate/svelte-spa-router": "^1.0.0"
+    "@keenmate/svelte-spa-router": "^5.1.1"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^6.0.0",
