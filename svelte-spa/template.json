@@ -1,7 +1,7 @@
 {
   "$schema": "../schemas/pure-admin-template.schema.json",
-  "name": "svelte-spa",
-  "displayName": "Svelte SPA + Pure Admin",
+  "id": "svelte-spa",
+  "name": "Svelte SPA + Pure Admin",
   "version": "1.0.0",
   "technology": "svelte",
   "variant": "spa",
@@ -196,7 +196,7 @@
       "master-detail.svelte": "sha256:dac82e09d360371cda367cc7212642ef4971a2e58c694a6cbec6a460aeb9de0b"
     },
     "helper": "sha256:f6f21cbe8f623c243aafa2a69b71271529042f12b0c39dc9e59ec72e5509e34e",
-    "metadata": "sha256:3dd2f083ddec1e3047388b9f9dd9753305c0a2bfcd61773cef752ef9f1226481",
-    "summary": "sha256:b58dd771cedf88e46b827c8af97e2a072159e3404a133c9908ddc1781f80a8ed"
+    "metadata": "sha256:2336307ab85d40c8720716352093d45f415110389a3dd7bc0b37a76e94da13e5",
+    "summary": "sha256:f884ad0bd91d5263b3b47af9ad0a98fc3fb69da0852886acd1126649baa400c8"
   }
 }

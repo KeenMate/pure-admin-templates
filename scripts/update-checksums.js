@@ -44,7 +44,7 @@ function updateTemplate(templateDir) {
   }
 
   const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
-  const name = manifest.name || path.basename(templateDir);
+  const name = manifest.id || path.basename(templateDir);
   console.log(`  ${name}`);
 
   const checksums = {};

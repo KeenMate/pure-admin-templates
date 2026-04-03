@@ -4,20 +4,20 @@
   "title": "Pure Admin Template Manifest",
   "description": "Configuration manifest for Pure Admin project templates",
   "type": "object",
-  "required": ["name", "version", "technology", "variant", "displayName"],
+  "required": ["id", "name", "version", "technology", "variant"],
   "properties": {
     "$schema": {
       "type": "string",
       "description": "Reference to the JSON schema for validation"
     },
-    "name": {
+    "id": {
       "type": "string",
       "pattern": "^[a-z][a-z0-9-]*$",
-      "description": "Unique identifier for the template (lowercase, hyphens allowed)"
+      "description": "Unique identifier for the template (lowercase, hyphens allowed). Matches the folder name."
     },
-    "displayName": {
+    "name": {
       "type": "string",
-      "description": "Human-readable display name"
+      "description": "Human-readable display name (e.g. 'SvelteKit + Pure Admin')"
     },
     "version": {
       "type": "string",
