@@ -131,33 +131,30 @@
     },
     "floating-ui": {
       "description": "Floating UI for tooltips and popovers",
-      "isDefault": true,
+      "isRequired": true,
       "points": [
         "floating-ui-cdn",
         "popover-imports",
         "popover-container"
-      ],
-      "cli": "--floating-ui"
+      ]
     },
     "page-loader": {
       "description": "Loading spinner while fonts and CSS load",
-      "isDefault": true,
+      "isRequired": true,
       "points": [
         "page-loader-css",
         "page-loader-html",
         "page-loader-script",
         "page-loader-onmount"
-      ],
-      "cli": "--page-loader"
+      ]
     },
     "footer": {
       "description": "Page footer with copyright",
-      "isDefault": true,
+      "isRequired": true,
       "points": [
         "footer-component",
         "footer-imports"
-      ],
-      "cli": "--footer"
+      ]
     }
   },
   "pageTypes": {
