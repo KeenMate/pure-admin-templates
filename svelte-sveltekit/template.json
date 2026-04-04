@@ -42,6 +42,10 @@
       "description": "Default theme slug",
       "default": "corporate"
     },
+    "DEFAULT_MODE": {
+      "description": "Default color mode (dark/light), resolved from theme manifest",
+      "default": "dark"
+    },
     "USER_NAME": {
       "description": "Default user display name",
       "default": "John Doe"
@@ -192,7 +196,7 @@
       "pureadmin.json": "sha256:c1c4b3e844a972adf425de9074859c4698664b3d72649e196a48b64fdde0731b",
       "README.md": "sha256:562c63f39b6bb27d393145a3c436e6d1e3416334365197135e8ed0ac1f293e6a",
       "src/app.css": "sha256:1c0b34ff0b9907d25a9729081bb1737d0489af714a3da2f1de11eb6642a695a6",
-      "src/app.html": "sha256:a511e46fbdd31b594867ee8958322ed3d70f4dc1a05f1dc82a71f020583f2a83",
+      "src/app.html": "sha256:b69b9bc70ff01d15d5a52ca410f44fe46e1a32f62d8295ec4fe45b2ea4682b67",
       "src/routes/+layout.svelte": "sha256:a9b45cbfa07f8ff282549ff6fb60d6a7564470b69ef3713cf2b78832eb026573",
       "src/routes/+page.svelte": "sha256:c98fad1d22986e487de4b5e3d4a462870a6a2fce44c3a17600924746d16100d2",
       "src/routes/getting-started/+page.svelte": "sha256:58deb55108fc0acd98168bc4a9c8b3374f81c6f321b5201092a61a6b8c915898",
@@ -211,6 +215,6 @@
     },
     "helper": "sha256:080abd1e8e790ee3ae2981972a66a65fe74d2261b9baf8eea01dab6e37c20453",
     "metadata": "sha256:900395b1eb0594135220d4777fd8c7a9aae60d326ca8c23c72efc59baf6a93ab",
-    "summary": "sha256:04e4c965e0cc5b69163104ec17c71d11c764a7fd4e4c897917c524a9bf9e96b3"
+    "summary": "sha256:85c8fd4a288b623fe5249d373077de68d6574e759248ef8280695ae23fb67922"
   }
 }

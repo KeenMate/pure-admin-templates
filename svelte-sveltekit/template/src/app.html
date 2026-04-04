@@ -72,7 +72,7 @@
 			(function() {
 				var sidebarHidden = localStorage.getItem('sidebar-hidden') === 'true';
 				if (sidebarHidden) document.body.classList.add('sidebar-hidden');
-				var themeMode = localStorage.getItem('theme-mode') || 'dark';
+				var themeMode = localStorage.getItem('theme-mode') || '__DEFAULT_MODE__';
 				var resolvedMode;
 				if (themeMode === 'auto') {
 					resolvedMode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';

@@ -43,6 +43,10 @@
       "description": "Default theme slug",
       "default": "corporate"
     },
+    "DEFAULT_MODE": {
+      "description": "Default color mode (dark/light), resolved from theme manifest",
+      "default": "dark"
+    },
     "USER_NAME": {
       "description": "Default user display name",
       "default": "John Doe"
@@ -188,7 +192,7 @@
   "checksums": {
     "files": {
       "CHANGELOG.md": "sha256:f95da2199a404959bf927dc3ae6570a41b3bdb54ef5b1b0fbf8aa0d4e97a73ec",
-      "index.html": "sha256:659153a18f4632a9fdb191a8e574efc0548a416a6680ce7718b2831314c87034",
+      "index.html": "sha256:98f30c0deae20c70b95840ec3aea035c61332bb4be711ac1df9bd57765914f2d",
       "Makefile": "sha256:99a73ac77885588f0ac9788534fa50b00ce16630602c1c4d3469803a065b375d",
       "package.json": "sha256:39ba6a75c7eac33923b932b4584dd775bda793020c9074b8112ac4fe4ff3c00c",
       "pureadmin.json": "sha256:2fb8e7df4165736cfaad1c23d2455fb62a4619e60578d49780dcff925a8f1856",
@@ -212,6 +216,6 @@
     },
     "helper": "sha256:f6f21cbe8f623c243aafa2a69b71271529042f12b0c39dc9e59ec72e5509e34e",
     "metadata": "sha256:a9f313bce92a1261f342d9a863e3af8b2470f09295446f21d2f2dd9f94d1a50d",
-    "summary": "sha256:48fa2ab2e8e48572ca56938072bf2913f24c8523597805dd11ded171f6725c88"
+    "summary": "sha256:9f4e8f2880f9661ad1b8f3556dec71cdd3e8d128c458eb5bdfac440acc39b7d7"
   }
 }
