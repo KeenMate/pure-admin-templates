@@ -11,6 +11,7 @@
 		Badge,
 		Table
 	} from '@keenmate/svelte-pure-admin';
+	__EXTRA_IMPORTS__
 </script>
 
 <Paragraph mode="muted">Everything you need to know to start building with this template.</Paragraph>
@@ -77,7 +78,7 @@ export const { routes, nav, paths } = defineRoutes({
   labelText="Orders"
   active={currentPath === '/orders'}
 >
-  {#snippet icon()}<i class="fas fa-shopping-cart"></i>{/snippet}
+  {#snippet icon()}__ICON:shopping-cart__{/snippet}
 </SidebarItem>`}</CodeBlock>
 </Card>
 

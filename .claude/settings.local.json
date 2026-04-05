@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Git/KM/pure-admin-themes/**)",
+      "Read(//c/Git/KM/pure-admin-themes/dark/**)"
+    ]
+  }
+}

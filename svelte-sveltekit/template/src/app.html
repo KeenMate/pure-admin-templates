@@ -80,6 +80,8 @@
 					resolvedMode = themeMode;
 				}
 				document.body.classList.add('pa-mode-' + resolvedMode);
+				var colorVariant = localStorage.getItem('color-variant') || '__DEFAULT_VARIANT__';
+				if (colorVariant) document.body.classList.add(colorVariant);
 				var sidebarBehavior = localStorage.getItem('sidebar-behavior');
 				if (sidebarBehavior === 'icon-collapse') {
 					document.body.classList.add('sidebar-icon-collapse');

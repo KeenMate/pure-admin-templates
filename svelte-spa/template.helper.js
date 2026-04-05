@@ -1,10 +1,12 @@
 /**
  * Template Helper for Svelte SPA + Pure Admin
  *
- * Defines how to find data-pa points in template files.
- * The CLI loads this module and uses it to remove/inject content
- * based on enabled/disabled features.
+ * Defines data-pa marker format, point definitions, and template operations.
+ * The CLI loads this module for feature stripping and recipe step execution.
  */
+
+const fs = require('fs');
+const path = require('path');
 
 module.exports = {
   markerFormat: {
@@ -45,5 +47,136 @@ module.exports = {
     'profile-panel-component': { file: 'src/App.svelte', type: 'block' },
     'settings-panel-component': { file: 'src/App.svelte', type: 'block' },
     'popover-container': { file: 'src/App.svelte', type: 'block' },
+  },
+
+  /**
+   * Template operations — technology-specific file manipulation.
+   * Called by the CLI pipeline via { action: "call", op: "operationName", args: [...] }
+   * All operations receive (appDir, ...args) and mutate files in place.
+   */
+  operations: {
+    /**
+     * Add a dependency to package.json
+     * @param {string} appDir - project root
+     * @param {string} name - package name
+     * @param {string} version - version specifier
+     * @param {"dependencies"|"devDependencies"} [section="dependencies"]
+     */
+    addDependency(appDir, name, version, section = 'dependencies') {
+      const pkgPath = path.join(appDir, 'package.json');
+      const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
+      pkg[section] = pkg[section] || {};
+      pkg[section][name] = version;
+      fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
+    },
+
+    /**
+     * Set a value in pureadmin.json
+     * @param {string} appDir
+     * @param {string} key - dot-notation path (e.g. "themes.audi.version")
+     * @param {*} value
+     */
+    setConfigValue(appDir, key, value) {
+      const cfgPath = path.join(appDir, 'pureadmin.json');
+      const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf-8'));
+      const keys = key.split('.');
+      let obj = cfg;
+      for (let i = 0; i < keys.length - 1; i++) {
+        obj[keys[i]] = obj[keys[i]] || {};
+        obj = obj[keys[i]];
+      }
+      obj[keys[keys.length - 1]] = value;
+      fs.writeFileSync(cfgPath, JSON.stringify(cfg, null, 2) + '\n');
+    },
+
+    /**
+     * Inject text into a file at a marker position
+     * @param {string} appDir
+     * @param {string} file - relative path
+     * @param {string} marker - text to find
+     * @param {string} content - text to inject
+     * @param {"before"|"after"|"replace"} [position="after"]
+     */
+    inject(appDir, file, marker, content, position = 'after') {
+      const filePath = path.join(appDir, file);
+      if (!fs.existsSync(filePath)) return false;
+      let text = fs.readFileSync(filePath, 'utf-8');
+      if (!text.includes(marker)) return false;
+
+      if (position === 'replace') {
+        text = text.replace(marker, content);
+      } else if (position === 'before') {
+        text = text.replace(marker, content + marker);
+      } else {
+        text = text.replace(marker, marker + content);
+      }
+      fs.writeFileSync(filePath, text);
+      return true;
+    },
+
+    /**
+     * Add a <script> or <link> tag to index.html <head>
+     * @param {string} appDir
+     * @param {string} tag - full HTML tag
+     */
+    addHeadTag(appDir, tag) {
+      const htmlPath = path.join(appDir, 'index.html');
+      let html = fs.readFileSync(htmlPath, 'utf-8');
+      html = html.replace('</head>', `\t\t${tag}\n\t</head>`);
+      fs.writeFileSync(htmlPath, html);
+    },
+
+    /**
+     * Add a route entry to src/routes/index.ts
+     * @param {string} appDir
+     * @param {string} routePath - e.g. "/login"
+     * @param {string} componentName - e.g. "Login"
+     * @param {string} componentFile - e.g. "./Login.svelte"
+     */
+    addRoute(appDir, routePath, componentName, componentFile) {
+      const routesPath = path.join(appDir, 'src', 'routes', 'index.ts');
+      if (!fs.existsSync(routesPath)) return false;
+      let content = fs.readFileSync(routesPath, 'utf-8');
+
+      // Add import
+      const importLine = `import ${componentName} from '${componentFile}';`;
+      const lastImport = content.lastIndexOf('import ');
+      const lineEnd = content.indexOf('\n', lastImport);
+      content = content.slice(0, lineEnd + 1) + importLine + '\n' + content.slice(lineEnd + 1);
+
+      // Add route entry before closing }
+      const routeEntry = `\t'${routePath}': ${componentName},`;
+      content = content.replace(/\n};/, `,\n${routeEntry}\n};`);
+
+      fs.writeFileSync(routesPath, content);
+      return true;
+    },
+
+    /**
+     * Add a sidebar item to the layout
+     * @param {string} appDir
+     * @param {string} href - e.g. "#/login"
+     * @param {string} label - display label
+     * @param {string} iconMarkup - e.g. '<i class="fas fa-lock"></i>' or '<Lock size={18} />'
+     */
+    addSidebarItem(appDir, href, label, iconMarkup) {
+      // Find the sidebar-items slot marker or end of sidebar
+      const layoutFiles = [
+        path.join(appDir, 'src', 'App.svelte'),
+        path.join(appDir, 'src', 'routes', '+layout.svelte'),
+      ];
+      for (const filePath of layoutFiles) {
+        if (!fs.existsSync(filePath)) continue;
+        let content = fs.readFileSync(filePath, 'utf-8');
+        const marker = '<!-- /data-pa="sidebar-items" -->';
+        if (!content.includes(marker)) continue;
+
+        const item = `\t\t\t\t<SidebarItem href="${href}" labelText="${label}">\n\t\t\t\t\t{#snippet icon()}${iconMarkup}{/snippet}\n\t\t\t\t</SidebarItem>\n\t\t\t\t`;
+        content = content.replace(marker, item + marker);
+        fs.writeFileSync(filePath, content);
+        return true;
+      }
+      return false;
+    },
   },
 };

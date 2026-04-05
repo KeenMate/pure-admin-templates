@@ -55,9 +55,31 @@ Features define optional blocks in the template that can be toggled:
 
 Each feature has a `cli` field mapping to CLI flags, used by the pureadmin.io command builder to generate the `pureadmin create` command interactively.
 
+### template.helper.js
+
+Defines data-pa marker format, point definitions, and **template operations** — technology-specific functions that the CLI calls during app creation:
+
+| Operation | What it does | SPA | SvelteKit |
+|-----------|-------------|-----|-----------|
+| `addDependency` | Add npm package | package.json | package.json |
+| `setConfigValue` | Set config value | pureadmin.json | pureadmin.json |
+| `inject` | Insert text at a marker | any file | any file |
+| `addHeadTag` | Add to HTML head | index.html | app.html |
+| `addRoute` | Add route/page | routes/index.ts | creates dir |
+| `addSidebarItem` | Add sidebar entry | App.svelte | +layout.svelte |
+
+Operations are invoked via recipe steps:
+
+```json
+{ "action": "call", "op": "addDependency", "args": ["@auth/sveltekit", "^1.0"] }
+{ "action": "create-if", "feature": "auth", "path": "src/lib/auth.ts", "template": "auth.ts" }
+```
+
+Future templates (e.g. Phoenix LiveView) implement the same interface differently — `addDependency` edits `mix.exs`, `addRoute` edits `router.ex`, etc.
+
 ### template/ subfolder
 
-Contains the actual project files with `data-pa` markers for feature stripping. When a feature is disabled, the CLI removes all marked blocks for that feature.
+Contains the actual project files with `data-pa` markers for feature stripping and `__ICON:name__` / `__EXTRA_IMPORTS__` placeholders for icon provider support. When a feature is disabled, the CLI removes all marked blocks for that feature.
 
 ### pages/
 

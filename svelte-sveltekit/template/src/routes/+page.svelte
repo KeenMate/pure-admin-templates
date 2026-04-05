@@ -13,6 +13,7 @@
 		QuickActions,
 		Paragraph
 	} from '@keenmate/svelte-pure-admin';
+	__EXTRA_IMPORTS__
 </script>
 
 <svelte:head>
@@ -129,19 +130,19 @@
 		<Card titleText="Quick Actions" class="mt-4">
 			<QuickActions>
 				<Button variant="primary">
-					{#snippet icon()}<i class="fas fa-plus"></i>{/snippet}
+					{#snippet icon()}__ICON:plus__{/snippet}
 					New Order
 				</Button>
 				<Button variant="secondary">
-					{#snippet icon()}<i class="fas fa-user-plus"></i>{/snippet}
+					{#snippet icon()}__ICON:user-plus__{/snippet}
 					Add User
 				</Button>
 				<Button variant="info">
-					{#snippet icon()}<i class="fas fa-file-export"></i>{/snippet}
+					{#snippet icon()}__ICON:file-export__{/snippet}
 					Export
 				</Button>
 				<Button variant="success">
-					{#snippet icon()}<i class="fas fa-chart-bar"></i>{/snippet}
+					{#snippet icon()}__ICON:chart-bar__{/snippet}
 					Reports
 				</Button>
 			</QuickActions>

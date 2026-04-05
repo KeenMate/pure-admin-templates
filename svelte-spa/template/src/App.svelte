@@ -32,6 +32,7 @@
 	import Router, { location } from '@keenmate/svelte-spa-router';
 	import { onMount } from 'svelte';
 	import { routes } from './routes';
+	__EXTRA_IMPORTS__
 
 	let sidebarHidden = $state(
 		typeof localStorage !== 'undefined' && localStorage.getItem('sidebar-hidden') === 'true'
@@ -132,19 +133,19 @@
 			<Sidebar>
 				<!-- data-pa="sidebar-items" -->
 				<SidebarItem href="#/getting-started" labelText="Getting Started" active={currentPath === '/getting-started'}>
-					{#snippet icon()}<i class="fas fa-rocket"></i>{/snippet}
+					{#snippet icon()}__ICON:rocket__{/snippet}
 				</SidebarItem>
 				<SidebarItem href="#/" labelText="Dashboard" active={currentPath === '/'}>
-					{#snippet icon()}<i class="fas fa-chart-line"></i>{/snippet}
+					{#snippet icon()}__ICON:chart-line__{/snippet}
 				</SidebarItem>
 				<SidebarItem labelText="Management" hasSubmenu>
-					{#snippet icon()}<i class="fas fa-briefcase"></i>{/snippet}
+					{#snippet icon()}__ICON:briefcase__{/snippet}
 					{#snippet submenu()}
 						<SidebarItem href="#/users" labelText="Users" active={currentPath === '/users'}>
-							{#snippet icon()}<i class="fas fa-users"></i>{/snippet}
+							{#snippet icon()}__ICON:users__{/snippet}
 						</SidebarItem>
 						<SidebarItem href="#/settings" labelText="Settings" active={currentPath === '/settings'}>
-							{#snippet icon()}<i class="fas fa-cog"></i>{/snippet}
+							{#snippet icon()}__ICON:settings__{/snippet}
 						</SidebarItem>
 					{/snippet}
 				</SidebarItem>
@@ -183,13 +184,13 @@
 		{/snippet}
 		{#snippet nav()}
 			<ProfilePanelNavItem href="#/settings">
-				{#snippet icon()}<i class="fas fa-cog"></i>{/snippet}
+				{#snippet icon()}__ICON:settings__{/snippet}
 				Settings
 			</ProfilePanelNavItem>
 		{/snippet}
 		{#snippet actions()}
 			<Button variant="danger" isBlock onclick={() => alert('Logout')}>
-				{#snippet icon()}<i class="fas fa-sign-out-alt"></i>{/snippet}
+				{#snippet icon()}__ICON:log-out__{/snippet}
 				Sign Out
 			</Button>
 		{/snippet}

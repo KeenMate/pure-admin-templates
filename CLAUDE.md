@@ -81,10 +81,46 @@ Feature types in `template.json`:
 Template files use `__VAR__` syntax (not `{{VAR}}` which conflicts with Svelte):
 
 ```
-__APP_NAME__, __APP_ID__, __COPYRIGHT__, __DEFAULT_THEME__,
+__APP_NAME__, __APP_ID__, __COPYRIGHT__,
+__DEFAULT_THEME__, __DEFAULT_MODE__, __DEFAULT_VARIANT__,
 __USER_NAME__, __USER_EMAIL__, __USER_NAME_URL__,
-__PM__, __PM_RUN__, __PM_EXEC__
+__PM__, __PM_RUN__, __PM_EXEC__,
+__ICON:name__ (resolved per icon provider),
+__EXTRA_IMPORTS__ (per-file, resolved to Lucide imports or empty)
 ```
+
+## Template Operations API
+
+`template.helper.js` exports an `operations` object with technology-specific functions. The CLI calls them via recipe steps:
+
+```json
+{ "action": "call", "op": "addDependency", "args": ["bcrypt", "^3.0"] }
+{ "action": "call", "op": "addSidebarItem", "args": ["#/login", "Login", "<Lock size={18} />"] }
+{ "action": "create-if", "feature": "auth", "path": "lib/auth.ex", "template": "auth.ex" }
+```
+
+Available operations (each template implements these for its technology):
+
+| Operation | What it does |
+|-----------|-------------|
+| `addDependency(name, version, section?)` | Add to package.json (Svelte) or mix.exs (Phoenix) |
+| `setConfigValue(key, value)` | Set in pureadmin.json (dot-notation) |
+| `inject(file, marker, content, position?)` | Insert text before/after/replacing a marker in any file |
+| `addHeadTag(tag)` | Add `<script>` or `<link>` to HTML head |
+| `addRoute(path, ...)` | Add route (SPA: routes/index.ts, SvelteKit: creates dir) |
+| `addSidebarItem(href, label, iconMarkup)` | Add sidebar entry to layout |
+
+### Pipeline Actions
+
+| Action | Description |
+|--------|-------------|
+| `create` | Write file from template |
+| `create-if` | Write file only if a feature flag is enabled |
+| `json-merge` | Deep merge into JSON file |
+| `patch` | Find/replace in existing file |
+| `append` / `prepend` | Add text to start/end of file |
+| `delete` | Remove a file |
+| `call` | Invoke a named operation from template.helper.js |
 
 ## Key Differences: SvelteKit vs SPA
 

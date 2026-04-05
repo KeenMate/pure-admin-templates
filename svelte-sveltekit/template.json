@@ -46,6 +46,10 @@
       "description": "Default color mode (dark/light), resolved from theme manifest",
       "default": "dark"
     },
+    "DEFAULT_VARIANT": {
+      "description": "Default color variant CSS class (e.g. pa-color-blue), resolved from theme manifest",
+      "default": ""
+    },
     "USER_NAME": {
       "description": "Default user display name",
       "default": "John Doe"
@@ -196,12 +200,12 @@
       "pureadmin.json": "sha256:c1c4b3e844a972adf425de9074859c4698664b3d72649e196a48b64fdde0731b",
       "README.md": "sha256:562c63f39b6bb27d393145a3c436e6d1e3416334365197135e8ed0ac1f293e6a",
       "src/app.css": "sha256:1c0b34ff0b9907d25a9729081bb1737d0489af714a3da2f1de11eb6642a695a6",
-      "src/app.html": "sha256:b69b9bc70ff01d15d5a52ca410f44fe46e1a32f62d8295ec4fe45b2ea4682b67",
-      "src/routes/+layout.svelte": "sha256:a9b45cbfa07f8ff282549ff6fb60d6a7564470b69ef3713cf2b78832eb026573",
-      "src/routes/+page.svelte": "sha256:c98fad1d22986e487de4b5e3d4a462870a6a2fce44c3a17600924746d16100d2",
-      "src/routes/getting-started/+page.svelte": "sha256:58deb55108fc0acd98168bc4a9c8b3374f81c6f321b5201092a61a6b8c915898",
-      "src/routes/settings/+page.svelte": "sha256:9fc5b6d9f62533a417fdad367ddf63c4a5973435207caa1a2f7d5a64385e45dd",
-      "src/routes/users/+page.svelte": "sha256:b0aeee6f3792876ebf9f6ba3e9a77036be34bfc1341009dd9f12175a773a6530",
+      "src/app.html": "sha256:1ab563de36b899f2273a94ca36d01b19eb773998fad4af003143f4de6e75baa3",
+      "src/routes/+layout.svelte": "sha256:860c8f76f4b627f1a77ee3b27ee21ad24b94611354eed8eddce08c820a1860df",
+      "src/routes/+page.svelte": "sha256:50cd37a4565a44024db9d9e239013203d399665d79667e9af3a9af4ef295e8d7",
+      "src/routes/getting-started/+page.svelte": "sha256:a8ee27d85d820d8092e6fe01a21ee105289f8b726eee7eef7548ce9ca0972172",
+      "src/routes/settings/+page.svelte": "sha256:cd03dc2c0353fc62c6a3f6341c8f55bbe4d7ab21fc398de29f4920acffd0a7df",
+      "src/routes/users/+page.svelte": "sha256:51d841d06859c8a175e2d2d42c128f732845f4d96a43ff0b54baf9b3bdf501c5",
       "svelte.config.js": "sha256:fb0615df2dd6064603752f4a5e2de26b26d39beb52c98be2e3ca5b0c23a05e69",
       "tsconfig.json": "sha256:7c46e5fc665b2429eb8d4e66f493141a8a210d2fbf42e42a94f96771d6b7141e",
       "vite.config.ts": "sha256:57fab6695036bdec420fc24934ecc4cf5344ac2723a6ce0e2728a66ad96785b8"
@@ -213,8 +217,8 @@
       "list.svelte": "sha256:6a4a732645e73e7f0a2f2c3875c5925d235e2ca8e0859bad9f0c4d30433067cd",
       "master-detail.svelte": "sha256:dac82e09d360371cda367cc7212642ef4971a2e58c694a6cbec6a460aeb9de0b"
     },
-    "helper": "sha256:080abd1e8e790ee3ae2981972a66a65fe74d2261b9baf8eea01dab6e37c20453",
+    "helper": "sha256:3cc797f7cf87ee94f7688cb5b67b49f6040310b03a34239c851a9de76c742282",
     "metadata": "sha256:900395b1eb0594135220d4777fd8c7a9aae60d326ca8c23c72efc59baf6a93ab",
-    "summary": "sha256:85c8fd4a288b623fe5249d373077de68d6574e759248ef8280695ae23fb67922"
+    "summary": "sha256:4f0a0ee6d9a7c1d33c31dfdedaa70c47a036e2e661bc5dfb7a0a0dd308c79081"
   }
 }

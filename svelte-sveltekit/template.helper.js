@@ -1,125 +1,140 @@
 /**
  * Template Helper for SvelteKit + Pure Admin
  *
- * Defines how to find data-pa points in template files.
- * The CLI loads this module and uses it to remove/inject content
- * based on enabled/disabled features.
- *
- * Point types:
- *   - block: content between start/end markers (removable)
- *   - slot:  insertion point for generated content (injectable)
+ * Defines data-pa marker format, point definitions, and template operations.
+ * The CLI loads this module for feature stripping and recipe step execution.
  */
 
+const fs = require('fs');
+const path = require('path');
+
 module.exports = {
-  // Marker format used in template files
   markerFormat: {
-    // In Svelte/HTML files
     htmlStart: (id) => `<!-- data-pa="${id}" -->`,
     htmlEnd: (id) => `<!-- /data-pa="${id}" -->`,
-    // In JS/TS sections of .svelte files
     jsStart: (id) => `// data-pa="${id}"`,
     jsEnd: (id) => `// /data-pa="${id}"`,
   },
 
   points: {
     // ── app.html ──
-    'font-awesome-cdn': {
-      file: 'src/app.html',
-      type: 'block',
-    },
-    'floating-ui-cdn': {
-      file: 'src/app.html',
-      type: 'block',
-    },
-    'page-loader-css': {
-      file: 'src/app.html',
-      type: 'block',
-    },
-    'page-loader-html': {
-      file: 'src/app.html',
-      type: 'block',
-    },
-    'page-loader-script': {
-      file: 'src/app.html',
-      type: 'block',
-    },
+    'font-awesome-cdn': { file: 'src/app.html', type: 'block' },
+    'floating-ui-cdn': { file: 'src/app.html', type: 'block' },
+    'page-loader-css': { file: 'src/app.html', type: 'block' },
+    'page-loader-html': { file: 'src/app.html', type: 'block' },
+    'page-loader-script': { file: 'src/app.html', type: 'block' },
 
     // ── +layout.svelte — imports ──
-    'navbar-imports': {
-      file: 'src/routes/+layout.svelte',
-      type: 'block',
-    },
-    'sidebar-imports': {
-      file: 'src/routes/+layout.svelte',
-      type: 'block',
-    },
-    'profile-imports': {
-      file: 'src/routes/+layout.svelte',
-      type: 'block',
-    },
-    'settings-imports': {
-      file: 'src/routes/+layout.svelte',
-      type: 'block',
-    },
-    'footer-imports': {
-      file: 'src/routes/+layout.svelte',
-      type: 'block',
-    },
-    'popover-imports': {
-      file: 'src/routes/+layout.svelte',
-      type: 'block',
-    },
+    'navbar-imports': { file: 'src/routes/+layout.svelte', type: 'block' },
+    'sidebar-imports': { file: 'src/routes/+layout.svelte', type: 'block' },
+    'profile-imports': { file: 'src/routes/+layout.svelte', type: 'block' },
+    'settings-imports': { file: 'src/routes/+layout.svelte', type: 'block' },
+    'footer-imports': { file: 'src/routes/+layout.svelte', type: 'block' },
+    'popover-imports': { file: 'src/routes/+layout.svelte', type: 'block' },
 
     // ── +layout.svelte — state & functions ──
-    'profile-state': {
-      file: 'src/routes/+layout.svelte',
-      type: 'block',
-    },
-    'profile-toggle': {
-      file: 'src/routes/+layout.svelte',
-      type: 'block',
-    },
-    'settings-data': {
-      file: 'src/routes/+layout.svelte',
-      type: 'block',
-    },
-    'page-loader-onmount': {
-      file: 'src/routes/+layout.svelte',
-      type: 'block',
-    },
+    'profile-state': { file: 'src/routes/+layout.svelte', type: 'block' },
+    'profile-toggle': { file: 'src/routes/+layout.svelte', type: 'block' },
+    'settings-data': { file: 'src/routes/+layout.svelte', type: 'block' },
+    'page-loader-onmount': { file: 'src/routes/+layout.svelte', type: 'block' },
 
     // ── +layout.svelte — components ──
-    'navbar-component': {
-      file: 'src/routes/+layout.svelte',
-      type: 'block',
+    'navbar-component': { file: 'src/routes/+layout.svelte', type: 'block' },
+    'navbar-profile-snippet': { file: 'src/routes/+layout.svelte', type: 'block' },
+    'sidebar-component': { file: 'src/routes/+layout.svelte', type: 'block' },
+    'sidebar-items': { file: 'src/routes/+layout.svelte', type: 'slot' },
+    'footer-component': { file: 'src/routes/+layout.svelte', type: 'block' },
+    'profile-panel-component': { file: 'src/routes/+layout.svelte', type: 'block' },
+    'settings-panel-component': { file: 'src/routes/+layout.svelte', type: 'block' },
+    'popover-container': { file: 'src/routes/+layout.svelte', type: 'block' },
+  },
+
+  /**
+   * Template operations — technology-specific file manipulation.
+   * Called by the CLI pipeline via { action: "call", op: "operationName", args: [...] }
+   * All operations receive (appDir, ...args) and mutate files in place.
+   */
+  operations: {
+    /**
+     * Add a dependency to package.json
+     */
+    addDependency(appDir, name, version, section = 'dependencies') {
+      const pkgPath = path.join(appDir, 'package.json');
+      const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
+      pkg[section] = pkg[section] || {};
+      pkg[section][name] = version;
+      fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
     },
-    'navbar-profile-snippet': {
-      file: 'src/routes/+layout.svelte',
-      type: 'block',
+
+    /**
+     * Set a value in pureadmin.json (dot-notation key)
+     */
+    setConfigValue(appDir, key, value) {
+      const cfgPath = path.join(appDir, 'pureadmin.json');
+      const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf-8'));
+      const keys = key.split('.');
+      let obj = cfg;
+      for (let i = 0; i < keys.length - 1; i++) {
+        obj[keys[i]] = obj[keys[i]] || {};
+        obj = obj[keys[i]];
+      }
+      obj[keys[keys.length - 1]] = value;
+      fs.writeFileSync(cfgPath, JSON.stringify(cfg, null, 2) + '\n');
     },
-    'sidebar-component': {
-      file: 'src/routes/+layout.svelte',
-      type: 'block',
+
+    /**
+     * Inject text into a file at a marker position
+     */
+    inject(appDir, file, marker, content, position = 'after') {
+      const filePath = path.join(appDir, file);
+      if (!fs.existsSync(filePath)) return false;
+      let text = fs.readFileSync(filePath, 'utf-8');
+      if (!text.includes(marker)) return false;
+
+      if (position === 'replace') {
+        text = text.replace(marker, content);
+      } else if (position === 'before') {
+        text = text.replace(marker, content + marker);
+      } else {
+        text = text.replace(marker, marker + content);
+      }
+      fs.writeFileSync(filePath, text);
+      return true;
     },
-    'sidebar-items': {
-      file: 'src/routes/+layout.svelte',
-      type: 'slot',
+
+    /**
+     * Add a <script> or <link> tag to src/app.html <head>
+     */
+    addHeadTag(appDir, tag) {
+      const htmlPath = path.join(appDir, 'src', 'app.html');
+      let html = fs.readFileSync(htmlPath, 'utf-8');
+      html = html.replace('%sveltekit.head%', `${tag}\n\t\t%sveltekit.head%`);
+      fs.writeFileSync(htmlPath, html);
     },
-    'footer-component': {
-      file: 'src/routes/+layout.svelte',
-      type: 'block',
+
+    /**
+     * Add a SvelteKit route (creates the page file)
+     */
+    addRoute(appDir, routePath, content) {
+      const dir = path.join(appDir, 'src', 'routes', routePath);
+      fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(path.join(dir, '+page.svelte'), content);
     },
-    'profile-panel-component': {
-      file: 'src/routes/+layout.svelte',
-      type: 'block',
-    },
-    'settings-panel-component': {
-      file: 'src/routes/+layout.svelte',
-      type: 'block',
-    },
-    'popover-container': {
-      file: 'src/routes/+layout.svelte',
-      type: 'block',
+
+    /**
+     * Add a sidebar item to +layout.svelte
+     */
+    addSidebarItem(appDir, href, label, iconMarkup) {
+      const filePath = path.join(appDir, 'src', 'routes', '+layout.svelte');
+      if (!fs.existsSync(filePath)) return false;
+      let content = fs.readFileSync(filePath, 'utf-8');
+      const marker = '<!-- /data-pa="sidebar-items" -->';
+      if (!content.includes(marker)) return false;
+
+      const item = `\t\t\t\t<SidebarItem href="${href}" labelText="${label}">\n\t\t\t\t\t{#snippet icon()}${iconMarkup}{/snippet}\n\t\t\t\t</SidebarItem>\n\t\t\t\t`;
+      content = content.replace(marker, item + marker);
+      fs.writeFileSync(filePath, content);
+      return true;
     },
   },
 };

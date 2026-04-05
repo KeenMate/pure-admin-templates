@@ -13,6 +13,7 @@
 		Input,
 		FormGroup
 	} from '@keenmate/svelte-pure-admin';
+	__EXTRA_IMPORTS__
 
 	const users = [
 		{ id: 1, name: 'John Doe', email: 'john.doe@example.com', role: 'Admin', status: 'Active', joined: '2024-01-15' },
@@ -67,7 +68,7 @@
 <Card titleText="All Users">
 	{#snippet headerActions()}
 		<Button variant="primary" size="sm">
-			{#snippet icon()}<i class="fas fa-user-plus"></i>{/snippet}
+			{#snippet icon()}__ICON:user-plus__{/snippet}
 			Add User
 		</Button>
 	{/snippet}
@@ -95,10 +96,10 @@
 						<td>
 							<ButtonGroup>
 								<Button variant="secondary" size="xs" isIconOnly titleText="Edit">
-									<i class="fas fa-pen"></i>
+									__ICON:pen__
 								</Button>
 								<Button variant="danger" size="xs" isIconOnly titleText="Delete">
-									<i class="fas fa-trash"></i>
+									__ICON:trash__
 								</Button>
 							</ButtonGroup>
 						</td>

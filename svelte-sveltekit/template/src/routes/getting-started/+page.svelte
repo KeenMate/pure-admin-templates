@@ -11,6 +11,7 @@
 		Badge,
 		Table
 	} from '@keenmate/svelte-pure-admin';
+	__EXTRA_IMPORTS__
 </script>
 
 <svelte:head>
@@ -71,7 +72,7 @@
   labelText="Orders"
   active={isActive('/orders')}
 >
-  {#snippet icon()}<i class="fas fa-shopping-cart"></i>{/snippet}
+  {#snippet icon()}__ICON:shopping-cart__{/snippet}
 </SidebarItem>`}</CodeBlock>
 </Card>
 

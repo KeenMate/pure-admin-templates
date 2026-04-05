@@ -18,6 +18,7 @@
 		Fields,
 		FieldGroup
 	} from '@keenmate/svelte-pure-admin';
+	__EXTRA_IMPORTS__
 
 	let appName = $state('My App');
 	let appDescription = $state('A modern admin dashboard built with Svelte Pure Admin.');
@@ -71,7 +72,7 @@
 			</FormGroup>
 
 			<Button variant="primary" onclick={handleSave}>
-				{#snippet icon()}<i class="fas fa-save"></i>{/snippet}
+				{#snippet icon()}__ICON:save__{/snippet}
 				Save Changes
 			</Button>
 		</Card>
@@ -105,11 +106,11 @@
 			</Alert>
 			<ButtonGroup class="mt-4">
 				<Button variant="danger" isOutline onclick={() => alert('Would clear cache')}>
-					{#snippet icon()}<i class="fas fa-broom"></i>{/snippet}
+					{#snippet icon()}__ICON:broom__{/snippet}
 					Clear Cache
 				</Button>
 				<Button variant="danger" onclick={() => alert('Would reset app')}>
-					{#snippet icon()}<i class="fas fa-trash"></i>{/snippet}
+					{#snippet icon()}__ICON:trash__{/snippet}
 					Reset Application
 				</Button>
 			</ButtonGroup>
