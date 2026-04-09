@@ -1,0 +1,31 @@
+<.layout>
+  <.navbar>
+    <:start>
+      <.navbar_burger />
+      <.navbar_brand />
+    </:start>
+    <:center>
+      <.navbar_title>
+        <h2>{assigns[:page_title] || "Home"}</h2>
+      </.navbar_title>
+    </:center>
+  </.navbar>
+
+  <.layout_inner>
+    <.sidebar>
+      <%!-- data-pa="sidebar-items" --%>
+      <.sidebar_item label="Dashboard" icon="fa-solid fa-gauge" href="/" is_active={assigns[:current_path] == "/"} />
+      <%!-- /data-pa="sidebar-items" --%>
+    </.sidebar>
+
+    <.layout_content>
+      <.main>
+        <.flash_group flash={@flash} />
+        {@inner_content}
+      </.main>
+      <%!-- data-pa="footer-component" --%>
+      <.footer />
+      <%!-- /data-pa="footer-component" --%>
+    </.layout_content>
+  </.layout_inner>
+</.layout>

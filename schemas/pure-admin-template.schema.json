@@ -64,11 +64,16 @@
       "properties": {
         "command": {
           "type": "string",
-          "description": "Primary scaffold command (supports {{APP_ID}} placeholder)"
+          "description": "Primary scaffold command. Supports {{APP_ID}} and __SCAFFOLD_FLAGS__ placeholders. __SCAFFOLD_FLAGS__ is built from feature.scaffoldFlag entries (see features schema)."
         },
         "fallback": {
           "type": "string",
           "description": "Fallback command if primary fails"
+        },
+        "runFirst": {
+          "type": "boolean",
+          "default": false,
+          "description": "When true and --template-path is used, runs the scaffold command BEFORE copying template files. Lets templates run a generator (e.g. mix phx.new) and then layer customizations on top of the result."
         }
       }
     },
@@ -125,6 +130,18 @@
             "type": "array",
             "items": { "type": "string" },
             "description": "data-pa point IDs that belong to this feature"
+          },
+          "scaffoldFlag": {
+            "type": "string",
+            "description": "Flag to add to the scaffold command's __SCAFFOLD_FLAGS__ when this feature is DISABLED. Example: '--no-ecto' for the ecto feature in a Phoenix template. Alias: scaffoldFlagWhenDisabled."
+          },
+          "scaffoldFlagWhenDisabled": {
+            "type": "string",
+            "description": "Same as scaffoldFlag — flag added to __SCAFFOLD_FLAGS__ when feature is disabled."
+          },
+          "scaffoldFlagWhenEnabled": {
+            "type": "string",
+            "description": "Flag to add to __SCAFFOLD_FLAGS__ when this feature is ENABLED. Example: '--database postgres' when a postgres feature is on."
           },
           "cli": {
             "description": "CLI flag(s) to enable this feature. String for single flag, array of objects for multiple exclusive options.",

@@ -1,0 +1,225 @@
+{
+  "$schema": "../schemas/pure-admin-template.schema.json",
+  "id": "elixir-phoenix-liveview",
+  "name": "Phoenix LiveView + Pure Admin",
+  "version": "1.0.0",
+  "technology": "elixir",
+  "variant": "phoenix-liveview",
+  "description": "Phoenix LiveView app with Pure Admin layout, sidebar navigation, and theme switching",
+  "content": "## Phoenix LiveView + Pure Admin\n\nA Phoenix LiveView application template with Pure Admin layout, sidebar navigation, theme switching, and optional panels.\n\n### Highlights\n\n- **Phoenix LiveView** with the standard `mix phx.new` scaffold\n- **keen_pure_admin** as a drop-in replacement for `CoreComponents`\n- **Pure Admin** layout (navbar, sidebar, footer) read from app config\n- **Theme switching** via pureadmin.io themes\n- **Optional features**: Ecto, mailer, dashboard, gettext, profile panel, settings panel\n- **Page generators**: dashboard, list, detail, form, master-detail (each is a Phoenix LiveView module + heex template)\n\n### Quick Start\n\n```bash\npureadmin create my-app --template elixir-phoenix-liveview\ncd my-app\nmix ecto.create  # if ecto is enabled\nmix phx.server\n```",
+  "author": "KeenMate",
+  "license": "MIT",
+  "tags": [
+    "elixir",
+    "phoenix",
+    "liveview",
+    "ssr",
+    "fullstack"
+  ],
+  "homepage": "https://pureadmin.io",
+  "scaffold": {
+    "command": "mix phx.new __APP_ID__ --app __APP_ID_SNAKE__ --module __APP_MODULE__ --no-tailwind __SCAFFOLD_FLAGS__ --install",
+    "fallback": "mix phx.new __APP_ID__ --app __APP_ID_SNAKE__ --module __APP_MODULE__ --no-tailwind __SCAFFOLD_FLAGS__",
+    "runFirst": true
+  },
+  "themeSetup": {
+    "themesDir": "priv/static/themes"
+  },
+  "placeholders": {
+    "APP_NAME": {
+      "description": "Display name shown in navbar and footer",
+      "default": "My App"
+    },
+    "APP_ID": {
+      "description": "Elixir application name (snake_case, used as :app and module prefix)",
+      "default": "my_app"
+    },
+    "APP_MODULE": {
+      "description": "Elixir module name (PascalCase, e.g. MyApp)",
+      "default": "MyApp"
+    },
+    "COPYRIGHT": {
+      "description": "Footer copyright text",
+      "default": "© 2026 My Company"
+    },
+    "DEFAULT_THEME": {
+      "description": "Default theme slug",
+      "default": "audi"
+    },
+    "DEFAULT_MODE": {
+      "description": "Default color mode (dark/light)",
+      "default": "dark"
+    }
+  },
+  "features": {
+    "ecto": {
+      "description": "Ecto database integration (Postgres by default)",
+      "isDefault": true,
+      "points": ["ecto-config"],
+      "cli": "--no-ecto",
+      "scaffoldFlag": "--no-ecto"
+    },
+    "mailer": {
+      "description": "Swoosh mailer for sending emails",
+      "isDefault": true,
+      "points": [],
+      "cli": "--no-mailer",
+      "scaffoldFlag": "--no-mailer"
+    },
+    "dashboard": {
+      "description": "Phoenix LiveDashboard at /dev/dashboard",
+      "isDefault": true,
+      "points": [],
+      "cli": "--no-dashboard",
+      "scaffoldFlag": "--no-dashboard"
+    },
+    "gettext": {
+      "description": "Gettext for i18n",
+      "isDefault": true,
+      "points": [],
+      "cli": "--no-gettext",
+      "scaffoldFlag": "--no-gettext"
+    },
+    "navbar": {
+      "description": "Top navigation bar with burger menu",
+      "isRequired": true,
+      "points": ["navbar-component"]
+    },
+    "sidebar": {
+      "description": "Side navigation with menu items",
+      "isRequired": true,
+      "points": ["sidebar-component"]
+    },
+    "footer": {
+      "description": "Page footer with copyright",
+      "isRequired": true,
+      "points": ["footer-component"]
+    },
+    "profile-panel": {
+      "description": "User profile slide-in panel",
+      "requires": ["navbar"],
+      "points": ["profile-panel-component"],
+      "cli": "--profile-panel"
+    },
+    "settings-panel": {
+      "description": "Theme switcher and display settings gear",
+      "points": ["settings-panel-component"],
+      "cli": "--settings-panel"
+    },
+    "icons": {
+      "description": "Font Awesome icons via CDN",
+      "isDefault": true,
+      "points": ["font-awesome-cdn"]
+    },
+    "floating-ui": {
+      "description": "Floating UI for tooltips and popovers",
+      "isRequired": true,
+      "points": ["floating-ui-cdn"]
+    }
+  },
+  "pageTypes": {
+    "dashboard": {
+      "file": "pages/dashboard_live.ex",
+      "description": "Dashboard with stats and KPI cards",
+      "route": "lib/__APP_ID_SNAKE___web/live/dashboard_live.ex",
+      "icon": "fa-solid fa-gauge",
+      "defaultLabel": "Dashboard"
+    },
+    "list": {
+      "file": "pages/list_live.ex",
+      "description": "Data table with pagination",
+      "route": "lib/__APP_ID_SNAKE___web/live/__PAGE_ENTITY___live.ex",
+      "icon": "fa-solid fa-list",
+      "defaultLabel": "Items"
+    },
+    "detail": {
+      "file": "pages/detail_live.ex",
+      "description": "Single record detail view",
+      "route": "lib/__APP_ID_SNAKE___web/live/__PAGE_ENTITY___detail_live.ex",
+      "icon": null,
+      "defaultLabel": "Detail"
+    },
+    "form": {
+      "file": "pages/form_live.ex",
+      "description": "Create/edit form",
+      "route": "lib/__APP_ID_SNAKE___web/live/__PAGE_ENTITY___form_live.ex",
+      "icon": "fa-solid fa-pen-to-square",
+      "defaultLabel": "Form"
+    },
+    "master-detail": {
+      "file": "pages/master_detail_live.ex",
+      "description": "List + detail side-by-side",
+      "route": "lib/__APP_ID_SNAKE___web/live/__PAGE_ENTITY___live.ex",
+      "icon": "fa-solid fa-table-columns",
+      "defaultLabel": "Items"
+    }
+  },
+  "steps": [
+    { "action": "call", "op": "addDependency", "args": ["keen_pure_admin", "~> 1.0"] },
+    { "action": "call", "op": "addStaticPath", "args": ["themes"] },
+    {
+      "action": "patch",
+      "path": "lib/__APP_ID_SNAKE___web.ex",
+      "find": "import __APP_MODULE__Web.CoreComponents",
+      "replace": "# Core UI components — PureAdmin replaces Phoenix CoreComponents\n      use PureAdmin.Components"
+    },
+    {
+      "action": "patch",
+      "path": "lib/__APP_ID_SNAKE___web/router.ex",
+      "find": "plug :put_root_layout, html: {__APP_MODULE__Web.Layouts, :root}",
+      "replace": "plug :put_root_layout, html: {__APP_MODULE__Web.Layouts, :root}\n    plug :put_layout, html: {__APP_MODULE__Web.Layouts, :app}\n    plug __APP_MODULE__Web.Nav"
+    },
+    {
+      "action": "patch",
+      "path": "assets/js/app.js",
+      "find": "import {hooks as colocatedHooks} from \"phoenix-colocated/__APP_ID_SNAKE__\"",
+      "replace": "import {hooks as colocatedHooks} from \"phoenix-colocated/__APP_ID_SNAKE__\"\nimport {PureAdminHooks} from \"keen_pure_admin\""
+    },
+    {
+      "action": "patch",
+      "path": "assets/js/app.js",
+      "find": "hooks: {...colocatedHooks}",
+      "replace": "hooks: {...colocatedHooks, ...PureAdminHooks}"
+    },
+    { "action": "delete", "path": "lib/__APP_ID_SNAKE___web/components/core_components.ex" },
+    { "action": "delete", "path": "priv/static/assets/default.css" },
+    {
+      "action": "call",
+      "op": "setPureAdminConfig",
+      "args": [{
+        "app_name": "__APP_NAME__",
+        "app_version": "0.1.0",
+        "copyright": "__COPYRIGHT__",
+        "font_class": "pa-font-responsive"
+      }]
+    },
+    {
+      "action": "patch",
+      "path": "config/config.exs",
+      "find": "import_config \"#{config_env()}.exs\"",
+      "replace": "import_config \"#{config_env()}.exs\"\n\n# Local overrides — gitignored. Create config/.local.exs to override\n# DB credentials, port, or any other dev-only setting.\nFile.regular?(\"config/.local.exs\") && import_config(\".local.exs\")"
+    },
+    {
+      "action": "patch",
+      "path": "config/runtime.exs",
+      "find": "config :__APP_ID_SNAKE__, __APP_MODULE__Web.Endpoint,\n  http: [port: String.to_integer(System.get_env(\"PORT\", \"4000\"))]",
+      "replace": "# PORT env var overrides the port set in dev.exs/.local.exs (set it for prod or\n# containerized dev). Without PORT, dev.exs / config/.local.exs wins.\nif port = System.get_env(\"PORT\") do\n  config :__APP_ID_SNAKE__, __APP_MODULE__Web.Endpoint,\n    http: [port: String.to_integer(port)]\nend"
+    },
+    {
+      "action": "patch",
+      "path": ".gitignore",
+      "find": "# The directory Mix downloads your dependencies sources to.",
+      "replace": "# Local Phoenix config override (DB credentials, custom port, etc.)\nconfig/.local.exs\n\n# The directory Mix downloads your dependencies sources to."
+    }
+  ],
+  "instructions": [
+    "cd __APP_ID__",
+    "# Optional: create config/.local.exs (gitignored) for personal dev overrides",
+    "#   import Config",
+    "#   config :__APP_ID_SNAKE__, __APP_MODULE__.Repo, username: \"...\", password: \"...\"",
+    "#   config :__APP_ID_SNAKE__, __APP_MODULE__Web.Endpoint, http: [port: 4030]",
+    "mix ecto.create  # only if ecto is enabled",
+    "mix phx.server",
+    "Open http://localhost:4000"
+  ]
+}
