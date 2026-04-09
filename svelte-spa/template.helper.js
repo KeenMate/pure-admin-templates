@@ -9,6 +9,23 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = {
+  /**
+   * prepare(ctx, helpers) — populate ctx.placeholders for this template.
+   *
+   * Svelte SPA + Vite. Same identifiers as sveltekit (kebab-case app name,
+   * standard npm package manager).
+   */
+  prepare(ctx, helpers) {
+    helpers.setAppId(ctx);
+    helpers.setAppName(ctx);
+    helpers.setCopyright(ctx);
+    helpers.setLogo(ctx);
+    helpers.setUserDefaults(ctx);
+    helpers.setDefaultTheme(ctx);
+    helpers.setThemeIds(ctx);
+    helpers.setPackageManager(ctx);
+  },
+
   markerFormat: {
     htmlStart: (id) => `<!-- data-pa="${id}" -->`,
     htmlEnd: (id) => `<!-- /data-pa="${id}" -->`,

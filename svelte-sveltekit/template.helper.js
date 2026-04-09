@@ -9,6 +9,25 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = {
+  /**
+   * prepare(ctx, helpers) — populate ctx.placeholders for this template.
+   *
+   * SvelteKit + Svelte 5 + pnpm/npm/bun. Needs the standard npm-app
+   * identifiers plus package manager commands and theme/sidebar data.
+   */
+  prepare(ctx, helpers) {
+    helpers.setAppId(ctx);
+    helpers.setAppName(ctx);
+    helpers.setCopyright(ctx);
+    helpers.setLogo(ctx);
+    helpers.setUserDefaults(ctx);
+    helpers.setDefaultTheme(ctx);
+    helpers.setThemeIds(ctx);
+    helpers.setPackageManager(ctx);
+    // SvelteKit doesn't need APP_ID_SNAKE or APP_MODULE — Svelte files use
+    // kebab-case paths and the app name isn't used as a code identifier.
+  },
+
   markerFormat: {
     htmlStart: (id) => `<!-- data-pa="${id}" -->`,
     htmlEnd: (id) => `<!-- /data-pa="${id}" -->`,

@@ -14,6 +14,34 @@ const path = require('path');
 
 module.exports = {
   /**
+   * prepare(ctx, helpers) — populate ctx.placeholders for this template.
+   *
+   * Called by the CLI after buildContext but before the scaffold command
+   * runs. `helpers` is the CLI's preparator library — call whichever ones
+   * your template needs. Custom derivations can go inline.
+   *
+   * For Phoenix/Elixir we need:
+   *   - APP_ID        (the app name as passed, kebab-case OK for dir name)
+   *   - APP_ID_SNAKE  (snake_case for Elixir `otp_app` name + lib/ paths)
+   *   - APP_MODULE    (PascalCase for module names)
+   *   - APP_NAME      (human display name for navbar/footer)
+   *   - COPYRIGHT     (footer copyright text)
+   *   - DEFAULT_THEME (theme slug for root.html.heex link)
+   *   - DEFAULT_MODE  (dark/light, drives FOUC script)
+   *
+   * We explicitly SKIP the Node/Svelte-only ones (PM, PM_RUN, USER_*,
+   * THEME_OPTIONS, SIDEBAR_ITEMS) — Phoenix templates don't use them.
+   */
+  prepare(ctx, helpers) {
+    helpers.setAppId(ctx);
+    helpers.setAppIdSnake(ctx);
+    helpers.setAppModule(ctx);
+    helpers.setAppName(ctx);
+    helpers.setCopyright(ctx);
+    helpers.setDefaultTheme(ctx);
+  },
+
+  /**
    * Marker formats per file type:
    *  - .heex / .html.heex / .html → HTML comments
    *  - .ex / .exs → Elixir line comments
