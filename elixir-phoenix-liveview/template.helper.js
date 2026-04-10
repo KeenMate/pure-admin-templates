@@ -39,6 +39,19 @@ module.exports = {
     helpers.setAppName(ctx);
     helpers.setCopyright(ctx);
     helpers.setDefaultTheme(ctx);
+
+    // Profile panel items — collect objects, render as Phoenix HEEx
+    const profileItems = helpers.collectProfileItems(ctx);
+    ctx.placeholders.PROFILE_ITEMS = profileItems.map(item =>
+      `        <.profile_nav_item href="${item.href}" icon="${item.icon}">${item.label}</.profile_nav_item>`
+    ).join('\n');
+
+    // Brand — Phoenix uses runtime config (PureAdmin.Config.app_name), so we
+    // don't need a BRAND placeholder. But we expose the data for custom usage.
+    ctx.brand = helpers.collectBrand(ctx);
+
+    // Footer — same, handled by PureAdmin.Config at runtime.
+    ctx.footer = helpers.collectFooter(ctx);
   },
 
   /**

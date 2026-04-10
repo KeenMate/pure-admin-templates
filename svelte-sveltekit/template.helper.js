@@ -24,8 +24,27 @@ module.exports = {
     helpers.setDefaultTheme(ctx);
     helpers.setThemeIds(ctx);
     helpers.setPackageManager(ctx);
-    // SvelteKit doesn't need APP_ID_SNAKE or APP_MODULE — Svelte files use
-    // kebab-case paths and the app name isn't used as a code identifier.
+  },
+
+  /**
+   * prepareLate — called after ctx.themesData and ctx.pages are populated.
+   * Renders technology-specific markup from collected data objects.
+   */
+  prepareLate(ctx, helpers) {
+    // Sidebar items → Svelte SidebarItem components
+    const sidebarItems = helpers.collectSidebarItems(ctx);
+    ctx.placeholders.SIDEBAR_ITEMS = sidebarItems.map(item =>
+      `\t\t\t\t<SidebarItem href="${item.href}" labelText="${item.label}">\n\t\t\t\t\t{#snippet icon()}<i class="${item.icon}"></i>{/snippet}\n\t\t\t\t</SidebarItem>`
+    ).join('\n');
+
+    // Theme options → JS array literal for theme switcher
+    const themeOpts = helpers.collectThemeOptions(ctx);
+    ctx.placeholders.THEME_OPTIONS = themeOpts.map(t =>
+      `\t\t{ id: '${t.id}', name: '${t.name}', cssPath: '${t.cssPath}' }`
+    ).join(',\n');
+
+    // Themes config for pureadmin.json
+    helpers.setThemesConfig(ctx);
   },
 
   markerFormat: {

@@ -263,7 +263,7 @@
   ],
   "checksums": {
     "files": {
-      "lib/__APP_ID_SNAKE___web/components/layouts/app.html.heex": "sha256:998eacb6d32c59c51f58c525f2fac4f9f1f2aba95b5209bc7fc22009d12d5477",
+      "lib/__APP_ID_SNAKE___web/components/layouts/app.html.heex": "sha256:5772f6a13e2adc25170ac2e86a2061feccff72115a86913840c8307563b7bfbd",
       "lib/__APP_ID_SNAKE___web/components/layouts/root.html.heex": "sha256:0f749dece27a33b68ae454661ebcc38b06e78e2b118e94d37575e032092eebfa",
       "lib/__APP_ID_SNAKE___web/components/layouts.ex": "sha256:6cde656e155d749cd76e9c9c8619fa42538c952333d82b35678a4cb3473fadfe",
       "lib/__APP_ID_SNAKE___web/controllers/page_html/home.html.heex": "sha256:180bb0a0a2bfca8f8dbe3f732290469a599f67fdf86e9a9e6febe603cbeed758",
@@ -278,8 +278,8 @@
       "list_live.ex": "sha256:828ed8f4c1cd55457fb155e3e45addccfa5ce37f5d2e2bf08feb37da45fe8f0a",
       "master_detail_live.ex": "sha256:a8db9867570222d48608e869f2874d4fa69b8b3caff4ce7fffa97256b614fe0b"
     },
-    "helper": "sha256:b152d3e9ab37be5e6530e47c50657c577f6559661befe00b55800acd806260e3",
+    "helper": "sha256:ad5f29e05e12389d868f37fcf15cc860bb7e0e727506c6b5fc8d20847ce75f71",
     "metadata": "sha256:fa3b1dbf2654251162befe4b8938faf2b3c8ac5ad166651a021249e2cacf99e0",
-    "summary": "sha256:c138f2a1fd312986c48462d66ba3f8dfd21bc71bd9d323fe2835535e31ee13d5"
+    "summary": "sha256:0f9e290c006c7f49f50e24183f6dcba90a750b6b423be582907311a4452a0be4"
   }
 }
