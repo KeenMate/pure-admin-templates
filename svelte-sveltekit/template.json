@@ -18,8 +18,8 @@
   ],
   "homepage": "https://pureadmin.io",
   "scaffold": {
-    "command": "npx sv create {{APP_ID}} --template minimal --types ts --no-add-ons --no-install",
-    "fallback": "npm create svelte@latest {{APP_ID}} -- --template skeleton --types ts"
+    "command": "npx sv create __APP_ID__ --template minimal --types ts --no-add-ons --no-install",
+    "fallback": "npm create svelte@latest __APP_ID__ -- --template skeleton --types ts"
   },
   "dependencies": {
     "@keenmate/svelte-pure-admin": "latest",
@@ -194,14 +194,14 @@
     }
   },
   "instructions": [
-    "cd {{APP_ID}}",
-    "{{PM_RUN}} dev",
+    "cd __APP_ID__",
+    "__PM_RUN__ dev",
     "Open http://localhost:5173"
   ],
   "checksums": {
     "files": {
       "CHANGELOG.md": "sha256:f95da2199a404959bf927dc3ae6570a41b3bdb54ef5b1b0fbf8aa0d4e97a73ec",
-      "Makefile": "sha256:3a7e8947143c340faefdefbb278ecefc36135e9c0f34e046bea1859318eed86d",
+      "Makefile": "sha256:058badd5fb2e42e85e497e0164e4f9d9d27f7165945503e617fa5339c5638cce",
       "package.json": "sha256:61d7558757ad39e33d5d6a965c8428044c29b8c386a4eb475208193c178860ed",
       "pureadmin.json": "sha256:c1c4b3e844a972adf425de9074859c4698664b3d72649e196a48b64fdde0731b",
       "README.md": "sha256:562c63f39b6bb27d393145a3c436e6d1e3416334365197135e8ed0ac1f293e6a",
@@ -218,13 +218,13 @@
     },
     "pages": {
       "dashboard.svelte": "sha256:e789ef322fb573fa6c702a94c3b8fd1a616170690f16074b19fb8163e85bea8c",
-      "detail.svelte": "sha256:aa4256fb44bd581a568e7c185fad3b4b66fefab48bc5402145f397256ccbb023",
-      "form.svelte": "sha256:ad69d7a7269423c9cf52c561628336fbb81db3199ce05fecc68c01afe68928fa",
-      "list.svelte": "sha256:6a4a732645e73e7f0a2f2c3875c5925d235e2ca8e0859bad9f0c4d30433067cd",
-      "master-detail.svelte": "sha256:dac82e09d360371cda367cc7212642ef4971a2e58c694a6cbec6a460aeb9de0b"
+      "detail.svelte": "sha256:9c3ecc7a44d1ef25103d82142acb52fd4f7a03ed642ee64c387fdca3cfd56f34",
+      "form.svelte": "sha256:b20fdf8d5f91cda03891befe4f1551e7c4e2a8837785b72c82b82f01902c5500",
+      "list.svelte": "sha256:bc027f7e54459bd69b52925719fb4c277caf19a5769e37e78776f641e918d02e",
+      "master-detail.svelte": "sha256:0826347e90c7d80fa90a37d8f3c2454fdd62fe72d21e15b9e167ff001a04393b"
     },
     "helper": "sha256:a71a4836220df14595d0e5cb493ee483c75f900c2f161553b09e2b3052c29003",
     "metadata": "sha256:900395b1eb0594135220d4777fd8c7a9aae60d326ca8c23c72efc59baf6a93ab",
-    "summary": "sha256:23a5087542b928924f1ce0c775bf0f74d9d4bdde092ef35eafc46623ebd7abcf"
+    "summary": "sha256:ae8b83a3a1a4c72c23bc552d7e9e37e0692603d490713f5f5af0249bf06ad79d"
   }
 }

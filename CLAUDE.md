@@ -78,7 +78,7 @@ Feature types in `template.json`:
 
 ## Placeholder Syntax
 
-Template files use `__VAR__` syntax (not `{{VAR}}` which conflicts with Svelte):
+Template files use `__VAR__` syntax exclusively:
 
 ```
 __APP_NAME__, __APP_ID__, __COPYRIGHT__,

@@ -64,7 +64,7 @@
       "properties": {
         "command": {
           "type": "string",
-          "description": "Primary scaffold command. Supports {{APP_ID}} and __SCAFFOLD_FLAGS__ placeholders. __SCAFFOLD_FLAGS__ is built from feature.scaffoldFlag entries (see features schema)."
+          "description": "Primary scaffold command. Supports __APP_ID__ and __SCAFFOLD_FLAGS__ placeholders. __SCAFFOLD_FLAGS__ is built from feature.scaffoldFlag entries (see features schema)."
         },
         "fallback": {
           "type": "string",

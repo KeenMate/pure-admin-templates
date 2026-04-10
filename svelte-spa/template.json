@@ -18,8 +18,8 @@
   ],
   "homepage": "https://pureadmin.io",
   "scaffold": {
-    "command": "npm create vite@latest {{APP_ID}} -- --template svelte-ts",
-    "fallback": "npm create vite@latest {{APP_ID}} -- --template svelte-ts"
+    "command": "npm create vite@latest __APP_ID__ -- --template svelte-ts",
+    "fallback": "npm create vite@latest __APP_ID__ -- --template svelte-ts"
   },
   "dependencies": {
     "@keenmate/svelte-pure-admin": "latest",
@@ -195,15 +195,15 @@
     }
   },
   "instructions": [
-    "cd {{APP_ID}}",
-    "{{PM_RUN}} dev",
+    "cd __APP_ID__",
+    "__PM_RUN__ dev",
     "Open http://localhost:5173"
   ],
   "checksums": {
     "files": {
       "CHANGELOG.md": "sha256:f95da2199a404959bf927dc3ae6570a41b3bdb54ef5b1b0fbf8aa0d4e97a73ec",
       "index.html": "sha256:2b32ac35ad93f788ceb1fe3503a833f9d6090c204ffe657537ee19a108b4b37e",
-      "Makefile": "sha256:99a73ac77885588f0ac9788534fa50b00ce16630602c1c4d3469803a065b375d",
+      "Makefile": "sha256:22d6c2d3c8b888337e96ffb9d0cf4147485120abb8e603707bd6f77a4f9b9bbd",
       "package.json": "sha256:39ba6a75c7eac33923b932b4584dd775bda793020c9074b8112ac4fe4ff3c00c",
       "pureadmin.json": "sha256:2fb8e7df4165736cfaad1c23d2455fb62a4619e60578d49780dcff925a8f1856",
       "README.md": "sha256:b47a28697f16c78a8034af28923ff1151b2c0f6954956776d2c10a1febae6264",
@@ -219,13 +219,13 @@
     },
     "pages": {
       "dashboard.svelte": "sha256:e789ef322fb573fa6c702a94c3b8fd1a616170690f16074b19fb8163e85bea8c",
-      "detail.svelte": "sha256:aa4256fb44bd581a568e7c185fad3b4b66fefab48bc5402145f397256ccbb023",
-      "form.svelte": "sha256:ad69d7a7269423c9cf52c561628336fbb81db3199ce05fecc68c01afe68928fa",
-      "list.svelte": "sha256:6a4a732645e73e7f0a2f2c3875c5925d235e2ca8e0859bad9f0c4d30433067cd",
-      "master-detail.svelte": "sha256:dac82e09d360371cda367cc7212642ef4971a2e58c694a6cbec6a460aeb9de0b"
+      "detail.svelte": "sha256:9c3ecc7a44d1ef25103d82142acb52fd4f7a03ed642ee64c387fdca3cfd56f34",
+      "form.svelte": "sha256:b20fdf8d5f91cda03891befe4f1551e7c4e2a8837785b72c82b82f01902c5500",
+      "list.svelte": "sha256:bc027f7e54459bd69b52925719fb4c277caf19a5769e37e78776f641e918d02e",
+      "master-detail.svelte": "sha256:0826347e90c7d80fa90a37d8f3c2454fdd62fe72d21e15b9e167ff001a04393b"
     },
     "helper": "sha256:e2cce00940b036e9eb89becd0132639d7b227219de11224ecda333a3cb9c56a6",
     "metadata": "sha256:a9f313bce92a1261f342d9a863e3af8b2470f09295446f21d2f2dd9f94d1a50d",
-    "summary": "sha256:c7da9e9f195370fbaee51d2dff6c7c644a97ff40229acc7bd7164c1b33b9ce34"
+    "summary": "sha256:1f6a57d7a5b3bfa3f87eaa08e6a75859ef411b138073da54515ef33c952fb468"
   }
 }
