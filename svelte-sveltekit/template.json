@@ -168,23 +168,29 @@
   "pageTypes": {
     "dashboard": {
       "file": "pages/dashboard.svelte",
-      "description": "Dashboard with stats and charts"
+      "description": "Dashboard with stats and charts",
+      "route": "src/routes/+page.svelte"
     },
     "list": {
       "file": "pages/list.svelte",
-      "description": "Data table with search and pagination"
+      "description": "Data table with search and pagination",
+      "route": "src/routes/{{entity}}/+page.svelte"
     },
     "detail": {
       "file": "pages/detail.svelte",
-      "description": "Single record detail view"
+      "description": "Single record detail view",
+      "route": "src/routes/{{entity}}/[id]/+page.svelte",
+      "sidebar": false
     },
     "form": {
       "file": "pages/form.svelte",
-      "description": "Create/edit form"
+      "description": "Create/edit form",
+      "route": "src/routes/{{entity}}/+page.svelte"
     },
     "master-detail": {
       "file": "pages/master-detail.svelte",
-      "description": "List + detail side-by-side"
+      "description": "List + detail side-by-side",
+      "route": "src/routes/{{entity}}/+page.svelte"
     }
   },
   "instructions": [
