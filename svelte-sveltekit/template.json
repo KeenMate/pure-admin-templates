@@ -217,8 +217,8 @@
       "list.svelte": "sha256:6a4a732645e73e7f0a2f2c3875c5925d235e2ca8e0859bad9f0c4d30433067cd",
       "master-detail.svelte": "sha256:dac82e09d360371cda367cc7212642ef4971a2e58c694a6cbec6a460aeb9de0b"
     },
-    "helper": "sha256:3cc797f7cf87ee94f7688cb5b67b49f6040310b03a34239c851a9de76c742282",
+    "helper": "sha256:a71a4836220df14595d0e5cb493ee483c75f900c2f161553b09e2b3052c29003",
     "metadata": "sha256:900395b1eb0594135220d4777fd8c7a9aae60d326ca8c23c72efc59baf6a93ab",
-    "summary": "sha256:4f0a0ee6d9a7c1d33c31dfdedaa70c47a036e2e661bc5dfb7a0a0dd308c79081"
+    "summary": "sha256:23a5087542b928924f1ce0c775bf0f74d9d4bdde092ef35eafc46623ebd7abcf"
   }
 }

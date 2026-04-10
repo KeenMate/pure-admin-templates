@@ -218,8 +218,8 @@
       "list.svelte": "sha256:6a4a732645e73e7f0a2f2c3875c5925d235e2ca8e0859bad9f0c4d30433067cd",
       "master-detail.svelte": "sha256:dac82e09d360371cda367cc7212642ef4971a2e58c694a6cbec6a460aeb9de0b"
     },
-    "helper": "sha256:bcb3e303cbda8af0347137b3d10dabee4b7e87d85022cefacc5e9ef07de401ee",
+    "helper": "sha256:e2cce00940b036e9eb89becd0132639d7b227219de11224ecda333a3cb9c56a6",
     "metadata": "sha256:a9f313bce92a1261f342d9a863e3af8b2470f09295446f21d2f2dd9f94d1a50d",
-    "summary": "sha256:0717a90d52938ac38f08a19b515d4cf26bd2bb1eada338401fde0406ce76e61a"
+    "summary": "sha256:c7da9e9f195370fbaee51d2dff6c7c644a97ff40229acc7bd7164c1b33b9ce34"
   }
 }

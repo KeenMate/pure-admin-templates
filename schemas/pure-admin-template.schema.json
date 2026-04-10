@@ -204,6 +204,11 @@
           "defaultLabel": {
             "type": "string",
             "description": "Default sidebar label"
+          },
+          "sidebar": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether this page type should appear in the sidebar. Set to false for parameterized routes like detail views that aren't reachable from a top-level link."
           }
         }
       }

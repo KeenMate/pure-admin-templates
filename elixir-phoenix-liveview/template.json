@@ -55,7 +55,9 @@
     "ecto": {
       "description": "Ecto database integration (Postgres by default)",
       "isDefault": true,
-      "points": ["ecto-config"],
+      "points": [
+        "ecto-config"
+      ],
       "cli": "--no-ecto",
       "scaffoldFlag": "--no-ecto"
     },
@@ -83,38 +85,54 @@
     "navbar": {
       "description": "Top navigation bar with burger menu",
       "isRequired": true,
-      "points": ["navbar-component"]
+      "points": [
+        "navbar-component"
+      ]
     },
     "sidebar": {
       "description": "Side navigation with menu items",
       "isRequired": true,
-      "points": ["sidebar-component"]
+      "points": [
+        "sidebar-component"
+      ]
     },
     "footer": {
       "description": "Page footer with copyright",
       "isRequired": true,
-      "points": ["footer-component"]
+      "points": [
+        "footer-component"
+      ]
     },
     "profile-panel": {
       "description": "User profile slide-in panel",
-      "requires": ["navbar"],
-      "points": ["profile-panel-component"],
+      "requires": [
+        "navbar"
+      ],
+      "points": [
+        "profile-panel-component"
+      ],
       "cli": "--profile-panel"
     },
     "settings-panel": {
       "description": "Theme switcher and display settings gear",
-      "points": ["settings-panel-component"],
+      "points": [
+        "settings-panel-component"
+      ],
       "cli": "--settings-panel"
     },
     "icons": {
       "description": "Font Awesome icons via CDN",
       "isDefault": true,
-      "points": ["font-awesome-cdn"]
+      "points": [
+        "font-awesome-cdn"
+      ]
     },
     "floating-ui": {
       "description": "Floating UI for tooltips and popovers",
       "isRequired": true,
-      "points": ["floating-ui-cdn"]
+      "points": [
+        "floating-ui-cdn"
+      ]
     }
   },
   "pageTypes": {
@@ -134,10 +152,10 @@
     },
     "detail": {
       "file": "pages/detail_live.ex",
-      "description": "Single record detail view",
+      "description": "Single record detail view (no sidebar entry — accessed via list)",
       "route": "lib/__APP_ID_SNAKE___web/live/__PAGE_ENTITY___detail_live.ex",
-      "icon": null,
-      "defaultLabel": "Detail"
+      "defaultLabel": "Detail",
+      "sidebar": false
     },
     "form": {
       "file": "pages/form_live.ex",
@@ -155,8 +173,21 @@
     }
   },
   "steps": [
-    { "action": "call", "op": "addDependency", "args": ["keen_pure_admin", "~> 1.0"] },
-    { "action": "call", "op": "addStaticPath", "args": ["themes"] },
+    {
+      "action": "call",
+      "op": "addDependency",
+      "args": [
+        "keen_pure_admin",
+        "~> 1.0"
+      ]
+    },
+    {
+      "action": "call",
+      "op": "addStaticPath",
+      "args": [
+        "themes"
+      ]
+    },
     {
       "action": "patch",
       "path": "lib/__APP_ID_SNAKE___web.ex",
@@ -181,17 +212,25 @@
       "find": "hooks: {...colocatedHooks}",
       "replace": "hooks: {...colocatedHooks, ...PureAdminHooks}"
     },
-    { "action": "delete", "path": "lib/__APP_ID_SNAKE___web/components/core_components.ex" },
-    { "action": "delete", "path": "priv/static/assets/default.css" },
+    {
+      "action": "delete",
+      "path": "lib/__APP_ID_SNAKE___web/components/core_components.ex"
+    },
+    {
+      "action": "delete",
+      "path": "priv/static/assets/default.css"
+    },
     {
       "action": "call",
       "op": "setPureAdminConfig",
-      "args": [{
-        "app_name": "__APP_NAME__",
-        "app_version": "0.1.0",
-        "copyright": "__COPYRIGHT__",
-        "font_class": "pa-font-responsive"
-      }]
+      "args": [
+        {
+          "app_name": "__APP_NAME__",
+          "app_version": "0.1.0",
+          "copyright": "__COPYRIGHT__",
+          "font_class": "pa-font-responsive"
+        }
+      ]
     },
     {
       "action": "patch",
@@ -221,5 +260,26 @@
     "mix ecto.create  # only if ecto is enabled",
     "mix phx.server",
     "Open http://localhost:4000"
-  ]
+  ],
+  "checksums": {
+    "files": {
+      "lib/__APP_ID_SNAKE___web/components/layouts/app.html.heex": "sha256:ba2bff741859b750f9a5f658f28432ecaa83b152fa39878bb721a26ee11343ce",
+      "lib/__APP_ID_SNAKE___web/components/layouts/root.html.heex": "sha256:0f749dece27a33b68ae454661ebcc38b06e78e2b118e94d37575e032092eebfa",
+      "lib/__APP_ID_SNAKE___web/components/layouts.ex": "sha256:6cde656e155d749cd76e9c9c8619fa42538c952333d82b35678a4cb3473fadfe",
+      "lib/__APP_ID_SNAKE___web/controllers/page_html/home.html.heex": "sha256:180bb0a0a2bfca8f8dbe3f732290469a599f67fdf86e9a9e6febe603cbeed758",
+      "lib/__APP_ID_SNAKE___web/nav.ex": "sha256:88a83447da35b6cd718d25ccfdd72665c39465bbbb82b69f11dfa8074e1e5bda",
+      "Makefile": "sha256:6ab1521d8262bc4cd97407085dcf68f443cb6e82322e814b7e02f3a02e2e8a51",
+      "README.md": "sha256:630a054272df5e786ecd433f59d7b5521c383e59d144ed7237fb19cc3ad47ee9"
+    },
+    "pages": {
+      "dashboard_live.ex": "sha256:a8dad1f727f97de399c18307bcd177acb9213345046e8a06aa30007327f1cf4a",
+      "detail_live.ex": "sha256:740213c22eac2ccc58e16ffc36b6761655686a665fa25c06416d2ae951235bc9",
+      "form_live.ex": "sha256:d035023d721d58d1e3edffa2135087ec3edb410f2cdc40fe24972aa977e53e2c",
+      "list_live.ex": "sha256:828ed8f4c1cd55457fb155e3e45addccfa5ce37f5d2e2bf08feb37da45fe8f0a",
+      "master_detail_live.ex": "sha256:a8db9867570222d48608e869f2874d4fa69b8b3caff4ce7fffa97256b614fe0b"
+    },
+    "helper": "sha256:b152d3e9ab37be5e6530e47c50657c577f6559661befe00b55800acd806260e3",
+    "metadata": "sha256:fa3b1dbf2654251162befe4b8938faf2b3c8ac5ad166651a021249e2cacf99e0",
+    "summary": "sha256:d54f714bc7b67f8e51af94bc01f03aa45d7561d66ad661761fa404a02bd8baff"
+  }
 }
