@@ -45,6 +45,31 @@ module.exports = {
 
     // Themes config for pureadmin.json
     helpers.setThemesConfig(ctx);
+
+    // Project info summary for home page
+    const summary = helpers.collectCreateSummary(ctx);
+    const on = summary.featuresOn.map(f => `<Badge variant="success">${f}</Badge>`).join(' ');
+    const off = summary.featuresOff.map(f => `<Badge variant="secondary">${f}</Badge>`).join(' ');
+    const themes = summary.themes.map(t =>
+      t === summary.defaultTheme
+        ? `<Badge variant="primary">${t}</Badge>`
+        : `<Badge>${t}</Badge>`
+    ).join(' ');
+
+    ctx.placeholders.PROJECT_INFO = [
+      `<Card titleText="Project Info">`,
+      `\t<Heading level={4}>Template</Heading>`,
+      `\t<Paragraph><code>${summary.template}</code></Paragraph>`,
+      `\t<Heading level={4}>Features</Heading>`,
+      `\t<Paragraph>${on || '<em>none</em>'}</Paragraph>`,
+      summary.featuresOff.length > 0 ? `\t<Paragraph class="text-muted">Disabled: ${off}</Paragraph>` : '',
+      `\t<Heading level={4}>Themes</Heading>`,
+      `\t<Paragraph>${themes || '<em>none</em>'}</Paragraph>`,
+      `\t<Paragraph class="text-muted">Default: <strong>${summary.defaultTheme}</strong> (${summary.defaultMode})</Paragraph>`,
+      `\t<Heading level={4}>Created with</Heading>`,
+      `\t<CodeBlock language="bash">${summary.createCommand}</CodeBlock>`,
+      `</Card>`,
+    ].filter(Boolean).join('\n');
   },
 
   markerFormat: {

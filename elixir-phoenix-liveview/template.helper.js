@@ -55,6 +55,38 @@ module.exports = {
   },
 
   /**
+   * prepareLate — called after features + themes + pages are resolved.
+   * Renders the project info summary for the home page.
+   */
+  prepareLate(ctx, helpers) {
+    const summary = helpers.collectCreateSummary(ctx);
+
+    // Features as badge-like lists
+    const on = summary.featuresOn.map(f => `<.badge variant="success">${f}</.badge>`).join(' ');
+    const off = summary.featuresOff.map(f => `<.badge variant="secondary">${f}</.badge>`).join(' ');
+    const themes = summary.themes.map(t =>
+      t === summary.defaultTheme
+        ? `<.badge variant="primary">${t}</.badge>`
+        : `<.badge>${t}</.badge>`
+    ).join(' ');
+
+    ctx.placeholders.PROJECT_INFO = [
+      `<.card title_text="Project Info">`,
+      `  <h4>Template</h4>`,
+      `  <p><code>${summary.template}</code></p>`,
+      `  <h4>Features</h4>`,
+      `  <p>${on || '<em>none</em>'}</p>`,
+      summary.featuresOff.length > 0 ? `  <p class="text-muted">Disabled: ${off}</p>` : '',
+      `  <h4>Themes</h4>`,
+      `  <p>${themes || '<em>none</em>'}</p>`,
+      `  <p class="text-muted">Default: <strong>${summary.defaultTheme}</strong> (${summary.defaultMode})</p>`,
+      `  <h4>Created with</h4>`,
+      `  <.code_block language="bash">${summary.createCommand}</.code_block>`,
+      `</.card>`,
+    ].filter(Boolean).join('\n');
+  },
+
+  /**
    * Marker formats per file type:
    *  - .heex / .html.heex / .html → HTML comments
    *  - .ex / .exs → Elixir line comments

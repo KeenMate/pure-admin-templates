@@ -1,10 +1,29 @@
 <.card title_text="Welcome to __APP_NAME__">
   <.paragraph>
-    Your Phoenix LiveView app is running with PureAdmin components.
+    Your Phoenix LiveView app is running with
+    <a href="https://pureadmin.io" class="pa-link" target="_blank">PureAdmin</a> components.
   </.paragraph>
   <.paragraph>
-    Edit <code>lib/__APP_ID___web/controllers/page_html/home.html.heex</code> to change this page,
-    or add new LiveViews to <code>lib/__APP_ID___web/live/</code> and wire them in <code>router.ex</code>.
+    Edit <code>lib/__APP_ID_SNAKE___web/controllers/page_html/home.html.heex</code> to change this page,
+    or add new LiveViews to <code>lib/__APP_ID_SNAKE___web/live/</code> and wire them in <code>router.ex</code>.
   </.paragraph>
-  <.button variant="primary">Get Started</.button>
+  <.grid>
+    <.column size="100" md="1-3">
+      <a href="https://pureadmin.io" target="_blank" class="pa-btn pa-btn--primary pa-btn--block">
+        <i class="fa-solid fa-palette"></i> Themes
+      </a>
+    </.column>
+    <.column size="100" md="1-3">
+      <a href="https://icons.pureadmin.io" target="_blank" class="pa-btn pa-btn--secondary pa-btn--block">
+        <i class="fa-solid fa-icons"></i> Icons
+      </a>
+    </.column>
+    <.column size="100" md="1-3">
+      <a href="https://hexdocs.pm/keen_pure_admin" target="_blank" class="pa-btn pa-btn--secondary pa-btn--block">
+        <i class="fa-solid fa-book"></i> Docs
+      </a>
+    </.column>
+  </.grid>
 </.card>
+
+__PROJECT_INFO__

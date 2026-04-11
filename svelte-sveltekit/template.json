@@ -208,7 +208,7 @@
       "src/app.css": "sha256:1c0b34ff0b9907d25a9729081bb1737d0489af714a3da2f1de11eb6642a695a6",
       "src/app.html": "sha256:1ab563de36b899f2273a94ca36d01b19eb773998fad4af003143f4de6e75baa3",
       "src/routes/+layout.svelte": "sha256:860c8f76f4b627f1a77ee3b27ee21ad24b94611354eed8eddce08c820a1860df",
-      "src/routes/+page.svelte": "sha256:50cd37a4565a44024db9d9e239013203d399665d79667e9af3a9af4ef295e8d7",
+      "src/routes/+page.svelte": "sha256:94d93a49c5b126d07c4d6037aeda05a7841b11f36018cad31d175a2644efc493",
       "src/routes/getting-started/+page.svelte": "sha256:a8ee27d85d820d8092e6fe01a21ee105289f8b726eee7eef7548ce9ca0972172",
       "src/routes/settings/+page.svelte": "sha256:cd03dc2c0353fc62c6a3f6341c8f55bbe4d7ab21fc398de29f4920acffd0a7df",
       "src/routes/users/+page.svelte": "sha256:51d841d06859c8a175e2d2d42c128f732845f4d96a43ff0b54baf9b3bdf501c5",
@@ -223,8 +223,8 @@
       "list.svelte": "sha256:bc027f7e54459bd69b52925719fb4c277caf19a5769e37e78776f641e918d02e",
       "master-detail.svelte": "sha256:0826347e90c7d80fa90a37d8f3c2454fdd62fe72d21e15b9e167ff001a04393b"
     },
-    "helper": "sha256:bca02d2675b1abc1de2e9363120a3b113122247e39491aac4d4034c21e19b6be",
+    "helper": "sha256:a9f56b1087fbe89fbaf515abb410e6f17e0a04b1689a118f9efdf17606f8c1fe",
     "metadata": "sha256:900395b1eb0594135220d4777fd8c7a9aae60d326ca8c23c72efc59baf6a93ab",
-    "summary": "sha256:483e092dcf343e4622d116432c904d30e25bc0b3278b784d9eae519e36d3d15e"
+    "summary": "sha256:715d0c8a7420048f2a118eca3e1be2cd1858d6eed6ec18995ef7108bfd662ff4"
   }
 }

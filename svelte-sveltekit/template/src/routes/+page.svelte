@@ -11,7 +11,9 @@
 		ActivityFeed,
 		ActivityFeedItem,
 		QuickActions,
-		Paragraph
+		Paragraph,
+		Heading,
+		CodeBlock
 	} from '@keenmate/svelte-pure-admin';
 	__EXTRA_IMPORTS__
 </script>
@@ -149,3 +151,5 @@
 		</Card>
 	</Column>
 </Grid>
+
+__PROJECT_INFO__
