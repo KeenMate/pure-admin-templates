@@ -209,7 +209,7 @@
       "README.md": "sha256:b47a28697f16c78a8034af28923ff1151b2c0f6954956776d2c10a1febae6264",
       "src/App.svelte": "sha256:67d5e9c48a7d9d54b467061d1e8bbd67601133face315d873527ed78e8748d06",
       "src/main.ts": "sha256:8e6697d12d828faeac3afab70c72d9863fe71a867a9b0c74be17834bcfc924c5",
-      "src/routes/Dashboard.svelte": "sha256:895a6518fededcf9806c94d2c7b4d76ce66e79d5597d7fcb293fb640dfe8878f",
+      "src/routes/Dashboard.svelte": "sha256:7114dce59f525d10ba4ba339e45389914773bcec59cf09b114e1f6a3bcde78bf",
       "src/routes/GettingStarted.svelte": "sha256:e4036ff068514f5ea8f4a1afb3248c2454bc7da222b9b1dadcaf222b52f6b0a4",
       "src/routes/index.ts": "sha256:5ddbe50bb51146bf648d948a1038e81311263927cb407a3fc98670dd7e2839a0",
       "src/routes/Settings.svelte": "sha256:794f4f61469c84b56cc2cc8c6a572eb067907b92cf1befedbf84317493ba88fa",
@@ -226,6 +226,6 @@
     },
     "helper": "sha256:53707f160ab0596c92f7c9bc6c28d85bc9d40a6ab918163f1480386c9283b5c5",
     "metadata": "sha256:a9f313bce92a1261f342d9a863e3af8b2470f09295446f21d2f2dd9f94d1a50d",
-    "summary": "sha256:821062054071b087641c73123db64a6d2c86e8281935051e22ff6853b0185d95"
+    "summary": "sha256:8ad83b8351b6e951f14bd49c40418842cbd234eb0fc6f64897458f1c422b773b"
   }
 }
