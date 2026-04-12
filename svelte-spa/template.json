@@ -227,5 +227,6 @@
     "helper": "sha256:53707f160ab0596c92f7c9bc6c28d85bc9d40a6ab918163f1480386c9283b5c5",
     "metadata": "sha256:a9f313bce92a1261f342d9a863e3af8b2470f09295446f21d2f2dd9f94d1a50d",
     "summary": "sha256:8ad83b8351b6e951f14bd49c40418842cbd234eb0fc6f64897458f1c422b773b"
-  }
+  },
+  "defaultPages": []
 }

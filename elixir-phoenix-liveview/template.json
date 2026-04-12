@@ -281,5 +281,6 @@
     "helper": "sha256:ccea52952d8db8363ee1f14b4573723fd50c634aac27f161a0256e241a8cd6f9",
     "metadata": "sha256:fa3b1dbf2654251162befe4b8938faf2b3c8ac5ad166651a021249e2cacf99e0",
     "summary": "sha256:608a075335e2f4c8103e0c5e0be91d8f1e7b1a81a0c41d6ba612ac740928cd49"
-  }
+  },
+  "defaultPages": []
 }
