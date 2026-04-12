@@ -263,8 +263,8 @@
   ],
   "checksums": {
     "files": {
-      "lib/__APP_ID_SNAKE___web/components/layouts/app.html.heex": "sha256:5772f6a13e2adc25170ac2e86a2061feccff72115a86913840c8307563b7bfbd",
-      "lib/__APP_ID_SNAKE___web/components/layouts/root.html.heex": "sha256:0f749dece27a33b68ae454661ebcc38b06e78e2b118e94d37575e032092eebfa",
+      "lib/__APP_ID_SNAKE___web/components/layouts/app.html.heex": "sha256:35d017bd98944cb1d49b2f7fe7554c7752c8768e192e6e4667a71a64787ff4bb",
+      "lib/__APP_ID_SNAKE___web/components/layouts/root.html.heex": "sha256:c2bd39b6e0e583b630e1b9da2a866ad5a40a3d7e019646ef6cfeee06809b839d",
       "lib/__APP_ID_SNAKE___web/components/layouts.ex": "sha256:6cde656e155d749cd76e9c9c8619fa42538c952333d82b35678a4cb3473fadfe",
       "lib/__APP_ID_SNAKE___web/controllers/page_html/home.html.heex": "sha256:0a646d030c64bf3902b9d99f6d7838fc6bcb4a227c65999dd10e45119b21ce39",
       "lib/__APP_ID_SNAKE___web/nav.ex": "sha256:42c1b8a6f14b592852842f6c3d7b70e95ee50d2e20f160cb93d085bfb0e23a86",
@@ -280,7 +280,7 @@
     },
     "helper": "sha256:ccea52952d8db8363ee1f14b4573723fd50c634aac27f161a0256e241a8cd6f9",
     "metadata": "sha256:fa3b1dbf2654251162befe4b8938faf2b3c8ac5ad166651a021249e2cacf99e0",
-    "summary": "sha256:608a075335e2f4c8103e0c5e0be91d8f1e7b1a81a0c41d6ba612ac740928cd49"
+    "summary": "sha256:2d99a8649788a0956262eb7868b1068e3602db580c99d0c09027981457b1f211"
   },
   "defaultPages": []
 }

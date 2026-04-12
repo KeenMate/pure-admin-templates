@@ -35,6 +35,10 @@
   </.layout_inner>
 </.layout>
 
+<%!-- data-pa="settings-panel-component" --%>
+<.settings_panel default_theme="__DEFAULT_THEME__" />
+<%!-- /data-pa="settings-panel-component" --%>
+
 <%!-- data-pa="profile-panel-component" --%>
 <.profile_panel id="profile-panel" name="User" email="user@example.com" role="User">
   <div class="pa-tabs__panel pa-tabs__panel--active" data-profile-panel="profile">
@@ -52,3 +56,5 @@ __PROFILE_ITEMS__
   </:footer_>
 </.profile_panel>
 <%!-- /data-pa="profile-panel-component" --%>
+
+<.toast_container id="toasts" position="top-end" is_hook />
