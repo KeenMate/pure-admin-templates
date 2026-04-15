@@ -25,8 +25,8 @@ themes: ## Download Pure Admin themes via CLI
 themes-update: ## Re-download themes that have changed
 	npx @keenmate/pureadmin themes update
 
-ecto-create: ## Create the database
-	mix ecto.create
+ecto-create: ## Create the database (skipped if Ecto not installed)
+	@mix ecto.create 2>/dev/null || echo "  Ecto not installed, skipping ecto.create"
 
 ecto-reset: ## Drop and recreate the database
 	mix ecto.drop
