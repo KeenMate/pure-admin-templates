@@ -205,6 +205,12 @@
     },
     {
       "action": "patch",
+      "path": "config/config.exs",
+      "find": "url: [host: \"localhost\"]",
+      "replace": "url: [host: \"localhost\", port: 4000]"
+    },
+    {
+      "action": "patch",
       "path": "lib/__APP_ID_SNAKE___web/router.ex",
       "find": "plug :put_root_layout, html: {__APP_MODULE__Web.Layouts, :root}",
       "replace": "plug :put_root_layout, html: {__APP_MODULE__Web.Layouts, :root}\n    plug :put_layout, html: {__APP_MODULE__Web.Layouts, :app}\n    plug __APP_MODULE__Web.Nav"
