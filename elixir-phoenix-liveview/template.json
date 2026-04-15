@@ -121,10 +121,19 @@
       "cli": "--settings-panel"
     },
     "icons": {
-      "description": "Font Awesome icons via CDN",
+      "description": "Icon library (Font Awesome CDN or Heroicons built into Phoenix)",
       "isDefault": true,
-      "points": [
-        "font-awesome-cdn"
+      "points": [],
+      "cli": [
+        {
+          "name": "Font Awesome",
+          "flag": "--font-awesome",
+          "isDefault": true
+        },
+        {
+          "name": "Heroicons",
+          "flag": "--heroicons"
+        }
       ]
     },
     "floating-ui": {
@@ -263,10 +272,10 @@
   ],
   "checksums": {
     "files": {
-      "lib/__APP_ID_SNAKE___web/components/layouts/app.html.heex": "sha256:35d017bd98944cb1d49b2f7fe7554c7752c8768e192e6e4667a71a64787ff4bb",
-      "lib/__APP_ID_SNAKE___web/components/layouts/root.html.heex": "sha256:c2bd39b6e0e583b630e1b9da2a866ad5a40a3d7e019646ef6cfeee06809b839d",
+      "lib/__APP_ID_SNAKE___web/components/layouts/app.html.heex": "sha256:5729b2225b0c789def8b615be8e2a03d7327b8789fb3ff9e676366638f58f087",
+      "lib/__APP_ID_SNAKE___web/components/layouts/root.html.heex": "sha256:a9ecae18ffd6f81b2b02b5af2fafcb2f66353ab580ae950d8461318d222f58b8",
       "lib/__APP_ID_SNAKE___web/components/layouts.ex": "sha256:6cde656e155d749cd76e9c9c8619fa42538c952333d82b35678a4cb3473fadfe",
-      "lib/__APP_ID_SNAKE___web/controllers/page_html/home.html.heex": "sha256:0a646d030c64bf3902b9d99f6d7838fc6bcb4a227c65999dd10e45119b21ce39",
+      "lib/__APP_ID_SNAKE___web/controllers/page_html/home.html.heex": "sha256:a54457572d0ff00a0f6b226bbdfeb838808f7329c2da56e87b2e14ca32ca97da",
       "lib/__APP_ID_SNAKE___web/nav.ex": "sha256:42c1b8a6f14b592852842f6c3d7b70e95ee50d2e20f160cb93d085bfb0e23a86",
       "Makefile": "sha256:6ab1521d8262bc4cd97407085dcf68f443cb6e82322e814b7e02f3a02e2e8a51",
       "README.md": "sha256:630a054272df5e786ecd433f59d7b5521c383e59d144ed7237fb19cc3ad47ee9"
@@ -278,9 +287,9 @@
       "list_live.ex": "sha256:828ed8f4c1cd55457fb155e3e45addccfa5ce37f5d2e2bf08feb37da45fe8f0a",
       "master_detail_live.ex": "sha256:a8db9867570222d48608e869f2874d4fa69b8b3caff4ce7fffa97256b614fe0b"
     },
-    "helper": "sha256:ccea52952d8db8363ee1f14b4573723fd50c634aac27f161a0256e241a8cd6f9",
+    "helper": "sha256:aaff3ca10091a0ab0e688078c5f0ad53a143ccef35b2c46ab188083834d8ccaf",
     "metadata": "sha256:fa3b1dbf2654251162befe4b8938faf2b3c8ac5ad166651a021249e2cacf99e0",
-    "summary": "sha256:2d99a8649788a0956262eb7868b1068e3602db580c99d0c09027981457b1f211"
+    "summary": "sha256:65993a5dea818de44af152d4314a4eae9501fe3080e8a8e69055d105529814ed"
   },
   "defaultPages": []
 }

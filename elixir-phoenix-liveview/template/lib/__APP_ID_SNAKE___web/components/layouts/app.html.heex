@@ -19,7 +19,7 @@
   <.layout_inner>
     <.sidebar>
       <%!-- data-pa="sidebar-items" --%>
-      <.sidebar_item label="Dashboard" icon="fa-solid fa-gauge" href="/" is_active={assigns[:current_path] == "/"} />
+      <.sidebar_item label="Dashboard" icon="__ICON_DASHBOARD__" href="/" is_active={assigns[:current_path] == "/"} />
       <%!-- /data-pa="sidebar-items" --%>
     </.sidebar>
 
@@ -51,7 +51,7 @@ __PROFILE_ITEMS__
 
   <:footer_>
     <button class="pa-btn pa-btn--danger pa-btn--block">
-      <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+      __ICON:right-from-bracket__ Sign Out
     </button>
   </:footer_>
 </.profile_panel>

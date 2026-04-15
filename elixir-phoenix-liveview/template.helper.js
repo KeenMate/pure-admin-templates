@@ -40,17 +40,21 @@ module.exports = {
     helpers.setCopyright(ctx);
     helpers.setDefaultTheme(ctx);
 
+    // Icon resolver for this template's provider (font-awesome or heroicons)
+    const icon = (name) => helpers.resolveIconAttr(name, ctx.iconProvider);
+
     // Profile panel items — collect objects, render as Phoenix HEEx
     const profileItems = helpers.collectProfileItems(ctx);
     ctx.placeholders.PROFILE_ITEMS = profileItems.map(item =>
-      `        <.profile_nav_item href="${item.href}" icon="${item.icon}">${item.label}</.profile_nav_item>`
+      `        <.profile_nav_item href="${item.href}" icon="${icon(item.icon)}">${item.label}</.profile_nav_item>`
     ).join('\n');
 
-    // Brand — Phoenix uses runtime config (PureAdmin.Config.app_name), so we
-    // don't need a BRAND placeholder. But we expose the data for custom usage.
-    ctx.brand = helpers.collectBrand(ctx);
+    // Sidebar icon attrs (resolved per provider)
+    ctx.placeholders.ICON_DASHBOARD = icon('gauge');
 
-    // Footer — same, handled by PureAdmin.Config at runtime.
+    // Brand — Phoenix uses runtime config (PureAdmin.Config.app_name)
+    ctx.brand = helpers.collectBrand(ctx);
+    // Footer — handled by PureAdmin.Config at runtime
     ctx.footer = helpers.collectFooter(ctx);
   },
 
@@ -59,6 +63,14 @@ module.exports = {
    * Renders the project info summary for the home page.
    */
   prepareLate(ctx, helpers) {
+    // Icon CDN — only include Font Awesome CDN if FA is the provider.
+    // Heroicons ship with Phoenix (no CDN needed).
+    if (ctx.iconProvider === 'font-awesome') {
+      ctx.placeholders.ICON_CDN = '    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />';
+    } else {
+      ctx.placeholders.ICON_CDN = '    <%!-- Using Heroicons (built into Phoenix, no CDN needed) --%>';
+    }
+
     const summary = helpers.collectCreateSummary(ctx);
 
     // Features as badge-like lists
