@@ -19,7 +19,17 @@
   <.layout_inner>
     <.sidebar>
       <%!-- data-pa="sidebar-items" --%>
-      <.sidebar_item label="Dashboard" icon="__ICON_DASHBOARD__" href="/" is_active={assigns[:current_path] == "/"} />
+      <.sidebar_item label={gettext("Getting Started")} icon="__ICON_GETTING_STARTED__" href="/getting-started" is_active={assigns[:current_path] == "/getting-started"} />
+      <.sidebar_item label={gettext("Dashboard")} icon="__ICON_DASHBOARD__" href="/" is_active={assigns[:current_path] == "/"} />
+      <%!-- data-pa="demo-pages-sidebar" --%>
+      <.sidebar_submenu label={gettext("Management")} icon="__ICON_BRIEFCASE__" is_open={assigns[:current_path] in ["/users", "/settings"]}>
+        <.sidebar_item label={gettext("Users")} icon="__ICON_USERS__" href="/users" is_active={assigns[:current_path] == "/users"} />
+        <.sidebar_item label={gettext("Settings")} icon="__ICON_SETTINGS__" href="/settings" is_active={assigns[:current_path] == "/settings"} />
+      </.sidebar_submenu>
+      <%!-- /data-pa="demo-pages-sidebar" --%>
+      <%!-- data-pa="form-demo-sidebar" --%>
+      <.sidebar_item label={gettext("Form Demo")} icon="__ICON_FORM_DEMO__" href="/form-demo" is_active={assigns[:current_path] == "/form-demo"} />
+      <%!-- /data-pa="form-demo-sidebar" --%>
       <%!-- /data-pa="sidebar-items" --%>
     </.sidebar>
 
@@ -41,18 +51,14 @@
 
 <%!-- data-pa="profile-panel-component" --%>
 <.profile_panel id="profile-panel" name="User" email="user@example.com" role="User">
-  <div class="pa-tabs__panel pa-tabs__panel--active" data-profile-panel="profile">
-    <nav class="pa-profile-panel__nav">
-      <ul>
+  <:nav>
 __PROFILE_ITEMS__
-      </ul>
-    </nav>
-  </div>
+  </:nav>
 
   <:footer_>
-    <button class="pa-btn pa-btn--danger pa-btn--block">
-      __ICON:right-from-bracket__ Sign Out
-    </button>
+    <.button variant="danger" is_block>
+      __ICON:right-from-bracket__ {gettext("Sign Out")}
+    </.button>
   </:footer_>
 </.profile_panel>
 <%!-- /data-pa="profile-panel-component" --%>

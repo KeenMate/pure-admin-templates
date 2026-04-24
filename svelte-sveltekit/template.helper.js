@@ -46,28 +46,50 @@ module.exports = {
     // Themes config for pureadmin.json
     helpers.setThemesConfig(ctx);
 
-    // Project info summary for home page
+    // README profile blocks (org + app)
+    helpers.setProfiles(ctx);
+
+    // Project info summary for home page — rendered with the Pure Admin
+    // "Linear Minimal" data-display pattern: ultra-clean label/value rows,
+    // no decoration. Mirrors the README's App Profile section exactly:
+    // same field order, same naming, same _(source)_ provenance suffixes.
     const summary = helpers.collectCreateSummary(ctx);
-    const on = summary.featuresOn.map(f => `<Badge variant="success">${f}</Badge>`).join(' ');
-    const off = summary.featuresOff.map(f => `<Badge variant="secondary">${f}</Badge>`).join(' ');
-    const themes = summary.themes.map(t =>
-      t === summary.defaultTheme
-        ? `<Badge variant="primary">${t}</Badge>`
-        : `<Badge>${t}</Badge>`
-    ).join(' ');
+    const p = summary.provenance;
+    const themes = summary.themes
+      .map(t => t === summary.defaultTheme ? `<strong>${t}</strong>` : t)
+      .join(', ') || '<em>none</em>';
+
+    const field = (label, value, source) => {
+      if (value == null || value === '') return '';
+      const src = source ? ` <small class="text-color-2">(${source})</small>` : '';
+      return `\t\t<Field labelText="${label}">${value}${src}</Field>`;
+    };
 
     ctx.placeholders.PROJECT_INFO = [
       `<Card titleText="Project Info">`,
-      `\t<Heading level={4}>Template</Heading>`,
-      `\t<Paragraph><code>${summary.template}</code></Paragraph>`,
-      `\t<Heading level={4}>Features</Heading>`,
-      `\t<Paragraph>${on || '<em>none</em>'}</Paragraph>`,
-      summary.featuresOff.length > 0 ? `\t<Paragraph class="text-muted">Disabled: ${off}</Paragraph>` : '',
-      `\t<Heading level={4}>Themes</Heading>`,
-      `\t<Paragraph>${themes || '<em>none</em>'}</Paragraph>`,
-      `\t<Paragraph class="text-muted">Default: <strong>${summary.defaultTheme}</strong> (${summary.defaultMode})</Paragraph>`,
-      `\t<Heading level={4}>Created with</Heading>`,
-      `\t<CodeBlock language="bash">${summary.createCommand}</CodeBlock>`,
+      `\t<Fields isLinear hasBorder={false}>`,
+      field('App ID', summary.appId, p.appId),
+      field('Display name', summary.displayName, p.displayName),
+      field('Template', `<code>${summary.template}</code>`, p.template),
+      field('Preset', summary.preset || '<em>none</em>', p.preset),
+      field('Themes', themes, p.themes),
+      field('Default mode', summary.defaultMode, p.defaultMode),
+      field('Default variant', summary.defaultVariant, p.defaultVariant),
+      field('Icon provider', summary.iconProvider, p.iconProvider),
+      field('Package manager', summary.pm, p.pm),
+      field('Copyright', summary.copyright, p.copyright),
+      field('Logo', summary.logo),
+      field('Features enabled', summary.featuresOn.join(', ') || '<em>none</em>'),
+      summary.featuresOff.length > 0
+        ? field('Features disabled', `<span class="text-color-2">${summary.featuresOff.join(', ')}</span>`)
+        : '',
+      field('Generated pages', summary.pages.join(', ') || '<em>none</em>'),
+      summary.demoPages ? field('Demo pages', summary.demoPages) : '',
+      `\t</Fields>`,
+      `\t<div class="mt-3">`,
+      `\t\t<span class="text-color-2 text-sm">Created with</span>`,
+      `\t\t<CodeBlock language="bash">${summary.createCommand}</CodeBlock>`,
+      `\t</div>`,
       `</Card>`,
     ].filter(Boolean).join('\n');
   },

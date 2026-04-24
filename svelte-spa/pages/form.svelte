@@ -1,5 +1,16 @@
 <script lang="ts">
-	import { Heading, Card } from '@keenmate/svelte-pure-admin';
+	import {
+		_,
+		Heading,
+		Card,
+		Form,
+		FormGroup,
+		FormLabel,
+		Input,
+		Textarea,
+		Select,
+		Button
+	} from '@keenmate/svelte-pure-admin';
 
 	let formData = $state({
 		name: '',
@@ -10,36 +21,36 @@
 	function handleSubmit(e: Event) {
 		e.preventDefault();
 		console.log('Submit:', formData);
-		alert('Form submitted (demo)');
+		alert($_('app.forms.submitToast'));
 	}
 </script>
 
 <Heading level={1}>__PAGE_LABEL__</Heading>
 
 <Card titleText="__PAGE_LABEL__">
-	<form onsubmit={handleSubmit}>
-		<div class="pa-form-group">
-			<label class="pa-form-label" for="name">Name</label>
-			<input type="text" class="pa-input" id="name" bind:value={formData.name} placeholder="Enter name..." />
-		</div>
+	<Form onsubmit={handleSubmit}>
+		<FormGroup>
+			<FormLabel for="name">{$_('app.fields.name')}</FormLabel>
+			<Input id="name" bind:value={formData.name} placeholder={$_('app.forms.namePlaceholder')} />
+		</FormGroup>
 
-		<div class="pa-form-group">
-			<label class="pa-form-label" for="description">Description</label>
-			<textarea class="pa-textarea" id="description" bind:value={formData.description} placeholder="Enter description..." rows="3"></textarea>
-		</div>
+		<FormGroup>
+			<FormLabel for="description">{$_('app.fields.description')}</FormLabel>
+			<Textarea id="description" bind:value={formData.description} placeholder={$_('app.forms.descriptionPlaceholder')} rows={3} />
+		</FormGroup>
 
-		<div class="pa-form-group">
-			<label class="pa-form-label" for="status">Status</label>
-			<select class="pa-select" id="status" bind:value={formData.status}>
-				<option value="active">Active</option>
-				<option value="inactive">Inactive</option>
-				<option value="draft">Draft</option>
-			</select>
-		</div>
+		<FormGroup>
+			<FormLabel for="status">{$_('app.fields.status')}</FormLabel>
+			<Select id="status" bind:value={formData.status}>
+				<option value="active">{$_('app.status.active')}</option>
+				<option value="inactive">{$_('app.status.inactive')}</option>
+				<option value="draft">{$_('app.status.draft')}</option>
+			</Select>
+		</FormGroup>
 
-		<div class="pa-form-group" style="display: flex; gap: 0.8rem; justify-content: flex-end;">
-			<button type="button" class="pa-btn pa-btn--secondary">Cancel</button>
-			<button type="submit" class="pa-btn pa-btn--primary">Save</button>
-		</div>
-	</form>
+		<FormGroup class="d-flex justify-content-end gap-2">
+			<Button type="button" variant="secondary">{$_('app.forms.cancel')}</Button>
+			<Button type="submit" variant="primary">{$_('app.forms.save')}</Button>
+		</FormGroup>
+	</Form>
 </Card>

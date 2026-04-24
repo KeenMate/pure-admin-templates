@@ -2,6 +2,20 @@
 
 Built with [Svelte](https://svelte.dev) SPA and [Pure Admin](https://pureadmin.io).
 
+## Created With
+
+```bash
+__CREATE_COMMAND__
+```
+
+### Organization Profile
+
+__ORG_PROFILE__
+
+### App Profile
+
+__APP_PROFILE__
+
 ## Quick Start
 
 ```bash

@@ -1,0 +1,33 @@
+{
+	"app.dashboard.title": "Dashboard",
+	"app.dashboard.welcome.title": "Welcome",
+	"app.dashboard.welcome.body": "Your Pure Admin app is ready. Edit this page to get started.",
+	"app.dashboard.theme.title": "Theme",
+	"app.dashboard.theme.body": "Open the settings panel (gear icon) to switch between themes and modes.",
+	"app.dashboard.components.title": "Components",
+	"app.dashboard.components.body": "See the documentation for available components.",
+	"app.dashboard.components.linkText": "documentation",
+	"app.dashboard.components.linkUrl": "https://pureadmin.io/docs",
+
+	"app.detail.title": "Details",
+
+	"app.fields.id": "ID",
+	"app.fields.name": "Name",
+	"app.fields.description": "Description",
+	"app.fields.status": "Status",
+	"app.fields.actions": "Actions",
+
+	"app.forms.namePlaceholder": "Enter name...",
+	"app.forms.descriptionPlaceholder": "Enter description...",
+	"app.forms.cancel": "Cancel",
+	"app.forms.save": "Save",
+	"app.forms.submitToast": "Form submitted (demo)",
+
+	"app.list.view": "View",
+	"app.list.edit": "Edit",
+	"app.list.delete": "Delete",
+
+	"app.status.active": "Active",
+	"app.status.inactive": "Inactive",
+	"app.status.draft": "Draft"
+}

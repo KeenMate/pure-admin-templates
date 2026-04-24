@@ -164,6 +164,12 @@
         "footer-component",
         "footer-imports"
       ]
+    },
+    "demo-pages": {
+      "description": "Demo Users + Settings routes (sidebar + navbar links + route files). Pass --bare to skip and start with just / and /getting-started.",
+      "isDefault": true,
+      "cliDisable": "--bare",
+      "points": ["demo-pages-nav", "demo-pages-sidebar"]
     }
   },
   "pageTypes": {
@@ -194,6 +200,17 @@
       "route": "src/pages/{{entity}}.svelte"
     }
   },
+  "steps": [
+    { "action": "delete", "path": "src/routes/Users.svelte",    "unless": "demo-pages" },
+    { "action": "delete", "path": "src/routes/Settings.svelte", "unless": "demo-pages" },
+    {
+      "action": "patch",
+      "path": "src/routes/index.ts",
+      "find": "import Dashboard from './Dashboard.svelte';\nimport Users from './Users.svelte';\nimport Settings from './Settings.svelte';\nimport GettingStarted from './GettingStarted.svelte';\n\nexport const routes = {\n\t'/': Dashboard,\n\t'/getting-started': GettingStarted,\n\t'/users': Users,\n\t'/settings': Settings\n};",
+      "replace": "import Dashboard from './Dashboard.svelte';\nimport GettingStarted from './GettingStarted.svelte';\n\nexport const routes = {\n\t'/': Dashboard,\n\t'/getting-started': GettingStarted\n};",
+      "unless": "demo-pages"
+    }
+  ],
   "instructions": [
     "cd __APP_ID__",
     "__PM_RUN__ dev",

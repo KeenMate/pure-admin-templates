@@ -163,6 +163,12 @@
         "footer-component",
         "footer-imports"
       ]
+    },
+    "demo-pages": {
+      "description": "Demo Users + Settings routes (sidebar + navbar links + route files). Pass --bare to skip and start with just / and /getting-started.",
+      "isDefault": true,
+      "cliDisable": "--bare",
+      "points": ["demo-pages-nav", "demo-pages-sidebar"]
     }
   },
   "pageTypes": {
@@ -193,6 +199,10 @@
       "route": "src/routes/{{entity}}/+page.svelte"
     }
   },
+  "steps": [
+    { "action": "delete", "path": "src/routes/users",    "unless": "demo-pages" },
+    { "action": "delete", "path": "src/routes/settings", "unless": "demo-pages" }
+  ],
   "instructions": [
     "cd __APP_ID__",
     "__PM_RUN__ dev",

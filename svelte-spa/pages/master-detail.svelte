@@ -1,5 +1,15 @@
 <script lang="ts">
-	import { Heading, Card } from '@keenmate/svelte-pure-admin';
+	import {
+		_,
+		Heading,
+		Card,
+		Table,
+		Badge,
+		DetailView,
+		DetailPanel,
+		Fields,
+		Field
+	} from '@keenmate/svelte-pure-admin';
 
 	// TODO: Replace with real data source
 	const items = [
@@ -11,60 +21,56 @@
 
 	let selectedId = $state<number | null>(null);
 	const selected = $derived(items.find(i => i.id === selectedId));
+	const showPanel = $derived(selected != null);
+
+	function toggle(id: number) {
+		selectedId = selectedId === id ? null : id;
+	}
 </script>
 
 <Heading level={1}>__PAGE_LABEL__</Heading>
 
-<div class="pa-detail-view">
-	<div class="pa-detail-view__main">
+<DetailView show={showPanel} onclose={() => selectedId = null}>
+	{#snippet main()}
 		<Card>
-			<table class="pa-table pa-table--striped pa-table--hover">
+			<Table isStriped isHover>
 				<thead>
 					<tr>
-						<th>Name</th>
-						<th>Status</th>
+						<th>{$_('app.fields.name')}</th>
+						<th>{$_('app.fields.status')}</th>
 					</tr>
 				</thead>
 				<tbody>
 					{#each items as item}
 						<tr
 							class:is-selected={selectedId === item.id}
-							onclick={() => selectedId = selectedId === item.id ? null : item.id}
+							onclick={() => toggle(item.id)}
 							style="cursor: pointer;"
 						>
 							<td>{item.name}</td>
-							<td><span class="pa-badge pa-badge--success">{item.status}</span></td>
+							<td>
+								<Badge variant={item.status === 'Active' ? 'success' : 'secondary'}>
+									{item.status === 'Active' ? $_('app.status.active') : $_('app.status.inactive')}
+								</Badge>
+							</td>
 						</tr>
 					{/each}
 				</tbody>
-			</table>
+			</Table>
 		</Card>
-	</div>
+	{/snippet}
 
-	<div class="pa-detail-view__panel" class:pa-detail-view__panel--open={selected}>
-		{#if selected}
-			<div class="pa-detail-panel__content">
-				<div class="pa-detail-panel__header">
-					<h3 class="pa-detail-panel__title">{selected.name}</h3>
-					<button class="pa-detail-panel__close" onclick={() => selectedId = null}>&times;</button>
-				</div>
-				<div class="pa-detail-panel__body">
-					<div class="pa-fields pa-fields--horizontal pa-fields--bordered">
-						<div class="pa-field">
-							<div class="pa-field__label">ID</div>
-							<div class="pa-field__value">{selected.id}</div>
-						</div>
-						<div class="pa-field">
-							<div class="pa-field__label">Description</div>
-							<div class="pa-field__value">{selected.description}</div>
-						</div>
-						<div class="pa-field">
-							<div class="pa-field__label">Status</div>
-							<div class="pa-field__value"><span class="pa-badge pa-badge--success">{selected.status}</span></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		{/if}
-	</div>
-</div>
+	{#if selected}
+		<DetailPanel titleText={selected.name} onclose={() => selectedId = null}>
+			<Fields isHorizontal isBordered>
+				<Field labelText={$_('app.fields.id')} valueText={selected.id} />
+				<Field labelText={$_('app.fields.description')} valueText={selected.description} />
+				<Field labelText={$_('app.fields.status')}>
+					<Badge variant={selected.status === 'Active' ? 'success' : 'secondary'}>
+						{selected.status === 'Active' ? $_('app.status.active') : $_('app.status.inactive')}
+					</Badge>
+				</Field>
+			</Fields>
+		</DetailPanel>
+	{/if}
+</DetailView>

@@ -8,6 +8,14 @@ This project was scaffolded with the [PureAdmin CLI](https://www.npmjs.com/packa
 __CREATE_COMMAND__
 ```
 
+### Organization Profile
+
+__ORG_PROFILE__
+
+### App Profile
+
+__APP_PROFILE__
+
 ## Prerequisites
 
 - Elixir `~> 1.15`
@@ -143,6 +151,97 @@ Icons are provided by [Font Awesome 6](https://fontawesome.com) via CDN (configu
 
 Browse and search icons at **[icons.pureadmin.io](https://icons.pureadmin.io)** — a curated catalog with copy-to-clipboard class names across multiple icon libraries.
 
+## Internationalization (i18n)
+
+Two distinct categories of strings flow through two parallel pipes. They only look like one mechanism in this template because both ends happen to land in Gettext.
+
+```
+Your code:        gettext("Hello")
+                      │
+                      ▼
+                  Phoenix Gettext (unmodified)
+                      │
+                      ▼
+                  priv/gettext/<locale>/LC_MESSAGES/default.po
+
+
+Library code:     PureAdmin.Translations.t("pureAdmin.buttons.cancel")
+                      │
+                      ▼
+                  callback registered via   config :keen_pure_admin, translate: ...
+                      │
+                      ▼
+                  __APP_MODULE__Web.Translations.translate/2   ← lib/.../translations.ex
+                      │
+                      ▼  (this template's CHOICE — swap for DB / ETS / anything)
+                  Gettext.dgettext(__APP_MODULE__Web.Gettext, "pure_admin", key)
+                      │
+                      ▼
+                  priv/gettext/<locale>/LC_MESSAGES/pure_admin.po
+```
+
+### Pipe 1 — your app's strings
+
+Standard Phoenix Gettext. Wrap text in `gettext("...")`, run the usual `mix gettext.*` tasks. Nothing PureAdmin-specific — `translations.ex` doesn't touch this pipe at all.
+
+```heex
+<h1>{gettext("Welcome to __APP_NAME__")}</h1>
+<p>{gettext("Hello %{name}", name: @user.name)}</p>
+```
+
+### Pipe 2 — library strings (you can call them too)
+
+`keen_pure_admin` ships English defaults for `pureAdmin.*` keys — button labels, dialog text, settings panel, command palette, a11y. Reuse them from your own LiveViews so your custom UI stays consistent with the library when locales change:
+
+```elixir
+defmodule __APP_MODULE__Web.MyLive do
+  use __APP_MODULE__Web, :live_view
+  import PureAdmin.Translations, only: [t: 1, t: 2]
+
+  def render(assigns) do
+    ~H"""
+    <%!-- Same "Cancel" the library uses for its dialogs --%>
+    <.button>{t("pureAdmin.buttons.cancel")}</.button>
+
+    <%!-- With %{param} interpolation --%>
+    <p>{t("pureAdmin.pagination.pages", %{total: @count})}</p>
+    """
+  end
+end
+```
+
+If you only need a key once or twice and don't want the import, the fully-qualified call works the same: `PureAdmin.Translations.t("pureAdmin.buttons.save")`.
+
+### Swapping the backend
+
+`PureAdmin.Translations.t/2` calls a callback registered via `config :keen_pure_admin, translate: &...`. The library is agnostic — the callback can fetch from anywhere. This template's callback in `lib/__APP_ID_SNAKE___web/translations.ex` forwards to Gettext under the `pure_admin` domain so library strings live in the same `.po` structure as your app strings. Edit that file to swap the backend:
+
+```elixir
+# Sketch — replace the Gettext call with anything else.
+defmodule __APP_MODULE__Web.Translations do
+  def translate(key, params) do
+    case __APP_MODULE__.Translations.fetch(key, current_locale()) do
+      nil  -> nil   # falls back to library's English default
+      text -> PureAdmin.Translations.interpolate(text, params)
+    end
+  end
+end
+```
+
+### Adding a language
+
+```bash
+# 1. Wrap any new user-facing strings with gettext()
+mix gettext.extract                                # extract to .pot files
+mix gettext.merge priv/gettext --locale cs         # create cs/ translations
+
+# 2. Translate priv/gettext/cs/LC_MESSAGES/default.po (your app strings)
+#    and priv/gettext/cs/LC_MESSAGES/pure_admin.po (library overrides)
+
+# 3. Set the active locale at runtime (in a plug or LiveView mount/3):
+Gettext.put_locale(__APP_MODULE__Web.Gettext, "cs")
+```
+
 ## Project structure
 
 ```
@@ -157,7 +256,9 @@ __APP_ID__/
 ├── lib/__APP_ID_SNAKE___web/
 │   ├── components/layouts/       # root.html.heex + app.html.heex (PureAdmin layout)
 │   ├── controllers/              # PageController, etc.
-│   ├── live/                     # LiveView modules
+│   ├── live/                     # LiveView modules (incl. getting_started_live.ex)
+│   ├── nav.ex                    # Plug that puts current_path into assigns (for sidebar active state)
+│   ├── translations.ex           # keen_pure_admin → Gettext bridge (see i18n section)
 │   └── router.ex                 # Routes + browser pipeline
 ├── priv/static/themes/           # Downloaded Pure Admin themes (via CLI)
 └── Makefile                      # Standard dev targets

@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@keenmate/svelte-pure-admin": "^1.6.1",
+    "@keenmate/svelte-pure-admin": "^1.6.2",
     "@keenmate/pure-admin-core": "^2.3.5",
     "@keenmate/svelte-spa-router": "^5.1.1"
   },

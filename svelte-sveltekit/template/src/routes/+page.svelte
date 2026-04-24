@@ -8,12 +8,14 @@
 		Button,
 		Table,
 		TableResponsive,
-		ActivityFeed,
-		ActivityFeedItem,
-		QuickActions,
+		Timeline,
+		TimelineItem,
+		ButtonGroup,
 		Paragraph,
 		Heading,
-		CodeBlock
+		CodeBlock,
+		Fields,
+		Field
 	} from '@keenmate/svelte-pure-admin';
 	__EXTRA_IMPORTS__
 </script>
@@ -101,53 +103,29 @@
 
 	<Column size="100" lg="1-3">
 		<Card titleText="Recent Activity">
-			<ActivityFeed>
-				<ActivityFeedItem timeText="2 min ago">
-					{#snippet icon()}
-						<img src="https://ui-avatars.com/api/?name=John+D&background=0D8ABC&color=fff&size=32" alt="JD" style="border-radius: 50%;" />
-					{/snippet}
+			<Timeline variant="simple">
+				<TimelineItem variant="primary" isFilled timeText="2 min ago">
 					<strong>John Doe</strong> placed order #1006
-				</ActivityFeedItem>
-				<ActivityFeedItem timeText="15 min ago">
-					{#snippet icon()}
-						<img src="https://ui-avatars.com/api/?name=Jane+S&background=28a745&color=fff&size=32" alt="JS" style="border-radius: 50%;" />
-					{/snippet}
+				</TimelineItem>
+				<TimelineItem variant="success" isFilled timeText="15 min ago">
 					<strong>Jane Smith</strong> updated her profile
-				</ActivityFeedItem>
-				<ActivityFeedItem timeText="1 hour ago">
-					{#snippet icon()}
-						<img src="https://ui-avatars.com/api/?name=Bob+J&background=dc3545&color=fff&size=32" alt="BJ" style="border-radius: 50%;" />
-					{/snippet}
+				</TimelineItem>
+				<TimelineItem variant="danger" isFilled timeText="1 hour ago">
 					<strong>Bob Johnson</strong> cancelled order #998
-				</ActivityFeedItem>
-				<ActivityFeedItem timeText="3 hours ago">
-					{#snippet icon()}
-						<img src="https://ui-avatars.com/api/?name=Alice+W&background=ffc107&color=333&size=32" alt="AW" style="border-radius: 50%;" />
-					{/snippet}
+				</TimelineItem>
+				<TimelineItem variant="warning" timeText="3 hours ago">
 					<strong>Alice Williams</strong> signed up
-				</ActivityFeedItem>
-			</ActivityFeed>
+				</TimelineItem>
+			</Timeline>
 		</Card>
 
 		<Card titleText="Quick Actions" class="mt-4">
-			<QuickActions>
-				<Button variant="primary">
-					{#snippet icon()}__ICON:plus__{/snippet}
-					New Order
-				</Button>
-				<Button variant="secondary">
-					{#snippet icon()}__ICON:user-plus__{/snippet}
-					Add User
-				</Button>
-				<Button variant="info">
-					{#snippet icon()}__ICON:file-export__{/snippet}
-					Export
-				</Button>
-				<Button variant="success">
-					{#snippet icon()}__ICON:chart-bar__{/snippet}
-					Reports
-				</Button>
-			</QuickActions>
+			<ButtonGroup vertical>
+				<Button variant="primary" isBlock>New Order</Button>
+				<Button variant="secondary" isBlock>Add Customer</Button>
+				<Button variant="secondary" isBlock>Generate Report</Button>
+				<Button variant="secondary" isBlock>Export Data</Button>
+			</ButtonGroup>
 		</Card>
 	</Column>
 </Grid>

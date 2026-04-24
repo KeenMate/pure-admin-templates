@@ -69,24 +69,22 @@
 		<Table isCompact isHover isStriped>
 			<thead>
 				<tr>
+					<th class="col-auto">Actions</th>
 					<th>Name</th>
 					<th>Email</th>
 					<th>Role</th>
 					<th>Status</th>
 					<th>Joined</th>
-					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
 				{#each users as user}
 					<tr>
-						<td><strong>{user.name}</strong></td>
-						<td>{user.email}</td>
-						<td><Badge variant={roleVariant(user.role)}>{user.role}</Badge></td>
-						<td><Badge variant={statusVariant(user.status)}>{user.status}</Badge></td>
-						<td>{user.joined}</td>
-						<td>
+						<td class="col-auto">
 							<ButtonGroup>
+								<Button variant="primary" size="xs" isIconOnly titleText="View">
+									__ICON:eye__
+								</Button>
 								<Button variant="secondary" size="xs" isIconOnly titleText="Edit">
 									__ICON:pen__
 								</Button>
@@ -95,6 +93,11 @@
 								</Button>
 							</ButtonGroup>
 						</td>
+						<td><strong>{user.name}</strong></td>
+						<td>{user.email}</td>
+						<td><Badge variant={roleVariant(user.role)}>{user.role}</Badge></td>
+						<td><Badge variant={statusVariant(user.status)}>{user.status}</Badge></td>
+						<td>{user.joined}</td>
 					</tr>
 				{/each}
 			</tbody>

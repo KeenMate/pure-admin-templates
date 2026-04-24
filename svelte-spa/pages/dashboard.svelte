@@ -1,29 +1,38 @@
 <script lang="ts">
-	import { Heading, Card, Paragraph } from '@keenmate/svelte-pure-admin';
+	import {
+		_,
+		Heading,
+		Card,
+		Paragraph,
+		Grid,
+		Column,
+		Fields,
+		Field,
+		CodeBlock
+	} from '@keenmate/svelte-pure-admin';
 </script>
 
-<Heading level={1}>Dashboard</Heading>
+<Heading level={1}>{$_('app.dashboard.title')}</Heading>
 
-<div class="pa-row">
-	<div class="pa-col-100 pa-col-md-50 pa-col-lg-1-3">
-		<Card titleText="Welcome">
+<Grid>
+	<Column size="100" md="50" lg="1-3">
+		<Card titleText={$_('app.dashboard.welcome.title')}>
+			<Paragraph>{$_('app.dashboard.welcome.body')}</Paragraph>
+		</Card>
+	</Column>
+	<Column size="100" md="50" lg="1-3">
+		<Card titleText={$_('app.dashboard.theme.title')}>
+			<Paragraph>{$_('app.dashboard.theme.body')}</Paragraph>
+		</Card>
+	</Column>
+	<Column size="100" md="50" lg="1-3">
+		<Card titleText={$_('app.dashboard.components.title')}>
 			<Paragraph>
-				Your Pure Admin app is ready. Edit this page to get started.
+				{$_('app.dashboard.components.body')}
+				<a href={$_('app.dashboard.components.linkUrl')}>{$_('app.dashboard.components.linkText')}</a>
 			</Paragraph>
 		</Card>
-	</div>
-	<div class="pa-col-100 pa-col-md-50 pa-col-lg-1-3">
-		<Card titleText="Theme">
-			<Paragraph>
-				Open the settings panel (gear icon) to switch between themes and modes.
-			</Paragraph>
-		</Card>
-	</div>
-	<div class="pa-col-100 pa-col-md-50 pa-col-lg-1-3">
-		<Card titleText="Components">
-			<Paragraph>
-				See the <a href="https://pureadmin.io/docs">documentation</a> for available components.
-			</Paragraph>
-		</Card>
-	</div>
-</div>
+	</Column>
+</Grid>
+
+__PROJECT_INFO__

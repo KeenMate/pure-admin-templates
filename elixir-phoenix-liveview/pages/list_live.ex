@@ -15,13 +15,17 @@ defmodule __APP_MODULE__Web.__PAGE_MODULE__Live do
     ~H"""
     <.card has_padding={false} title_text="__PAGE_LABEL__">
       <.table rows={@items}>
-        <:col :let={item} label="ID">{item.id}</:col>
-        <:col :let={item} label="Name">{item.name}</:col>
-        <:col :let={item} label="Status">
-          <.badge variant={item.status_variant}>{item.status}</.badge>
+        <:col :let={_item} label={gettext("Actions")} class="col-auto">
+          <.button_group>
+            <.button variant="primary" size="xs" is_icon_only title={gettext("View")}>👁️</.button>
+            <.button variant="secondary" size="xs" is_icon_only title={gettext("Edit")}>✏️</.button>
+            <.button variant="danger" size="xs" is_icon_only title={gettext("Delete")}>🗑️</.button>
+          </.button_group>
         </:col>
-        <:col :let={item} label="Actions">
-          <.button variant="secondary" size="sm">View</.button>
+        <:col :let={item} label={gettext("ID")}>{item.id}</:col>
+        <:col :let={item} label={gettext("Name")}>{item.name}</:col>
+        <:col :let={item} label={gettext("Status")}>
+          <.badge variant={item.status_variant}>{item.status}</.badge>
         </:col>
       </.table>
     </.card>

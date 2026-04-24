@@ -25,6 +25,7 @@
 		// data-pa="profile-imports"
 		ProfilePanel,
 		ProfilePanelNavItem,
+		ProfileButton,
 		Button,
 		// /data-pa="profile-imports"
 	} from '@keenmate/svelte-pure-admin';
@@ -32,7 +33,10 @@
 	import Router, { location } from '@keenmate/svelte-spa-router';
 	import { onMount } from 'svelte';
 	import { routes } from './routes';
+	import { setupI18n } from './lib/i18n-setup';
 	__EXTRA_IMPORTS__
+
+	setupI18n();
 
 	let sidebarHidden = $state(
 		typeof localStorage !== 'undefined' && localStorage.getItem('sidebar-hidden') === 'true'
@@ -112,16 +116,17 @@
 
 		{#snippet navEnd()}
 			<li><a href="#/">Dashboard</a></li>
+			<!-- data-pa="demo-pages-nav" -->
 			<li><a href="#/users">Users</a></li>
 			<li><a href="#/settings">Settings</a></li>
+			<!-- /data-pa="demo-pages-nav" -->
 		{/snippet}
 
 		<!-- data-pa="navbar-profile-snippet" -->
 		{#snippet profile()}
-			<button class="pa-header__profile-btn" onclick={toggleProfilePanel} aria-label="User Profile">
-				<span class="pa-btn__icon">👤</span>
-				<span class="pa-header__profile-name">__USER_NAME__</span>
-			</button>
+			<ProfileButton name="__USER_NAME__" onclick={toggleProfilePanel}>
+				{#snippet icon()}👤{/snippet}
+			</ProfileButton>
 		{/snippet}
 		<!-- /data-pa="navbar-profile-snippet" -->
 	</Navbar>
@@ -138,6 +143,7 @@
 				<SidebarItem href="#/" labelText="Dashboard" active={currentPath === '/'}>
 					{#snippet icon()}__ICON:chart-line__{/snippet}
 				</SidebarItem>
+				<!-- data-pa="demo-pages-sidebar" -->
 				<SidebarItem labelText="Management" hasSubmenu>
 					{#snippet icon()}__ICON:briefcase__{/snippet}
 					{#snippet submenu()}
@@ -149,6 +155,7 @@
 						</SidebarItem>
 					{/snippet}
 				</SidebarItem>
+				<!-- /data-pa="demo-pages-sidebar" -->
 				<!-- /data-pa="sidebar-items" -->
 			</Sidebar>
 			<!-- /data-pa="sidebar-component" -->

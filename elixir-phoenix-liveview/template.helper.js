@@ -49,8 +49,14 @@ module.exports = {
       `        <.profile_nav_item href="${item.href}" icon="${icon(item.icon)}">${item.label}</.profile_nav_item>`
     ).join('\n');
 
-    // Sidebar icon attrs (resolved per provider)
+    // Sidebar icon attrs (resolved per provider — string for `icon=` attr,
+    // unlike __ICON:name__ which expands to inline markup)
+    ctx.placeholders.ICON_GETTING_STARTED = icon('rocket');
     ctx.placeholders.ICON_DASHBOARD = icon('gauge');
+    ctx.placeholders.ICON_BRIEFCASE = icon('briefcase');
+    ctx.placeholders.ICON_USERS = icon('users');
+    ctx.placeholders.ICON_SETTINGS = icon('settings');
+    ctx.placeholders.ICON_FORM_DEMO = icon('pen-to-square');
 
     // Brand — Phoenix uses runtime config (PureAdmin.Config.app_name)
     ctx.brand = helpers.collectBrand(ctx);
@@ -71,29 +77,50 @@ module.exports = {
       ctx.placeholders.ICON_CDN = '    <%!-- Using Heroicons (built into Phoenix, no CDN needed) --%>';
     }
 
-    const summary = helpers.collectCreateSummary(ctx);
+    // README profile blocks (org + app)
+    helpers.setProfiles(ctx);
 
-    // Features as badge-like lists
-    const on = summary.featuresOn.map(f => `<.badge variant="success">${f}</.badge>`).join(' ');
-    const off = summary.featuresOff.map(f => `<.badge variant="secondary">${f}</.badge>`).join(' ');
-    const themes = summary.themes.map(t =>
-      t === summary.defaultTheme
-        ? `<.badge variant="primary">${t}</.badge>`
-        : `<.badge>${t}</.badge>`
-    ).join(' ');
+    // Project info summary for home page — rendered with the Pure Admin
+    // "Linear Minimal" data-display pattern: ultra-clean label/value rows,
+    // no decoration. Mirrors the README's App Profile section exactly:
+    // same field order, same naming, same _(source)_ provenance suffixes.
+    const summary = helpers.collectCreateSummary(ctx);
+    const p = summary.provenance;
+    const themes = summary.themes
+      .map(t => t === summary.defaultTheme ? `<strong>${t}</strong>` : t)
+      .join(', ') || '<em>none</em>';
+
+    const field = (label, value, source) => {
+      if (value == null || value === '') return '';
+      const src = source ? ` <small class="text-color-2">(${source})</small>` : '';
+      return `    <.field label="${label}">${value}${src}</.field>`;
+    };
 
     ctx.placeholders.PROJECT_INFO = [
       `<.card title_text="Project Info">`,
-      `  <h4>Template</h4>`,
-      `  <p><code>${summary.template}</code></p>`,
-      `  <h4>Features</h4>`,
-      `  <p>${on || '<em>none</em>'}</p>`,
-      summary.featuresOff.length > 0 ? `  <p class="text-muted">Disabled: ${off}</p>` : '',
-      `  <h4>Themes</h4>`,
-      `  <p>${themes || '<em>none</em>'}</p>`,
-      `  <p class="text-muted">Default: <strong>${summary.defaultTheme}</strong> (${summary.defaultMode})</p>`,
-      `  <h4>Created with</h4>`,
-      `  <.code_block language="bash">${summary.createCommand}</.code_block>`,
+      `  <.fields is_linear is_no_border>`,
+      field('App ID', summary.appId, p.appId),
+      field('Display name', summary.displayName, p.displayName),
+      field('Template', `<code>${summary.template}</code>`, p.template),
+      field('Preset', summary.preset || '<em>none</em>', p.preset),
+      field('Themes', themes, p.themes),
+      field('Default mode', summary.defaultMode, p.defaultMode),
+      field('Default variant', summary.defaultVariant, p.defaultVariant),
+      field('Icon provider', summary.iconProvider, p.iconProvider),
+      field('Package manager', summary.pm, p.pm),
+      field('Copyright', summary.copyright, p.copyright),
+      field('Logo', summary.logo),
+      field('Features enabled', summary.featuresOn.join(', ') || '<em>none</em>'),
+      summary.featuresOff.length > 0
+        ? field('Features disabled', `<span class="text-color-2">${summary.featuresOff.join(', ')}</span>`)
+        : '',
+      field('Generated pages', summary.pages.join(', ') || '<em>none</em>'),
+      summary.demoPages ? field('Demo pages', summary.demoPages) : '',
+      `  </.fields>`,
+      `  <div class="mt-3">`,
+      `    <span class="text-color-2 text-sm">Created with</span>`,
+      `    <.code_block language="bash">${summary.createCommand}</.code_block>`,
+      `  </div>`,
       `</.card>`,
     ].filter(Boolean).join('\n');
   },

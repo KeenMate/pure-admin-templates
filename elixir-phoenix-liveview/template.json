@@ -76,11 +76,9 @@
       "scaffoldFlag": "--no-dashboard"
     },
     "gettext": {
-      "description": "Gettext for i18n",
-      "isDefault": true,
-      "points": [],
-      "cli": "--no-gettext",
-      "scaffoldFlag": "--no-gettext"
+      "description": "Gettext for i18n (required — template uses gettext() in app.html.heex / home.html.heex / dashboard_live.ex and routes keen_pure_admin's pureAdmin.* keys through Gettext.dgettext under the \"pure_admin\" domain)",
+      "isRequired": true,
+      "points": []
     },
     "navbar": {
       "description": "Top navigation bar with burger menu",
@@ -94,6 +92,21 @@
       "isRequired": true,
       "points": [
         "sidebar-component"
+      ]
+    },
+    "demo-pages": {
+      "description": "Demo Users + Settings LiveViews (sidebar entries + routes + LiveView modules). Pass --bare to skip and start with just / and /getting-started.",
+      "isDefault": true,
+      "cliDisable": "--bare",
+      "points": [
+        "demo-pages-sidebar"
+      ]
+    },
+    "form-demo": {
+      "description": "Phoenix/LiveView form demo with per-session ETS cache (FormCache + Sweeper + SessionPlug + FormDemoLive). Showcases <.simple_form> + field={@form[:x]} binding, inline edit, toast+undo delete, popconfirm bulk clear, relative timestamps via PureAdmin.DateTime.",
+      "cli": "--form-demo",
+      "points": [
+        "form-demo-sidebar"
       ]
     },
     "footer": {
@@ -187,7 +200,7 @@
       "op": "addDependency",
       "args": [
         "keen_pure_admin",
-        "~> 1.0"
+        "~> 1.1"
       ]
     },
     {
@@ -217,6 +230,18 @@
     },
     {
       "action": "patch",
+      "path": "lib/__APP_ID_SNAKE___web/router.ex",
+      "find": "get \"/\", PageController, :home",
+      "replace": "get \"/\", PageController, :home\n    live \"/getting-started\", GettingStartedLive\n    live \"/users\", UsersLive\n    live \"/settings\", SettingsLive"
+    },
+    {
+      "action": "patch",
+      "path": "lib/__APP_ID_SNAKE___web.ex",
+      "find": "      use Phoenix.LiveView\n\n      unquote(html_helpers())",
+      "replace": "      use Phoenix.LiveView,\n        layout: {__APP_MODULE__Web.Layouts, :app}\n\n      unquote(html_helpers())"
+    },
+    {
+      "action": "patch",
       "path": "assets/js/app.js",
       "find": "import {hooks as colocatedHooks} from \"phoenix-colocated/__APP_ID_SNAKE__\"",
       "replace": "import {hooks as colocatedHooks} from \"phoenix-colocated/__APP_ID_SNAKE__\"\nimport {PureAdminHooks} from \"keen_pure_admin\""
@@ -236,6 +261,23 @@
       "path": "priv/static/assets/default.css"
     },
     {
+      "action": "delete",
+      "path": "lib/__APP_ID_SNAKE___web/live/users_live.ex",
+      "unless": "demo-pages"
+    },
+    {
+      "action": "delete",
+      "path": "lib/__APP_ID_SNAKE___web/live/settings_live.ex",
+      "unless": "demo-pages"
+    },
+    {
+      "action": "patch",
+      "path": "lib/__APP_ID_SNAKE___web/router.ex",
+      "find": "live \"/getting-started\", GettingStartedLive\n    live \"/users\", UsersLive\n    live \"/settings\", SettingsLive",
+      "replace": "live \"/getting-started\", GettingStartedLive",
+      "unless": "demo-pages"
+    },
+    {
       "action": "call",
       "op": "setPureAdminConfig",
       "args": [
@@ -251,7 +293,7 @@
       "action": "patch",
       "path": "config/config.exs",
       "find": "import_config \"#{config_env()}.exs\"",
-      "replace": "import_config \"#{config_env()}.exs\"\n\n# Local overrides — gitignored. Create config/.local.exs to override\n# DB credentials, port, or any other dev-only setting.\nFile.regular?(\"config/.local.exs\") && import_config(\".local.exs\")"
+      "replace": "# keen_pure_admin translation hook — routes the library's pureAdmin.* keys\n# through Gettext under the \"pure_admin\" domain. Returns nil to fall through\n# to English defaults. See lib/__APP_ID_SNAKE___web/translations.ex for details.\nconfig :keen_pure_admin,\n  translate: &__APP_MODULE__Web.Translations.translate/2\n\nimport_config \"#{config_env()}.exs\"\n\n# Local overrides — gitignored. Create config/.local.exs to override\n# DB credentials, port, or any other dev-only setting.\nFile.regular?(\"config/.local.exs\") && import_config(\".local.exs\")"
     },
     {
       "action": "patch",
@@ -264,6 +306,47 @@
       "path": ".gitignore",
       "find": "# The directory Mix downloads your dependencies sources to.",
       "replace": "# Local Phoenix config override (DB credentials, custom port, etc.)\nconfig/.local.exs\n\n# The directory Mix downloads your dependencies sources to."
+    },
+    {
+      "action": "delete",
+      "path": "lib/__APP_ID_SNAKE__/form_cache.ex",
+      "unless": "form-demo"
+    },
+    {
+      "action": "delete",
+      "path": "lib/__APP_ID_SNAKE__/form_cache/sweeper.ex",
+      "unless": "form-demo"
+    },
+    {
+      "action": "delete",
+      "path": "lib/__APP_ID_SNAKE___web/session_plug.ex",
+      "unless": "form-demo"
+    },
+    {
+      "action": "delete",
+      "path": "lib/__APP_ID_SNAKE___web/live/form_demo_live.ex",
+      "unless": "form-demo"
+    },
+    {
+      "action": "patch",
+      "path": "lib/__APP_ID_SNAKE__/application.ex",
+      "find": "{Phoenix.PubSub, name: __APP_MODULE__.PubSub},",
+      "replace": "{Phoenix.PubSub, name: __APP_MODULE__.PubSub},\n      __APP_MODULE__.FormCache.Sweeper,",
+      "if": "form-demo"
+    },
+    {
+      "action": "patch",
+      "path": "lib/__APP_ID_SNAKE___web/router.ex",
+      "find": "plug :put_secure_browser_headers",
+      "replace": "plug :put_secure_browser_headers\n    plug __APP_MODULE__Web.SessionPlug",
+      "if": "form-demo"
+    },
+    {
+      "action": "patch",
+      "path": "lib/__APP_ID_SNAKE___web/router.ex",
+      "find": "live \"/getting-started\", GettingStartedLive",
+      "replace": "live \"/getting-started\", GettingStartedLive\n    live \"/form-demo\", FormDemoLive",
+      "if": "form-demo"
     }
   ],
   "instructions": [
@@ -278,24 +361,32 @@
   ],
   "checksums": {
     "files": {
-      "lib/__APP_ID_SNAKE___web/components/layouts/app.html.heex": "sha256:5729b2225b0c789def8b615be8e2a03d7327b8789fb3ff9e676366638f58f087",
-      "lib/__APP_ID_SNAKE___web/components/layouts/root.html.heex": "sha256:a9ecae18ffd6f81b2b02b5af2fafcb2f66353ab580ae950d8461318d222f58b8",
+      "lib/__APP_ID_SNAKE__/form_cache/sweeper.ex": "sha256:77fc6ed9ca46d3374a1e2d680f35bf0e0c5bcfe6e04f12a379bd20451219468d",
+      "lib/__APP_ID_SNAKE__/form_cache.ex": "sha256:1fc0b0f70b0754e1d4963b6e1b49ed590c93aaf4ceae1a7cd84b13247ec2ffca",
+      "lib/__APP_ID_SNAKE___web/components/layouts/app.html.heex": "sha256:0145f14a6018f500917ed81cb70c3357f79824720606a747c9f0aaa0273cb808",
+      "lib/__APP_ID_SNAKE___web/components/layouts/root.html.heex": "sha256:46c917cc020aa2defcd6dc5e2f4157e053414c6d4363d6e1e157893a0daab9dd",
       "lib/__APP_ID_SNAKE___web/components/layouts.ex": "sha256:6cde656e155d749cd76e9c9c8619fa42538c952333d82b35678a4cb3473fadfe",
-      "lib/__APP_ID_SNAKE___web/controllers/page_html/home.html.heex": "sha256:a54457572d0ff00a0f6b226bbdfeb838808f7329c2da56e87b2e14ca32ca97da",
+      "lib/__APP_ID_SNAKE___web/controllers/page_html/home.html.heex": "sha256:148b79276cd0a5eccb6f73c6184818ceae3ee7cf66728a441f70634450b1681f",
+      "lib/__APP_ID_SNAKE___web/live/form_demo_live.ex": "sha256:66dd55523ffe76d079f3eba3962b59c574f4522aa0f3bd90b2b27aee646056a2",
+      "lib/__APP_ID_SNAKE___web/live/getting_started_live.ex": "sha256:3aaf6defc997e33a6faaa4c83df6ba2e0c38462b5d6497824c7360b764533b8a",
+      "lib/__APP_ID_SNAKE___web/live/settings_live.ex": "sha256:5c020ffbcf8a350c0001737f827b6e100136a27d3cf0b7ccb7e54c3db99600e0",
+      "lib/__APP_ID_SNAKE___web/live/users_live.ex": "sha256:2706dd2c4e263de49136ef2a958a7a5eb47769b08755d3a6d089b0022001fb73",
       "lib/__APP_ID_SNAKE___web/nav.ex": "sha256:42c1b8a6f14b592852842f6c3d7b70e95ee50d2e20f160cb93d085bfb0e23a86",
+      "lib/__APP_ID_SNAKE___web/session_plug.ex": "sha256:5f8c8335feccf0e22ef7d3715111eb627a320393747350e24387c06ab223a7f8",
+      "lib/__APP_ID_SNAKE___web/translations.ex": "sha256:0b3e51fa701f04a8c0f3f5239e0ff2ffbe7e0c499e755d345832e725e615dbd3",
       "Makefile": "sha256:3a3581a3243a15849a72b0072aa0b3d4b38d69d676cab584b100659892d453b0",
-      "README.md": "sha256:630a054272df5e786ecd433f59d7b5521c383e59d144ed7237fb19cc3ad47ee9"
+      "README.md": "sha256:31f8c2a59b5cb871af70719b988fb36c4b9f3fc5fd078e775c9e588f5cca152e"
     },
     "pages": {
-      "dashboard_live.ex": "sha256:a8dad1f727f97de399c18307bcd177acb9213345046e8a06aa30007327f1cf4a",
+      "dashboard_live.ex": "sha256:c41f912a33324508d0114eec34a7fd8c809a18605125268933dd4118f2e93c66",
       "detail_live.ex": "sha256:740213c22eac2ccc58e16ffc36b6761655686a665fa25c06416d2ae951235bc9",
-      "form_live.ex": "sha256:d035023d721d58d1e3edffa2135087ec3edb410f2cdc40fe24972aa977e53e2c",
-      "list_live.ex": "sha256:828ed8f4c1cd55457fb155e3e45addccfa5ce37f5d2e2bf08feb37da45fe8f0a",
+      "form_live.ex": "sha256:e4145c41a9a388489f97ce402dfd7e10d12f7b51edf99436de66aff78289f4c3",
+      "list_live.ex": "sha256:c3b16ab1143402f43bc29b148dbee7f425999c5ef741cc4848572ec31e337bcc",
       "master_detail_live.ex": "sha256:a8db9867570222d48608e869f2874d4fa69b8b3caff4ce7fffa97256b614fe0b"
     },
-    "helper": "sha256:aaff3ca10091a0ab0e688078c5f0ad53a143ccef35b2c46ab188083834d8ccaf",
+    "helper": "sha256:9caf64902d93e4efa211689a9e4c68fb7584a5c9531c8d26c3aa3a0c52bd3ff3",
     "metadata": "sha256:fa3b1dbf2654251162befe4b8938faf2b3c8ac5ad166651a021249e2cacf99e0",
-    "summary": "sha256:9900488fd37e186e1fec64d8129865af0d346f2d8f30154df2009dc59ef6ceb0"
+    "summary": "sha256:a282098fc38a5ec0f30bd164c7458963d3b9a631b0cfe73e24eca67d2ef6c247"
   },
   "defaultPages": []
 }
