@@ -53,7 +53,8 @@ __APP_ID__/
 ├── static/
 │   └── themes/                  # Downloaded theme CSS (corporate, audi, dark, ...)
 ├── package.json
-├── pureadmin.json               # Theme configuration
+├── pureadmin.json               # Theme declarations (hand-edited, committed)
+├── pureadmin.lock.json          # Resolved theme versions (tool-managed, committed)
 ├── svelte.config.js             # SvelteKit config
 ├── vite.config.ts               # Vite config
 ├── tsconfig.json                # TypeScript config
@@ -71,11 +72,23 @@ __APP_ID__/
 
 ## Themes
 
-Themes are managed via `pureadmin.json`. To add or update themes:
+Themes are declared in `pureadmin.json` (committed) and pinned in
+`pureadmin.lock.json` (committed, tool-managed). To add a new theme:
 
 ```bash
-__PM_EXEC__ pureadmin themes audi dark express
-__PM_EXEC__ pureadmin update
+__PM_EXEC__ pureadmin themes add audi
+```
+
+To bump every declared theme to the latest compatible version:
+
+```bash
+__PM_EXEC__ pureadmin themes update
+```
+
+On a fresh clone or in CI, install the locked versions:
+
+```bash
+__PM_EXEC__ pureadmin themes ci
 ```
 
 Theme CSS is served from `static/themes/` and loaded via `<link>` in `app.html`.

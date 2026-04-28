@@ -21,6 +21,9 @@
     "command": "npx sv create __APP_ID__ --template minimal --types ts --no-add-ons --no-install",
     "fallback": "npm create svelte@latest __APP_ID__ -- --template skeleton --types ts"
   },
+  "themeSetup": {
+    "themesDir": "static/themes"
+  },
   "dependencies": {
     "@keenmate/svelte-pure-admin": "latest",
     "@keenmate/pure-admin-core": "latest"
@@ -213,7 +216,6 @@
       "CHANGELOG.md": "sha256:f95da2199a404959bf927dc3ae6570a41b3bdb54ef5b1b0fbf8aa0d4e97a73ec",
       "Makefile": "sha256:058badd5fb2e42e85e497e0164e4f9d9d27f7165945503e617fa5339c5638cce",
       "package.json": "sha256:61d7558757ad39e33d5d6a965c8428044c29b8c386a4eb475208193c178860ed",
-      "pureadmin.json": "sha256:c1c4b3e844a972adf425de9074859c4698664b3d72649e196a48b64fdde0731b",
       "README.md": "sha256:562c63f39b6bb27d393145a3c436e6d1e3416334365197135e8ed0ac1f293e6a",
       "src/app.css": "sha256:1c0b34ff0b9907d25a9729081bb1737d0489af714a3da2f1de11eb6642a695a6",
       "src/app.html": "sha256:1ab563de36b899f2273a94ca36d01b19eb773998fad4af003143f4de6e75baa3",

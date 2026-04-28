@@ -21,6 +21,9 @@
     "command": "npm create vite@latest __APP_ID__ -- --template svelte-ts",
     "fallback": "npm create vite@latest __APP_ID__ -- --template svelte-ts"
   },
+  "themeSetup": {
+    "themesDir": "public/themes"
+  },
   "dependencies": {
     "@keenmate/svelte-pure-admin": "latest",
     "@keenmate/pure-admin-core": "latest",
@@ -222,7 +225,6 @@
       "index.html": "sha256:2b32ac35ad93f788ceb1fe3503a833f9d6090c204ffe657537ee19a108b4b37e",
       "Makefile": "sha256:22d6c2d3c8b888337e96ffb9d0cf4147485120abb8e603707bd6f77a4f9b9bbd",
       "package.json": "sha256:39ba6a75c7eac33923b932b4584dd775bda793020c9074b8112ac4fe4ff3c00c",
-      "pureadmin.json": "sha256:2fb8e7df4165736cfaad1c23d2455fb62a4619e60578d49780dcff925a8f1856",
       "README.md": "sha256:b47a28697f16c78a8034af28923ff1151b2c0f6954956776d2c10a1febae6264",
       "src/App.svelte": "sha256:67d5e9c48a7d9d54b467061d1e8bbd67601133face315d873527ed78e8748d06",
       "src/main.ts": "sha256:8e6697d12d828faeac3afab70c72d9863fe71a867a9b0c74be17834bcfc924c5",

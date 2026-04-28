@@ -118,14 +118,18 @@ Themes are managed by the PureAdmin CLI. Each theme is a self-contained CSS pack
 
 ### Installed themes
 
-Configured themes are listed in `pureadmin.json`. To add more:
+Configured themes are declared in `pureadmin.json` and pinned in
+`pureadmin.lock.json` (both committed). To add more:
 
 ```bash
-# Add one or more themes to this project
-npx @keenmate/pureadmin themes add corporate express dark --dir priv/static/themes
+# Add one or more themes to this project (writes both pureadmin.json + lock)
+npx @keenmate/pureadmin themes add corporate express dark
 
-# Re-download only themes whose content has changed
+# Bump every declared theme to the latest compatible version
 npx @keenmate/pureadmin themes update
+
+# On a fresh clone or in CI, install the locked versions exactly
+npx @keenmate/pureadmin themes ci
 ```
 
 Browse all available themes at **[pureadmin.io](https://pureadmin.io)**.
