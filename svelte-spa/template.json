@@ -179,28 +179,28 @@
     "dashboard": {
       "file": "pages/dashboard.svelte",
       "description": "Dashboard with stats and charts",
-      "route": "src/pages/Dashboard.svelte"
+      "route": "src/routes/Dashboard.svelte"
     },
     "list": {
       "file": "pages/list.svelte",
       "description": "Data table with search and pagination",
-      "route": "src/pages/{{entity}}.svelte"
+      "route": "src/routes/{{module}}.svelte"
     },
     "detail": {
       "file": "pages/detail.svelte",
       "description": "Single record detail view",
-      "route": "src/pages/{{entity}}Detail.svelte",
+      "route": "src/routes/{{module}}Detail.svelte",
       "sidebar": false
     },
     "form": {
       "file": "pages/form.svelte",
       "description": "Create/edit form",
-      "route": "src/pages/{{entity}}Form.svelte"
+      "route": "src/routes/{{module}}Form.svelte"
     },
     "master-detail": {
       "file": "pages/master-detail.svelte",
       "description": "List + detail side-by-side",
-      "route": "src/pages/{{entity}}.svelte"
+      "route": "src/routes/{{module}}.svelte"
     }
   },
   "steps": [
@@ -209,8 +209,15 @@
     {
       "action": "patch",
       "path": "src/routes/index.ts",
-      "find": "import Dashboard from './Dashboard.svelte';\nimport Users from './Users.svelte';\nimport Settings from './Settings.svelte';\nimport GettingStarted from './GettingStarted.svelte';\n\nexport const routes = {\n\t'/': Dashboard,\n\t'/getting-started': GettingStarted,\n\t'/users': Users,\n\t'/settings': Settings\n};",
-      "replace": "import Dashboard from './Dashboard.svelte';\nimport GettingStarted from './GettingStarted.svelte';\n\nexport const routes = {\n\t'/': Dashboard,\n\t'/getting-started': GettingStarted\n};",
+      "find": "import Dashboard from './Dashboard.svelte';\nimport Users from './Users.svelte';\nimport Settings from './Settings.svelte';\nimport GettingStarted from './GettingStarted.svelte';",
+      "replace": "import Dashboard from './Dashboard.svelte';\nimport GettingStarted from './GettingStarted.svelte';",
+      "unless": "demo-pages"
+    },
+    {
+      "action": "patch",
+      "path": "src/routes/index.ts",
+      "find": "\t'/': wrap({ component: Dashboard }),\n\t'/getting-started': wrap({ component: GettingStarted }),\n\t'/users': wrap({ component: Users }),\n\t'/settings': wrap({ component: Settings })",
+      "replace": "\t'/': wrap({ component: Dashboard }),\n\t'/getting-started': wrap({ component: GettingStarted })",
       "unless": "demo-pages"
     }
   ],

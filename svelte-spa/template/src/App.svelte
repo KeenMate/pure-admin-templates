@@ -156,6 +156,11 @@
 					{/snippet}
 				</SidebarItem>
 				<!-- /data-pa="demo-pages-sidebar" -->
+				<!-- Preset-added pages (e.g. Products under --preset full). The
+				     helper filters out entities already represented by the
+				     hardcoded items above (dashboard, users, settings). Empty
+				     when no preset/extra pages. -->
+				__PRESET_PAGES_SIDEBAR__
 				<!-- /data-pa="sidebar-items" -->
 			</Sidebar>
 			<!-- /data-pa="sidebar-component" -->

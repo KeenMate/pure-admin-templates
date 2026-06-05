@@ -37,6 +37,18 @@ module.exports = {
       `\t\t\t\t<SidebarItem href="${item.href}" labelText="${item.label}">\n\t\t\t\t\t{#snippet icon()}<i class="${item.icon}"></i>{/snippet}\n\t\t\t\t</SidebarItem>`
     ).join('\n');
 
+    // Preset-additional sidebar entries — items the preset declared that
+    // aren't already represented by the hardcoded sidebar in layout.svelte
+    // (which covers getting-started, dashboard, users, settings via the
+    // Management submenu when demo-pages is enabled). Anything else (e.g.
+    // Products from `--preset full`) is appended here so route file +
+    // sidebar link stay in sync.
+    const HARDCODED_HREFS = new Set(['/', '/users', '/settings']);
+    const presetExtras = sidebarItems.filter(item => !HARDCODED_HREFS.has(item.href));
+    ctx.placeholders.PRESET_PAGES_SIDEBAR = presetExtras.map(item =>
+      `\t\t\t\t<SidebarItem href="${item.href}" labelText="${item.label}" active={isActive('${item.href}')}>\n\t\t\t\t\t{#snippet icon()}<i class="${item.icon}"></i>{/snippet}\n\t\t\t\t</SidebarItem>`
+    ).join('\n');
+
     // Theme options → JS array literal for theme switcher
     const themeOpts = helpers.collectThemeOptions(ctx);
     ctx.placeholders.THEME_OPTIONS = themeOpts.map(t =>

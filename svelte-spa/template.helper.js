@@ -32,6 +32,51 @@ module.exports = {
       `\t\t\t\t<SidebarItem href="${item.href}" labelText="${item.label}">\n\t\t\t\t\t{#snippet icon()}<i class="${item.icon}"></i>{/snippet}\n\t\t\t\t</SidebarItem>`
     ).join('\n');
 
+    // Preset-additional sidebar entries — anything the preset declared that
+    // isn't already hardcoded in App.svelte (dashboard /, users, settings).
+    // The SPA uses hash routing via @keenmate/svelte-spa-router, so hrefs
+    // are prefixed with `#` and `active=` compares against currentPath
+    // (the un-prefixed path).
+    const HARDCODED_HREFS = new Set(['/', '/getting-started', '/users', '/settings']);
+    const presetExtras = sidebarItems.filter(item => !HARDCODED_HREFS.has(item.href));
+    ctx.placeholders.PRESET_PAGES_SIDEBAR = presetExtras.map(item =>
+      `\t\t\t\t<SidebarItem href="#${item.href}" labelText="${item.label}" active={currentPath === '${item.href}'}>\n\t\t\t\t\t{#snippet icon()}<i class="${item.icon}"></i>{/snippet}\n\t\t\t\t</SidebarItem>`
+    ).join('\n');
+
+    // Auto-register preset pages as routes. Page steps write files into
+    // src/routes/ (per pageTypes manifest), but routes/index.ts only knows
+    // about the hardcoded Dashboard/Users/Settings/GettingStarted entries.
+    // Push an addRoute call for each preset entity whose route isn't already
+    // hardcoded — that splices import + wrap()-form entry into routes/index.ts.
+    //
+    // Filename mirrors template.json pageTypes:
+    //   list / master-detail → <Module>.svelte
+    //   form                 → <Module>Form.svelte
+    //   detail               → <Module>Detail.svelte
+    //   dashboard            → Dashboard.svelte (skip — already hardcoded)
+    const toPascalCase = (s) => String(s)
+      .split(/[-_\s]+/)
+      .filter(Boolean)
+      .map(w => w[0].toUpperCase() + w.slice(1))
+      .join('');
+    const fileSuffix = { form: 'Form', detail: 'Detail' };
+    if (ctx.recipe && Array.isArray(ctx.recipe.steps)) {
+      for (const p of (ctx.pages || [])) {
+        if (p.type === 'dashboard') continue;
+        const entity = p.entity || p.type;
+        const href = `/${entity}`;
+        if (HARDCODED_HREFS.has(href)) continue;
+        const moduleName = toPascalCase(entity);
+        const file = `./${moduleName}${fileSuffix[p.type] || ''}.svelte`;
+        const componentName = `${moduleName}${fileSuffix[p.type] || ''}`;
+        ctx.recipe.steps.push({
+          action: 'call',
+          op: 'addRoute',
+          args: [href, componentName, file],
+        });
+      }
+    }
+
     const themeOpts = helpers.collectThemeOptions(ctx);
     ctx.placeholders.THEME_OPTIONS = themeOpts.map(t =>
       `\t\t{ id: '${t.id}', name: '${t.name}', cssPath: '${t.cssPath}' }`
@@ -205,7 +250,10 @@ module.exports = {
     },
 
     /**
-     * Add a route entry to src/routes/index.ts
+     * Add a route entry to src/routes/index.ts. Idempotent — duplicate
+     * imports and route entries are skipped, so the operation is safe to
+     * call multiple times for the same route (e.g. via prepareLate-pushed
+     * steps that may overlap with hardcoded routes).
      * @param {string} appDir
      * @param {string} routePath - e.g. "/login"
      * @param {string} componentName - e.g. "Login"
@@ -216,15 +264,19 @@ module.exports = {
       if (!fs.existsSync(routesPath)) return false;
       let content = fs.readFileSync(routesPath, 'utf-8');
 
-      // Add import
       const importLine = `import ${componentName} from '${componentFile}';`;
-      const lastImport = content.lastIndexOf('import ');
-      const lineEnd = content.indexOf('\n', lastImport);
-      content = content.slice(0, lineEnd + 1) + importLine + '\n' + content.slice(lineEnd + 1);
+      if (!content.includes(importLine)) {
+        const lastImport = content.lastIndexOf('import ');
+        const lineEnd = content.indexOf('\n', lastImport);
+        content = content.slice(0, lineEnd + 1) + importLine + '\n' + content.slice(lineEnd + 1);
+      }
 
-      // Add route entry before closing }
-      const routeEntry = `\t'${routePath}': ${componentName},`;
-      content = content.replace(/\n};/, `,\n${routeEntry}\n};`);
+      const routeEntry = `\t'${routePath}': wrap({ component: ${componentName} })`;
+      // Skip if an entry for this path already exists (string match is enough
+      // since route paths are unique keys).
+      if (!content.includes(`'${routePath}':`)) {
+        content = content.replace(/\n};/, `,\n${routeEntry}\n};`);
+      }
 
       fs.writeFileSync(routesPath, content);
       return true;
