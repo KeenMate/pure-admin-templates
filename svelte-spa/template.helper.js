@@ -47,7 +47,7 @@ module.exports = {
     // src/routes/ (per pageTypes manifest), but routes/index.ts only knows
     // about the hardcoded Dashboard/Users/Settings/GettingStarted entries.
     // Push an addRoute call for each preset entity whose route isn't already
-    // hardcoded — that splices import + wrap()-form entry into routes/index.ts.
+    // hardcoded — that splices import + bare-function entry into routes/index.ts.
     //
     // Filename mirrors template.json pageTypes:
     //   list / master-detail → <Module>.svelte
@@ -271,7 +271,10 @@ module.exports = {
         content = content.slice(0, lineEnd + 1) + importLine + '\n' + content.slice(lineEnd + 1);
       }
 
-      const routeEntry = `\t'${routePath}': wrap({ component: ${componentName} })`;
+      // Bare-function form (`'/': Component`) works natively on
+      // @keenmate/svelte-spa-router ^5.2.1+ — earlier versions had a
+      // validator bug on Svelte 5.5+ that needed wrap() as a workaround.
+      const routeEntry = `\t'${routePath}': ${componentName}`;
       // Skip if an entry for this path already exists (string match is enough
       // since route paths are unique keys).
       if (!content.includes(`'${routePath}':`)) {

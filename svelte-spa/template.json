@@ -216,8 +216,8 @@
     {
       "action": "patch",
       "path": "src/routes/index.ts",
-      "find": "\t'/': wrap({ component: Dashboard }),\n\t'/getting-started': wrap({ component: GettingStarted }),\n\t'/users': wrap({ component: Users }),\n\t'/settings': wrap({ component: Settings })",
-      "replace": "\t'/': wrap({ component: Dashboard }),\n\t'/getting-started': wrap({ component: GettingStarted })",
+      "find": "\t'/': Dashboard,\n\t'/getting-started': GettingStarted,\n\t'/users': Users,\n\t'/settings': Settings",
+      "replace": "\t'/': Dashboard,\n\t'/getting-started': GettingStarted",
       "unless": "demo-pages"
     }
   ],
