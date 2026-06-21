@@ -134,7 +134,7 @@
       "cli": "--settings-panel"
     },
     "icons": {
-      "description": "Icon library (Font Awesome CDN or Heroicons built into Phoenix)",
+      "description": "Icon library — Font Awesome CDN, Heroicons built into Phoenix, or Lucide SVG sprites via icon_callback",
       "isDefault": true,
       "points": [],
       "cli": [
@@ -146,6 +146,10 @@
         {
           "name": "Heroicons",
           "flag": "--heroicons"
+        },
+        {
+          "name": "Lucide",
+          "flag": "--lucide"
         }
       ]
     },
@@ -288,6 +292,26 @@
           "font_class": "pa-font-responsive"
         }
       ]
+    },
+    {
+      "action": "call",
+      "op": "setPureAdminConfig",
+      "args": [
+        {
+          "icon_callback": { "__raw__": "{__APP_MODULE__Web.Icons, :render}" }
+        }
+      ],
+      "if": "lucide"
+    },
+    {
+      "action": "delete",
+      "path": "lib/__APP_ID_SNAKE___web/icons.ex",
+      "unless": "lucide"
+    },
+    {
+      "action": "delete",
+      "path": "priv/static/assets/icons/lucide",
+      "unless": "lucide"
     },
     {
       "action": "patch",

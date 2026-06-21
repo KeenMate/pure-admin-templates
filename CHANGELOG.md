@@ -1,6 +1,20 @@
 # Changelog
 
-## [Unreleased]
+## 2026-06-21
+
+### Added
+- **Phoenix `--lucide` icon provider.** Third option alongside `--font-awesome` and `--heroicons` (declared in `features.icons.cli`). Pairs with keen_pure_admin 1.3's `<.icon>` dispatcher + `:icon_callback`. When passed, the generated app gets:
+  - ~27 Lucide outline SVGs at `priv/static/assets/icons/lucide/*.svg` covering the heroicons-curated canonical set (rocket, gauge, briefcase, users, settings, log-out, etc.)
+  - `<App>Web.Icons` module at `lib/<app>_web/icons.ex` — pattern-matches `lucide-X` names into `<img src="/assets/icons/lucide/X.svg">`, falls back to FA-style `<i class>` for everything else
+  - `icon_callback: {<App>Web.Icons, :render}` appended to `config :keen_pure_admin` in `config.exs`
+  - Inline `__ICON:name__` placeholders and sidebar/profile `icon=` attrs both resolve to `lucide-X` strings that flow through `<.icon>`
+  - Empty `ICON_CDN` slot in `root.html.heex` (Lucide ships as bundled SVGs — no external CDN)
+
+  When `--lucide` is not passed, `icons.ex` and the SVG directory are deleted (`unless: "lucide"` steps) so the FA / heroicons / `--no-icons` paths are unchanged.
+
+- **`setPureAdminConfig` operation accepts `{__raw__: "..."}` values.** Lets recipe steps inject raw Elixir literals (tuples, MFAs, atoms) into the `:keen_pure_admin` config block instead of only quoted strings. Used by the new `icon_callback` step to emit `{<App>Web.Icons, :render}` as a real tuple. Backward-compatible — string/number/bool/null values still work as before.
+
+## 2026-04-24
 
 ### Added
 - **Phoenix `--form-demo` opt-in feature.** New CLI flag scaffolds a fully-wired Phoenix/LiveView form demo with per-session ETS cache (`__APP_MODULE__.FormCache` + `Sweeper`), session-id cookie plug (`__APP_MODULE__Web.SessionPlug`), and `__APP_MODULE__Web.FormDemoLive` at `/form-demo`. Showcases `<.simple_form>` + `field={@form[:x]}` binding, inline edit, toast+undo on delete, popconfirm for bulk clear, force-errors toggle, relative timestamps via `PureAdmin.DateTime`, and per-session sliding-TTL persistence. Files copied 1:1 from `keen_pure_admin/demo` with namespace + ETS-table substitution; recipe steps patch `application.ex` (children) and `router.ex` (browser pipeline plug + route) only when the feature is enabled, and the four demo files are deleted otherwise. Sidebar entry wrapped in `data-pa="form-demo-sidebar"` so it appears only when opted in.

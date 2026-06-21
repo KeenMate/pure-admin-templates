@@ -40,8 +40,10 @@ module.exports = {
     helpers.setCopyright(ctx);
     helpers.setDefaultTheme(ctx);
 
-    // Icon resolver for this template's provider (font-awesome or heroicons)
-    const icon = (name) => helpers.resolveIconAttr(name, ctx.iconProvider);
+    // Icon resolver for this template's provider (font-awesome, heroicons, or lucide).
+    // Pass technology so Lucide attr strings resolve to `"lucide-X"` (Phoenix form,
+    // routed through `<.icon>` + :icon_callback) instead of the Svelte component name.
+    const icon = (name) => helpers.resolveIconAttr(name, ctx.iconProvider, ctx.recipe?.technology);
 
     // Profile panel items — collect objects, render as Phoenix HEEx
     const profileItems = helpers.collectProfileItems(ctx);
@@ -70,13 +72,16 @@ module.exports = {
    */
   prepareLate(ctx, helpers) {
     // Icon CDN — only include the Font Awesome CDN when FA is the provider.
-    // Heroicons ship with Phoenix (no CDN needed). When the provider is
+    // Heroicons ship with Phoenix and Lucide ships as bundled SVGs served from
+    // priv/static/assets/icons/lucide/, neither needs a CDN. When the provider is
     // 'none' (e.g. --no-icons), leave the placeholder empty so the generated
     // root.html.heex has no mention of icons at all.
     if (ctx.iconProvider === 'font-awesome') {
       ctx.placeholders.ICON_CDN = '    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />';
     } else if (ctx.iconProvider === 'heroicons') {
       ctx.placeholders.ICON_CDN = '    <%!-- Using Heroicons (built into Phoenix, no CDN needed) --%>';
+    } else if (ctx.iconProvider === 'lucide') {
+      ctx.placeholders.ICON_CDN = '    <%!-- Using Lucide (SVG sprites in priv/static/assets/icons/lucide/) --%>';
     } else {
       ctx.placeholders.ICON_CDN = '';
     }
@@ -309,11 +314,14 @@ module.exports = {
       // Normalize input to a map
       const updates = typeof keyOrMap === 'object' ? keyOrMap : { [keyOrMap]: value };
 
-      // Render an Elixir literal for a JS value
+      // Render an Elixir literal for a JS value.
+      // {__raw__: "expr"} → expr verbatim — for tuples / mfa / atoms that
+      // can't be expressed as a quoted string (e.g. icon_callback values).
       function literal(v) {
         if (v === null || v === undefined) return 'nil';
         if (typeof v === 'boolean') return String(v);
         if (typeof v === 'number') return String(v);
+        if (v && typeof v === 'object' && typeof v.__raw__ === 'string') return v.__raw__;
         return `"${String(v).replace(/"/g, '\\"')}"`;
       }
 
