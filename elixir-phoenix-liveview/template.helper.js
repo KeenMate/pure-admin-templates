@@ -69,12 +69,16 @@ module.exports = {
    * Renders the project info summary for the home page.
    */
   prepareLate(ctx, helpers) {
-    // Icon CDN — only include Font Awesome CDN if FA is the provider.
-    // Heroicons ship with Phoenix (no CDN needed).
+    // Icon CDN — only include the Font Awesome CDN when FA is the provider.
+    // Heroicons ship with Phoenix (no CDN needed). When the provider is
+    // 'none' (e.g. --no-icons), leave the placeholder empty so the generated
+    // root.html.heex has no mention of icons at all.
     if (ctx.iconProvider === 'font-awesome') {
       ctx.placeholders.ICON_CDN = '    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />';
-    } else {
+    } else if (ctx.iconProvider === 'heroicons') {
       ctx.placeholders.ICON_CDN = '    <%!-- Using Heroicons (built into Phoenix, no CDN needed) --%>';
+    } else {
+      ctx.placeholders.ICON_CDN = '';
     }
 
     // README profile blocks (org + app)

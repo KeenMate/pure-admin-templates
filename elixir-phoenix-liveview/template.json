@@ -200,7 +200,7 @@
       "op": "addDependency",
       "args": [
         "keen_pure_admin",
-        "~> 1.1"
+        "~> 1.3"
       ]
     },
     {
